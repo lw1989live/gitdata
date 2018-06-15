@@ -1,0 +1,1044 @@
+
+liwang@liwang-PC MINGW64 ~
+$ get config
+bash: get: command not found
+
+liwang@liwang-PC MINGW64 ~
+$ ls
+ _viminfo
+ 「开始」菜单@
+ AppData/
+'Application Data'@
+ Contacts/
+ Cookies@
+ Desktop/
+ IntelGraphicsProfiles/
+ Links/
+'Local Settings'@
+'My Documents'@
+ NetHood@
+ NTUSER.DAT
+ ntuser.dat.LOG1
+ ntuser.dat.LOG2
+ NTUSER.DAT{016888bd-6c6f-11de-8d1d-001e0bcde3ec}.TM.blf
+ NTUSER.DAT{016888bd-6c6f-11de-8d1d-001e0bcde3ec}.TMContainer00000000000000000001.regtrans-ms
+ NTUSER.DAT{016888bd-6c6f-11de-8d1d-001e0bcde3ec}.TMContainer00000000000000000002.regtrans-ms
+ ntuser.ini
+ Oracle/
+ PrintHood@
+ Recent@
+'Saved Games'/
+ Searches/
+ SendTo@
+ sqlnet.log
+ Templates@
+
+liwang@liwang-PC MINGW64 ~
+$ get config --global user.name liwang
+bash: get: command not found
+
+liwang@liwang-PC MINGW64 ~
+$ git config
+usage: git config [<options>]
+
+Config file location
+    --global              use global config file
+    --system              use system config file
+    --local               use repository config file
+    -f, --file <file>     use given config file
+    --blob <blob-id>      read config from given blob object
+
+Action
+    --get                 get value: name [value-regex]
+    --get-all             get all values: key [value-regex]
+    --get-regexp          get values for regexp: name-regex [value-regex]
+    --get-urlmatch        get value specific for the URL: section[.var] URL
+    --replace-all         replace all matching variables: name value [value_regex]
+    --add                 add a new variable: name value
+    --unset               remove a variable: name [value-regex]
+    --unset-all           remove all matches: name [value-regex]
+    --rename-section      rename section: old-name new-name
+    --remove-section      remove a section: name
+    -l, --list            list all
+    -e, --edit            open an editor
+    --get-color           find the color configured: slot [default]
+    --get-colorbool       find the color setting: slot [stdout-is-tty]
+
+Type
+    --bool                value is "true" or "false"
+    --int                 value is decimal number
+    --bool-or-int         value is --bool or --int
+    --path                value is a path (file or directory name)
+    --expiry-date         value is an expiry date
+
+Other
+    -z, --null            terminate values with NUL byte
+    --name-only           show variable names only
+    --includes            respect include directives on lookup
+    --show-origin         show origin of config (file, standard input, blob, command line)
+
+
+liwang@liwang-PC MINGW64 ~
+$ git config --global user.name liwang
+
+liwang@liwang-PC MINGW64 ~
+$ git config --global user.email lw1989live@hotmail.com
+
+liwang@liwang-PC MINGW64 ~
+$ cd e:
+
+liwang@liwang-PC MINGW64 /e
+$ ls
+'$RECYCLE.BIN'/                TEMP/     电子书/   音乐/
+ software软件/                 备份/     视频/     游戏盘/
+'System Volume Information'/   部件库/   图片/
+
+liwang@liwang-PC MINGW64 /e
+$ cd f:
+
+liwang@liwang-PC MINGW64 /f
+$ ls
+'$RECYCLE.BIN'/                VSS1034.0/     VSSPolicy/
+ svndata/                      VssAutotest/   VssSpecial/
+'System Volume Information'/   vssdata/       WorkRoot/
+ UPZLSOFT/                     VssData9/      ZLBHBranchs/
+ VSS1031/                      VssDocument/   ZLSoftBusineseHome/
+ VSS1031.0/                    VssEdition/    部件库/
+ VSS1032.0/                    VssExample/    新建文件夹/
+ VSS1033.0/                    VSSInsure/
+
+liwang@liwang-PC MINGW64 /f
+$ mkdir gitdata
+
+liwang@liwang-PC MINGW64 /f
+$ cd gitdata
+
+liwang@liwang-PC MINGW64 /f/gitdata
+$ pwd
+/f/gitdata
+
+liwang@liwang-PC MINGW64 /f/gitdata
+$ git init
+Initialized empty Git repository in F:/gitdata/.git/
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ ls
+document/  resource/  source/
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ ll
+total 0
+drwxr-xr-x 1 liwang 197121 0 六月 15 10:14 document/
+drwxr-xr-x 1 liwang 197121 0 六月 15 10:14 resource/
+drwxr-xr-x 1 liwang 197121 0 六月 15 10:15 source/
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ ll -a
+total 16
+drwxr-xr-x 1 liwang 197121 0 六月 15 11:20 ./
+drwxr-xr-x 1 liwang 197121 0 六月 15 11:20 ../
+drwxr-xr-x 1 liwang 197121 0 六月 15 11:20 .git/
+drwxr-xr-x 1 liwang 197121 0 六月 15 10:14 document/
+drwxr-xr-x 1 liwang 197121 0 六月 15 10:14 resource/
+drwxr-xr-x 1 liwang 197121 0 六月 15 10:15 source/
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ ls -ah
+./  ../  .git/  document/  resource/  source/
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ ls -a
+./  ../  .git/  document/  resource/  source/
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ git add readme.txt
+fatal: pathspec 'readme.txt' did not match any files
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ git add readme.txt
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ git connit -m "wrote a readme file"
+git: 'connit' is not a git command. See 'git --help'.
+
+The most similar commands are
+        commit
+        config
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ git commit -m "wrote a readme file"
+[master (root-commit) 499239d] wrote a readme file
+ 1 file changed, 2 insertions(+)
+ create mode 100644 readme.txt
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ ls
+document/  readme.txt  resource/  source/
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ cd source
+
+liwang@liwang-PC MINGW64 /f/gitdata/source (master)
+$ ls
+exercise/  project/
+
+liwang@liwang-PC MINGW64 /f/gitdata/source (master)
+$ cd exercise
+
+liwang@liwang-PC MINGW64 /f/gitdata/source/exercise (master)
+$ ls
+'c primer plus'/
+
+liwang@liwang-PC MINGW64 /f/gitdata/source/exercise (master)
+$ cd 'c primer plus'
+
+liwang@liwang-PC MINGW64 /f/gitdata/source/exercise/c primer plus (master)
+$ ls
+program_1.1.c           program_2.6.c           program_3.5_charcode.c
+program_1.2.c           program_3.1_platinum.c  program_3.6_altnames.c
+program_2.1_first.c     program_3.10_escape.c   program_3.7_showf_pt.c
+program_2.2_fathm_ft.c  program_3.11.c          program_3.8_typesize.c
+program_2.3_two_func.c  program_3.2_print1.c    program_3.9_badcount.c
+program_2.4_nogood.c    program_3.3_bases.c
+program_2.5_stillbad.c  program_3.4_print2.c
+
+liwang@liwang-PC MINGW64 /f/gitdata/source/exercise/c primer plus (master)
+$ gid add program*.c
+bash: gid: command not found
+
+liwang@liwang-PC MINGW64 /f/gitdata/source/exercise/c primer plus (master)
+$ gid add program
+bash: gid: command not found
+
+liwang@liwang-PC MINGW64 /f/gitdata/source/exercise/c primer plus (master)
+$ gid add program_*
+bash: gid: command not found
+
+liwang@liwang-PC MINGW64 /f/gitdata/source/exercise/c primer plus (master)
+$ notepad config
+
+liwang@liwang-PC MINGW64 /f/gitdata/source/exercise/c primer plus (master)
+$ git config --list
+core.symlinks=false
+core.autocrlf=true
+core.fscache=true
+color.diff=auto
+color.status=auto
+color.branch=auto
+color.interactive=true
+help.format=html
+rebase.autosquash=true
+http.sslcainfo=D:/Software/Git/mingw64/ssl/certs/ca-bundle.crt
+http.sslbackend=openssl
+diff.astextplain.textconv=astextplain
+filter.lfs.clean=git-lfs clean -- %f
+filter.lfs.smudge=git-lfs smudge -- %f
+filter.lfs.process=git-lfs filter-process
+filter.lfs.required=true
+credential.helper=manager
+core.editor='D:\Software (x86)\Notepad++\notepad++.exe' -multiInst -notabbar -nosession -noPlugin
+user.name=liwang
+user.email=lw1989live@hotmail.com
+core.repositoryformatversion=0
+core.filemode=false
+core.bare=false
+core.logallrefupdates=true
+core.symlinks=false
+core.ignorecase=true
+
+liwang@liwang-PC MINGW64 /f/gitdata/source/exercise/c primer plus (master)
+$ git starts
+git: 'starts' is not a git command. See 'git --help'.
+
+The most similar command is
+        status
+
+liwang@liwang-PC MINGW64 /f/gitdata/source/exercise/c primer plus (master)
+$ git status
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        ../../
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+liwang@liwang-PC MINGW64 /f/gitdata/source/exercise/c primer plus (master)
+$ git status -s
+?? ../../
+
+liwang@liwang-PC MINGW64 /f/gitdata/source/exercise/c primer plus (master)
+$ ls
+program_1.1.c           program_2.6.c           program_3.5_charcode.c
+program_1.2.c           program_3.1_platinum.c  program_3.6_altnames.c
+program_2.1_first.c     program_3.10_escape.c   program_3.7_showf_pt.c
+program_2.2_fathm_ft.c  program_3.11.c          program_3.8_typesize.c
+program_2.3_two_func.c  program_3.2_print1.c    program_3.9_badcount.c
+program_2.4_nogood.c    program_3.3_bases.c
+program_2.5_stillbad.c  program_3.4_print2.c
+
+liwang@liwang-PC MINGW64 /f/gitdata/source/exercise/c primer plus (master)
+$ git status -s
+?? ../../
+
+liwang@liwang-PC MINGW64 /f/gitdata/source/exercise/c primer plus (master)
+$ git add .
+
+liwang@liwang-PC MINGW64 /f/gitdata/source/exercise/c primer plus (master)
+$ git status -s
+A  program_1.1.c
+A  program_1.2.c
+A  program_2.1_first.c
+A  program_2.2_fathm_ft.c
+A  program_2.3_two_func.c
+A  program_2.4_nogood.c
+A  program_2.5_stillbad.c
+A  program_2.6.c
+A  program_3.10_escape.c
+A  program_3.11.c
+A  program_3.1_platinum.c
+A  program_3.2_print1.c
+A  program_3.3_bases.c
+A  program_3.4_print2.c
+A  program_3.5_charcode.c
+A  program_3.6_altnames.c
+A  program_3.7_showf_pt.c
+A  program_3.8_typesize.c
+A  program_3.9_badcount.c
+
+liwang@liwang-PC MINGW64 /f/gitdata/source/exercise/c primer plus (master)
+$ git commit
+Aborting commit due to empty commit message.
+
+liwang@liwang-PC MINGW64 /f/gitdata/source/exercise/c primer plus (master)
+$ git commit
+Aborting commit due to empty commit message.
+
+liwang@liwang-PC MINGW64 /f/gitdata/source/exercise/c primer plus (master)
+$ git status -s
+A  program_1.1.c
+A  program_1.2.c
+A  program_2.1_first.c
+A  program_2.2_fathm_ft.c
+A  program_2.3_two_func.c
+A  program_2.4_nogood.c
+A  program_2.5_stillbad.c
+A  program_2.6.c
+A  program_3.10_escape.c
+A  program_3.11.c
+A  program_3.1_platinum.c
+A  program_3.2_print1.c
+A  program_3.3_bases.c
+A  program_3.4_print2.c
+A  program_3.5_charcode.c
+A  program_3.6_altnames.c
+A  program_3.7_showf_pt.c
+A  program_3.8_typesize.c
+A  program_3.9_badcount.c
+
+liwang@liwang-PC MINGW64 /f/gitdata/source/exercise/c primer plus (master)
+$ git config --list
+core.symlinks=false
+core.autocrlf=true
+core.fscache=true
+color.diff=auto
+color.status=auto
+color.branch=auto
+color.interactive=true
+help.format=html
+rebase.autosquash=true
+http.sslcainfo=D:/Software/Git/mingw64/ssl/certs/ca-bundle.crt
+http.sslbackend=openssl
+diff.astextplain.textconv=astextplain
+filter.lfs.clean=git-lfs clean -- %f
+filter.lfs.smudge=git-lfs smudge -- %f
+filter.lfs.process=git-lfs filter-process
+filter.lfs.required=true
+credential.helper=manager
+core.editor='D:\Software (x86)\Notepad++\notepad++.exe' -multiInst -notabbar -nosession -noPlugin
+user.name=liwang
+user.email=lw1989live@hotmail.com
+core.repositoryformatversion=0
+core.filemode=false
+core.bare=false
+core.logallrefupdates=true
+core.symlinks=false
+core.ignorecase=true
+
+liwang@liwang-PC MINGW64 /f/gitdata/source/exercise/c primer plus (master)
+$ git commit
+Aborting commit due to empty commit message.
+
+liwang@liwang-PC MINGW64 /f/gitdata/source/exercise/c primer plus (master)
+$ git commit -m "c primer plus"
+[master b24de76] c primer plus
+ 19 files changed, 447 insertions(+)
+ create mode 100644 source/exercise/c primer plus/program_1.1.c
+ create mode 100644 source/exercise/c primer plus/program_1.2.c
+ create mode 100644 source/exercise/c primer plus/program_2.1_first.c
+ create mode 100644 source/exercise/c primer plus/program_2.2_fathm_ft.c
+ create mode 100644 source/exercise/c primer plus/program_2.3_two_func.c
+ create mode 100644 source/exercise/c primer plus/program_2.4_nogood.c
+ create mode 100644 source/exercise/c primer plus/program_2.5_stillbad.c
+ create mode 100644 source/exercise/c primer plus/program_2.6.c
+ create mode 100644 source/exercise/c primer plus/program_3.10_escape.c
+ create mode 100644 source/exercise/c primer plus/program_3.11.c
+ create mode 100644 source/exercise/c primer plus/program_3.1_platinum.c
+ create mode 100644 source/exercise/c primer plus/program_3.2_print1.c
+ create mode 100644 source/exercise/c primer plus/program_3.3_bases.c
+ create mode 100644 source/exercise/c primer plus/program_3.4_print2.c
+ create mode 100644 source/exercise/c primer plus/program_3.5_charcode.c
+ create mode 100644 source/exercise/c primer plus/program_3.6_altnames.c
+ create mode 100644 source/exercise/c primer plus/program_3.7_showf_pt.c
+ create mode 100644 source/exercise/c primer plus/program_3.8_typesize.c
+ create mode 100644 source/exercise/c primer plus/program_3.9_badcount.c
+
+liwang@liwang-PC MINGW64 /f/gitdata/source/exercise/c primer plus (master)
+$ ssh -keygen -t rsa -C "lw1989live@hotmail.com"
+Bad escape character 'ygen'.
+
+liwang@liwang-PC MINGW64 /f/gitdata/source/exercise/c primer plus (master)
+$ ssh -keygen -t rsa -C lw1989live@hotmail.com
+Bad escape character 'ygen'.
+
+liwang@liwang-PC MINGW64 /f/gitdata/source/exercise/c primer plus (master)
+$ ssh-keygen -t rsa -C "lw1989live@hotmail.com"
+Generating public/private rsa key pair.
+Enter file in which to save the key (/c/Users/liwang/.ssh/id_rsa): no.3@1989
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in no.3@1989.
+Your public key has been saved in no.3@1989.pub.
+The key fingerprint is:
+SHA256:8NIM63HbvqvRLa11JhmGVQhJh+9Km3sDzcOXnnRpVwk lw1989live@hotmail.com
+The key's randomart image is:
++---[RSA 2048]----+
+|         .o+...  |
+|          o..E   |
+|      o    .. . .|
+|       B   o.  ..|
+|      + S .=o  .o|
+|     . + +o+*o+oo|
+|      . o.+=*=+o.|
+|         o++o+o  |
+|        ..*= .   |
++----[SHA256]-----+
+
+liwang@liwang-PC MINGW64 /f/gitdata/source/exercise/c primer plus (master)
+$ ssh-keygen -t rsa -C "lw1989live@hotmail.com"
+Generating public/private rsa key pair.
+Enter file in which to save the key (/c/Users/liwang/.ssh/id_rsa): liwang
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in liwang.
+Your public key has been saved in liwang.pub.
+The key fingerprint is:
+SHA256:vkU+QI8jMru4vihSnzyEt0KyJsatErW6cbYSORkw1wM lw1989live@hotmail.com
+The key's randomart image is:
++---[RSA 2048]----+
+|  Eo             |
+|o . o            |
+|.o   .  .        |
+|. .    . o       |
+| = oo . S o      |
+|B = o+ o =       |
+|oX+=.o  . +      |
+|OO.+*.   o .     |
+|X=B+..  .        |
++----[SHA256]-----+
+
+liwang@liwang-PC MINGW64 /f/gitdata/source/exercise/c primer plus (master)
+$ cd ~
+
+liwang@liwang-PC MINGW64 ~
+$ ls
+ _viminfo
+ 「开始」菜单@
+ AppData/
+'Application Data'@
+ Contacts/
+ Cookies@
+ Desktop/
+ IntelGraphicsProfiles/
+ Links/
+'Local Settings'@
+'My Documents'@
+ NetHood@
+ NTUSER.DAT
+ ntuser.dat.LOG1
+ ntuser.dat.LOG2
+ NTUSER.DAT{016888bd-6c6f-11de-8d1d-001e0bcde3ec}.TM.blf
+ NTUSER.DAT{016888bd-6c6f-11de-8d1d-001e0bcde3ec}.TMContainer00000000000000000001.regtrans-ms
+ NTUSER.DAT{016888bd-6c6f-11de-8d1d-001e0bcde3ec}.TMContainer00000000000000000002.regtrans-ms
+ ntuser.ini
+ Oracle/
+ PrintHood@
+ Recent@
+'Saved Games'/
+ Searches/
+ SendTo@
+ sqlnet.log
+ Templates@
+
+liwang@liwang-PC MINGW64 ~
+$ ssh-keygen -t rsa -C "lw1989live@hotmail.com"
+Generating public/private rsa key pair.
+Enter file in which to save the key (/c/Users/liwang/.ssh/id_rsa): liwang
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in liwang.
+Your public key has been saved in liwang.pub.
+The key fingerprint is:
+SHA256:CkCyJ6hX2E/2rtTVWB0cXIOoTaBRBKAMFCwCnyZPJC4 lw1989live@hotmail.com
+The key's randomart image is:
++---[RSA 2048]----+
+|B++  ..o++. .o++.|
+|=Oo+.   o  o oo..|
+|E.Ooo o.  + . .  |
+|oB o + . . =     |
+|. o . . S o .    |
+| .   . + .       |
+|      o o        |
+|     . .         |
+|      .          |
++----[SHA256]-----+
+
+liwang@liwang-PC MINGW64 ~
+$ ls
+ _viminfo
+ 「开始」菜单@
+ AppData/
+'Application Data'@
+ Contacts/
+ Cookies@
+ Desktop/
+ IntelGraphicsProfiles/
+ Links/
+ liwang
+ liwang.pub
+'Local Settings'@
+'My Documents'@
+ NetHood@
+ NTUSER.DAT
+ ntuser.dat.LOG1
+ ntuser.dat.LOG2
+ NTUSER.DAT{016888bd-6c6f-11de-8d1d-001e0bcde3ec}.TM.blf
+ NTUSER.DAT{016888bd-6c6f-11de-8d1d-001e0bcde3ec}.TMContainer00000000000000000001.regtrans-ms
+ NTUSER.DAT{016888bd-6c6f-11de-8d1d-001e0bcde3ec}.TMContainer00000000000000000002.regtrans-ms
+ ntuser.ini
+ Oracle/
+ PrintHood@
+ Recent@
+'Saved Games'/
+ Searches/
+ SendTo@
+ sqlnet.log
+ Templates@
+
+liwang@liwang-PC MINGW64 ~
+$ ll
+total 5735
+-rw-r--r-- 1 liwang 197121     530 六月  1 10:06  _viminfo
+lrwxrwxrwx 1 liwang 197121      60 十二 18 11:43  「开始」菜单 -> '/c/Users/liwang/AppData/Roaming/Microsoft/Windows/Start Menu'/
+drwxr-xr-x 1 liwang 197121       0 十二 18 11:43  AppData/
+lrwxrwxrwx 1 liwang 197121      31 十二 18 11:43 'Application Data' -> /c/Users/liwang/AppData/Roaming/
+drwxr-xr-x 1 liwang 197121       0 一月 22 09:12  Contacts/
+lrwxrwxrwx 1 liwang 197121      57 十二 18 11:43  Cookies -> /c/Users/liwang/AppData/Roaming/Microsoft/Windows/Cookies/
+drwxr-xr-x 1 liwang 197121       0 五月 11 15:08  Desktop/
+drwxr-xr-x 1 liwang 197121       0 六月 15 08:59  IntelGraphicsProfiles/
+drwxr-xr-x 1 liwang 197121       0 一月 22 09:12  Links/
+-rw-r--r-- 1 liwang 197121    1766 六月 15 13:59  liwang
+-rw-r--r-- 1 liwang 197121     404 六月 15 13:59  liwang.pub
+lrwxrwxrwx 1 liwang 197121      29 十二 18 11:43 'Local Settings' -> /c/Users/liwang/AppData/Local/
+lrwxrwxrwx 1 liwang 197121      25 十二 18 11:43 'My Documents' -> /c/Users/liwang/Documents
+lrwxrwxrwx 1 liwang 197121      67 十二 18 11:43  NetHood -> '/c/Users/liwang/AppData/Roaming/Microsoft/Windows/Network Shortcuts'/
+-rw-r--r-- 1 liwang 197121 3932160 六月 15 13:59  NTUSER.DAT
+-rw-r--r-- 1 liwang 197121  262144 六月 15 13:59  ntuser.dat.LOG1
+-rw-r--r-- 1 liwang 197121       0 十二 18 11:43  ntuser.dat.LOG2
+-rw-r--r-- 1 liwang 197121   65536 十二 18 11:43  NTUSER.DAT{016888bd-6c6f-11de-8d1d-001e0bcde3ec}.TM.blf
+-rw-r--r-- 1 liwang 197121  524288 十二 18 11:43  NTUSER.DAT{016888bd-6c6f-11de-8d1d-001e0bcde3ec}.TMContainer00000000000000000001.regtrans-ms
+-rw-r--r-- 1 liwang 197121  524288 十二 18 11:43  NTUSER.DAT{016888bd-6c6f-11de-8d1d-001e0bcde3ec}.TMContainer00000000000000000002.regtrans-ms
+-rw-r--r-- 1 liwang 197121      20 十二 18 11:43  ntuser.ini
+drwxr-xr-x 1 liwang 197121       0 十二 20 16:52  Oracle/
+lrwxrwxrwx 1 liwang 197121      67 十二 18 11:43  PrintHood -> '/c/Users/liwang/AppData/Roaming/Microsoft/Windows/Printer Shortcuts'/
+lrwxrwxrwx 1 liwang 197121      56 十二 18 11:43  Recent -> /c/Users/liwang/AppData/Roaming/Microsoft/Windows/Recent/
+drwxr-xr-x 1 liwang 197121       0 一月 22 09:12 'Saved Games'/
+drwxr-xr-x 1 liwang 197121       0 一月 22 09:12  Searches/
+lrwxrwxrwx 1 liwang 197121      56 十二 18 11:43  SendTo -> /c/Users/liwang/AppData/Roaming/Microsoft/Windows/SendTo/
+-rw-r--r-- 1 liwang 197121    1534 一月 25 11:28  sqlnet.log
+lrwxrwxrwx 1 liwang 197121      59 十二 18 11:43  Templates -> /c/Users/liwang/AppData/Roaming/Microsoft/Windows/Templates/
+
+liwang@liwang-PC MINGW64 ~
+$ pwd
+/c/Users/liwang
+
+liwang@liwang-PC MINGW64 ~
+$ cd f:/gitdata
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ pwd
+/f/gitdata
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ ssh-keygen -t rsa -C "lw1989live@hotmail.com"
+Generating public/private rsa key pair.
+Enter file in which to save the key (/c/Users/liwang/.ssh/id_rsa): liwang
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in liwang.
+Your public key has been saved in liwang.pub.
+The key fingerprint is:
+SHA256:Pti65trfexzYrFUmJErBqgQeqhFq9R4yRArSMtriQ64 lw1989live@hotmail.com
+The key's randomart image is:
++---[RSA 2048]----+
+|o...   ...       |
+|* =o    o . .    |
+|oOoo.  o . o     |
+|*ooo.o. .   . o  |
+|*o .+.. S  + +   |
+|.+  .. +  . =    |
+|. .   . +  + .   |
+|E    ... o. o    |
+|    .+=o. oo     |
++----[SHA256]-----+
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ git status -s
+?? liwang
+?? liwang.pub
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ ls
+document/  liwang  liwang.pub  readme.txt  resource/  source/
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ ll
+total 6
+drwxr-xr-x 1 liwang 197121    0 六月 15 10:14 document/
+-rw-r--r-- 1 liwang 197121 1766 六月 15 14:01 liwang
+-rw-r--r-- 1 liwang 197121  404 六月 15 14:01 liwang.pub
+-rw-r--r-- 1 liwang 197121   55 六月 15 11:26 readme.txt
+drwxr-xr-x 1 liwang 197121    0 六月 15 10:14 resource/
+drwxr-xr-x 1 liwang 197121    0 六月 15 11:34 source/
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ readme.txt
+bash: readme.txt: command not found
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ vim readme.txt
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ no
+nohup.exe     normaliz.dll  notepad       notepad.exe
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ notepad readme.txt
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ notepad.exe readme.txt
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ path
+bash: path: command not found
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ $path
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ git status -s
+ M readme.txt
+?? liwang
+?? liwang.pub
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ git staus
+git: 'staus' is not a git command. See 'git --help'.
+
+The most similar command is
+        status
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   readme.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        liwang
+        liwang.pub
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   readme.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ git diff readme.txt
+diff --git a/readme.txt b/readme.txt
+index d8036c1..d9ae87c 100644
+--- a/readme.txt
++++ b/readme.txt
+@@ -1,2 +1,5 @@
+ Git is a version control system.
+-Git is free software.
+\ No newline at end of file
++Git is free software.
++
++Git is a distributed version control system.
++Git is free software.
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ git add readme.txt
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        modified:   readme.txt
+
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ git diff readme.txt
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ git commit -m "add distributed"
+[master 244a3ca] add distributed
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ git add readme.txt
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ git commit -m "append GPL"
+[master 5f4d37a] append GPL
+ 1 file changed, 1 insertion(+), 4 deletions(-)
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ git log
+commit 5f4d37afcca1295dabd58ff0072e720958229082 (HEAD -> master)
+Author: liwang <lw1989live@hotmail.com>
+Date:   Fri Jun 15 14:30:46 2018 +0800
+
+    append GPL
+
+commit 244a3cae78975e7778cc74e0a1bf18285252d088
+Author: liwang <lw1989live@hotmail.com>
+Date:   Fri Jun 15 14:25:28 2018 +0800
+
+    add distributed
+
+commit b24de76bcdd4a4cb3554402caf99c7a6c8f1dbc1
+Author: liwang <lw1989live@hotmail.com>
+Date:   Fri Jun 15 12:00:48 2018 +0800
+
+    c primer plus
+
+commit 499239d9a54cfc0ac12849f242b2dea426d5787a
+Author: liwang <lw1989live@hotmail.com>
+Date:   Fri Jun 15 11:27:42 2018 +0800
+
+    wrote a readme file
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ git log --pertty=oneline
+fatal: unrecognized argument: --pertty=oneline
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ git log --pretty=oneline
+5f4d37afcca1295dabd58ff0072e720958229082 (HEAD -> master) append GPL
+244a3cae78975e7778cc74e0a1bf18285252d088 add distributed
+b24de76bcdd4a4cb3554402caf99c7a6c8f1dbc1 c primer plus
+499239d9a54cfc0ac12849f242b2dea426d5787a wrote a readme file
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ git --help
+usage: git [--version] [--help] [-C <path>] [-c <name>=<value>]
+           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+           [-p | --paginate | --no-pager] [--no-replace-objects] [--bare]
+           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+           <command> [<args>]
+
+These are common Git commands used in various situations:
+
+start a working area (see also: git help tutorial)
+   clone      Clone a repository into a new directory
+   init       Create an empty Git repository or reinitialize an existing one
+
+work on the current change (see also: git help everyday)
+   add        Add file contents to the index
+   mv         Move or rename a file, a directory, or a symlink
+   reset      Reset current HEAD to the specified state
+   rm         Remove files from the working tree and from the index
+
+examine the history and state (see also: git help revisions)
+   bisect     Use binary search to find the commit that introduced a bug
+   grep       Print lines matching a pattern
+   log        Show commit logs
+   show       Show various types of objects
+   status     Show the working tree status
+
+grow, mark and tweak your common history
+   branch     List, create, or delete branches
+   checkout   Switch branches or restore working tree files
+   commit     Record changes to the repository
+   diff       Show changes between commits, commit and working tree, etc
+   merge      Join two or more development histories together
+   rebase     Reapply commits on top of another base tip
+   tag        Create, list, delete or verify a tag object signed with GPG
+
+collaborate (see also: git help workflows)
+   fetch      Download objects and refs from another repository
+   pull       Fetch from and integrate with another repository or a local branch
+   push       Update remote refs along with associated objects
+
+'git help -a' and 'git help -g' list available subcommands and some
+concept guides. See 'git help <command>' or 'git help <concept>'
+to read about a specific subcommand or concept.
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ git log --help
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ git reset --hard HEAD^
+HEAD is now at 244a3ca add distributed
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ cat readme.txt
+Git is a version control system.
+Git is free software.
+
+Git is a distributed version control system.
+Git is free software.
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ git log
+commit 244a3cae78975e7778cc74e0a1bf18285252d088 (HEAD -> master)
+Author: liwang <lw1989live@hotmail.com>
+Date:   Fri Jun 15 14:25:28 2018 +0800
+
+    add distributed
+
+commit b24de76bcdd4a4cb3554402caf99c7a6c8f1dbc1
+Author: liwang <lw1989live@hotmail.com>
+Date:   Fri Jun 15 12:00:48 2018 +0800
+
+    c primer plus
+
+commit 499239d9a54cfc0ac12849f242b2dea426d5787a
+Author: liwang <lw1989live@hotmail.com>
+Date:   Fri Jun 15 11:27:42 2018 +0800
+
+    wrote a readme file
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ m
+Display all 494 possibilities? (y or n)
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ init
+bash: init: command not found
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ shutdown --help
+?÷?: C:\Windows\system32\shutdown.exe [/i | /l | /s | /r | /g | /a | /p | /h | /e] [/f]
+    [/m \\computer][/t xxx][/d [p|u:]xx:yy [/c "comment"]]
+
+    ??в???   ???????????????? /? ????????
+    /?         ??????????????????κ????????????
+    /i         ?????????????(GUI)??
+               ?????????????䶮
+    /l         ??????????? /m ?? /d ????????á?
+    /s         ?????????
+    /r         ???????????????????
+    /g         ???????????????????????????????
+               ??????????????????ó???
+    /a         ?????????
+               ??????????????á?
+    /p         ??????????????г?????档
+               ?????? /d ?? /f ????????á?
+    /h         ?????????????
+               ?????? /f ????????á?
+    /e         ??????????????????
+    /m \\computer ????????????
+    /t xxx     ???ù???????? xxx ??
+               ??Ч??Χ?? 0-315360000 (10 ??)??????? 30??
+               ???????????? 0?????? /f
+               ??????
+    /c "comment" ???????????????????
+               ??????? 512 ???????
+    /f         ??????????е???ó???????????????????
+               ??? /t ??????????? 0 ??????
+               ???? /f ??????
+    /d [p|u:]xx:yy  ???????????????????
+               p ????????????????????????
+               u ??????????????塣
+               ??? p ?? u ??δ?????????????????????
+               ?????
+               xx ?????????(С?? 256 ????????)??
+               yy ????????(С?? 65536 ????????)??
+
+????????????:
+(E = ??? U = ???? P = ??????C = ?????)
+???     ???     ???     ????
+
+ U      0       0       ????(?????)
+E       0       0       ????(?????)
+E P     0       0       ????(?????)
+ U      0       5       ????????: ????з??
+E       1       1       ???: ???(?????)
+E P     1       1       ???: ???(?????)
+E       1       2       ???: ???(?????)
+E P     1       2       ???: ???(?????)
+E       2       2       ??????: ???(?????)
+E P     2       2       ??????: ???(?????)
+  P     2       3       ??????: ????(?????)
+E       2       4       ??????: ????????(?????)
+E P     2       4       ??????: ????????(?????)
+  P     2       16      ??????: Service Pack (?????)
+        2       17      ??????: ?????(?????)
+  P     2       17      ??????: ?????(?????)
+        2       18      ??????: ??????(?????)
+  P     2       18      ??????: ??????(?????)
+E       4       1       ??ó???: ???(?????)
+E P     4       1       ??ó???: ???(?????)
+E P     4       2       ??ó???: ???(?????)
+E       4       5       ??ó???: ??з??
+E       4       6       ??ó???: ?????
+ U      5       15      ??????: ??????
+ U      5       19
+E       5       19
+E P     5       19
+E       5       20      ??????????(?????)
+ U      6       11      ???????: ??????ε?
+ U      6       12      ???????: ????
+  P     7       0       ??? API ???
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ git reset --hard ^C
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ shutdown --help 5f4d37afc
+?÷?: C:\Windows\system32\shutdown.exe [/i | /l | /s | /r | /g | /a | /p | /h | /e] [/f]
+    [/m \\computer][/t xxx][/d [p|u:]xx:yy [/c "comment"]]
+
+    ??в???   ???????????????? /? ????????
+    /?         ??????????????????κ????????????
+    /i         ?????????????(GUI)??
+               ?????????????䶮
+    /l         ??????????? /m ?? /d ????????á?
+    /s         ?????????
+    /r         ???????????????????
+    /g         ???????????????????????????????
+               ??????????????????ó???
+    /a         ?????????
+               ??????????????á?
+    /p         ??????????????г?????档
+               ?????? /d ?? /f ????????á?
+    /h         ?????????????
+               ?????? /f ????????á?
+    /e         ??????????????????
+    /m \\computer ????????????
+    /t xxx     ???ù???????? xxx ??
+               ??Ч??Χ?? 0-315360000 (10 ??)??????? 30??
+               ???????????? 0?????? /f
+               ??????
+    /c "comment" ???????????????????
+               ??????? 512 ???????
+    /f         ??????????е???ó???????????????????
+               ??? /t ??????????? 0 ??????
+               ???? /f ??????
+    /d [p|u:]xx:yy  ???????????????????
+               p ????????????????????????
+               u ??????????????塣
+               ??? p ?? u ??δ?????????????????????
+               ?????
+               xx ?????????(С?? 256 ????????)??
+               yy ????????(С?? 65536 ????????)??
+
+????????????:
+(E = ??? U = ???? P = ??????C = ?????)
+???     ???     ???     ????
+
+ U      0       0       ????(?????)
+E       0       0       ????(?????)
+E P     0       0       ????(?????)
+ U      0       5       ????????: ????з??
+E       1       1       ???: ???(?????)
+E P     1       1       ???: ???(?????)
+E       1       2       ???: ???(?????)
+E P     1       2       ???: ???(?????)
+E       2       2       ??????: ???(?????)
+E P     2       2       ??????: ???(?????)
+  P     2       3       ??????: ????(?????)
+E       2       4       ??????: ????????(?????)
+E P     2       4       ??????: ????????(?????)
+  P     2       16      ??????: Service Pack (?????)
+        2       17      ??????: ?????(?????)
+  P     2       17      ??????: ?????(?????)
+        2       18      ??????: ??????(?????)
+  P     2       18      ??????: ??????(?????)
+E       4       1       ??ó???: ???(?????)
+E P     4       1       ??ó???: ???(?????)
+E P     4       2       ??ó???: ???(?????)
+E       4       5       ??ó???: ??з??
+E       4       6       ??ó???: ?????
+ U      5       15      ??????: ??????
+ U      5       19
+E       5       19
+E P     5       19
+E       5       20      ??????????(?????)
+ U      6       11      ???????: ??????ε?
+ U      6       12      ???????: ????
+  P     7       0       ??? API ???
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ git reset --hard 5f4d37afc
+HEAD is now at 5f4d37a append GPL
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ cat readme.txt
+Git is a distributed version control system.
+Git is free software distributed under the GPL.
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ git reflog
+5f4d37a (HEAD -> master) HEAD@{0}: reset: moving to 5f4d37afc
+244a3ca HEAD@{1}: reset: moving to HEAD^
+5f4d37a (HEAD -> master) HEAD@{2}: commit: append GPL
+244a3ca HEAD@{3}: commit: add distributed
+b24de76 HEAD@{4}: commit: c primer plus
+499239d HEAD@{5}: commit (initial): wrote a readme file
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ touch LICENSE
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ ls
+document/  LICENSE  readme.txt  resource/  source/
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$ notepad++.exe
+bash: notepad++.exe: command not found
+
+liwang@liwang-PC MINGW64 /f/gitdata (master)
+$

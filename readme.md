@@ -4,16 +4,12 @@ Git has a mutable index called stage.
 Git tracks changes of files. 
 Creating a new branch is quick & simple. 
 
-#关联一个远程库
-> git remote add origin git@github.com:lw1989live/gitdata.git
-#第一次推送master分支的所有内容
-> git push -u origin master
+#git常用命令
 #推送最新修改
 > git push origin master
-#克隆一个本地库
-> git clone git@github.com:lw1989live/gitdata.git
 #从远程仓库下载新分支与数据
 > git fetch origin
 #从远端仓库提取数据并尝试合并到当前分支
 > git merge origin/master
-
+#查看git提交历史
+> git log --graph --pretty=oneline --abbrev-commit

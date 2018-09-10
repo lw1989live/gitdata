@@ -13,3 +13,5 @@ Creating a new branch is quick & simple.
 > git merge origin/master
 #查看git提交历史
 > git log --graph --pretty=oneline --abbrev-commit
+#从远程库克隆
+> git clone git@github.com:lw1989live/exercise.git

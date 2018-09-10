@@ -5,11 +5,11 @@ Git tracks changes of files.
 Creating a new branch is quick & simple. 
 
 #git常用命令
-#推送最新修改
+#推送本地最新修改到远程仓库的master分支
 > git push origin master
 #从远程仓库下载新分支与数据
 > git fetch origin
-#从远端仓库提取数据并尝试合并到当前分支
+#将从远端仓库提取的更新分支同步到当前分支
 > git merge origin/master
 #查看git提交历史
 > git log --graph --pretty=oneline --abbrev-commit

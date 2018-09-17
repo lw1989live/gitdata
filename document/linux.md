@@ -365,9 +365,75 @@ touch 的目的在修改檔案的時間參數，但亦可用來建立空檔案�
 7.6.1 磁碟空間之浪費問題
 7.6.2 利用 GNU 的 parted 進行分割行為 (Optional)
 7.7 重點回顧
+
+    一個可以被掛載的資料通常稱為『檔案系統, filesystem』而不是分割槽 (partition) 喔！
+    基本上 Linux 的傳統檔案系統為 Ext2 ，該檔案系統內的資訊主要有：
+        superblock：記錄此 filesystem 的整體資訊，包括inode/block的總量、使用量、剩餘量， 以及檔案系統的格式與相關資訊等；
+        inode：記錄檔案的屬性，一個檔案佔用一個inode，同時記錄此檔案的資料所在的block 號碼；
+        block：實際記錄檔案的內容，若檔案太大時，會佔用多個 block 。
+    Ext2 檔案系統的資料存取為索引式檔案系統(indexed allocation)
+    需要磁碟重組的原因就是檔案寫入的 block 太過於離散了，此時檔案讀取的效能將會變的很差所致。 這個時候可以透過磁碟重組將同一個檔案所屬的 blocks 彙整在一起。
+    Ext2檔案系統主要有：boot sector, superblock, inode bitmap, block bitmap, inode table, data block 等六大部分。
+    data block 是用來放置檔案內容資料地方，在 Ext2 檔案系統中所支援的 block 大小有 1K, 2K 及 4K 三種而已
+    inode 記錄檔案的屬性/權限等資料，其他重要項目為： 每個 inode 大小均為固定，有 128/256bytes 兩種基本容量。每個檔案都僅會佔用一個 inode 而已； 因此檔案系統能夠建立的檔案數量與 inode 的數量有關；
+    檔案的 block 在記錄檔案的實際資料，目錄的 block 則在記錄該目錄底下檔名與其 inode 號碼的對照表；
+    日誌式檔案系統 (journal) 會多出一塊記錄區，隨時記載檔案系統的主要活動，可加快系統復原時間；
+    Linux 檔案系統為增加效能，會讓主記憶體作為大量的磁碟快取；
+    實體連結只是多了一個檔名對該 inode 號碼的連結而已；
+    符號連結就類似Windows的捷徑功能。
+    磁碟的使用必需要經過：分割、格式化與掛載，分別慣用的指令為：gdisk, mkfs, mount三個指令
+    分割時，應使用 parted 檢查分割表格式，再判斷使用 fdisk/gdisk 來分割，或直接使用 parted 分割
+    為了考慮效能，XFS 檔案系統格式化時，可以考慮加上 agcount/su/sw/extsize 等參數較佳
+    如果磁碟已無未分割的容量，可以考慮使用大型檔案取代磁碟裝置的處理方式，透過 dd 與格式化功能。
+    開機自動掛載可參考/etc/fstab之設定，設定完畢務必使用 mount -a 測試語法正確否；
+
+
 7.8 本章習題 - 第一題一定要做
 7.9 參考資料與延伸閱讀
 針對本文的建議：http://phorum.vbird.org/viewtopic.php?t=23881
+
+第八章、檔案與檔案系統的壓縮,打包與備份
+最近更新日期：2015/07/16
+
+在 Linux 底下有相當多的壓縮指令可以運作喔！這些壓縮指令可以讓我們更方便從網路上面下載容量較大的檔案呢！ 此外，我們知道在 Linux 底下的副檔名是沒有什麼很特殊的意義的，不過，針對這些壓縮指令所做出來的壓縮檔， 為了方便記憶，還是會有一些特殊的命名方式啦！就讓我們來看看吧！
+
+    8.1 壓縮檔案的用途與技術
+    8.2 Linux 系統常見的壓縮指令
+        8.2.1 gzip, zcat/zmore/zless/zgrep
+        8.2.2 bzip2, bzcat/bzmore/bzless/bzgrep
+        8.2.3 xz, xzcat/xzmore/xzless/xzgrep
+    8.3 打包指令: tar, 解壓後的 SELinux 課題
+    8.4 XFS 檔案系統的備份與還原
+        8.4.1 XFS 檔案系統備份 xfsdump
+        8.4.2 XFS 檔案系統還原 xfsrestore
+    8.5 光碟寫入工具
+        8.5.1 mkisofs：建立映像檔： isoinfo
+        8.5.2 cdrecord：光碟燒錄工具
+    8.6 其他常見的壓縮與備份工具
+        8.6.1 dd
+        8.6.2 cpio
+    8.7 重點回顧
+
+    壓縮指令為透過一些運算方法去將原本的檔案進行壓縮，以減少檔案所佔用的磁碟容量。 壓縮後與壓縮前的檔案所佔用的磁碟容量比值， 就可以被稱為是『壓縮比』
+    壓縮的好處是可以減少磁碟容量的浪費，在 WWW 網站也可以利用檔案壓縮的技術來進行資料的傳送，好讓網站頻寬的可利用率上升喔
+    壓縮檔案的副檔名大多是：『*.gz, *.bz2, *.xz, *.tar, *.tar.gz, *.tar.bz2, *.tar.xz』
+    常見的壓縮指令有 gzip, bzip2, xz。壓縮率最佳的是 xz，若可以不計時間成本，建議使用 xz 進行壓縮。
+    tar 可以用來進行檔案打包，並可支援 gzip, bzip2, xz 的壓縮。
+    壓　縮：tar -Jcv -f filename.tar.xz 要被壓縮的檔案或目錄名稱
+    查　詢：tar -Jtv -f filename.tar.xz
+    解壓縮：tar -Jxv -f filename.tar.xz -C 欲解壓縮的目錄
+    xfsdump 指令可備份檔案系統或單一目錄
+    xfsdump 的備份若針對檔案系統時，可進行 0-9 的 level 差異備份！其中 level 0 為完整備份；
+    xfsrestore 指令可還原被 xfsdump 建置的備份檔；
+    要建立光碟燒錄資料時，可透過 mkisofs 指令來建置；
+    可透過 wodim 來寫入 CD 或 DVD 燒錄機
+    dd 可備份完整的 partition 或 disk ，因為 dd 可讀取磁碟的 sector 表面資料
+    cpio 為相當優秀的備份指令，不過必須要搭配類似 find 指令來讀入欲備份的檔名資料，方可進行備份動作。
+
+    8.8 本章習題
+    8.9 參考資料與延伸閱讀
+    針對本文的建議：http://phorum.vbird.org/viewtopic.php?t=23882
+
 
     • 第三部份：學習Shell與Shell Scripts 
     • 第四部份：Linux使用者管理 

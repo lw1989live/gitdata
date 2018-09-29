@@ -57,6 +57,55 @@ Linux並不好學習，鳥哥也是『重傷』過好幾次才能對Linux有一�
     • 
     • 0.6 本章習題 
     • 0.7 參考資料與延伸閱讀 
+
+    註1：名片型電腦，或單版電腦：
+        香蕉派台灣官網：http://tw.bananapi.org/
+        Xapple pi 粉絲團：https://www.facebook.com/roseapplepi
+    註2：可穿戴式電腦：http://en.wikipedia.org/wiki/Wearable_computer
+    註3：對於CPU的原理有興趣的讀者，可以參考維基百科的說明：
+    英文CPU(http://en.wikipedia.org/wiki/CPU)
+    中文CPU(http://zh.wikipedia.org/wiki/中央處理器)。
+    註4：圖片參考：
+    Wiki book: http://en.wikibooks.org/wiki/IB/Group_4/Computer_Science/Computer_Organisation
+    作者：陳錦輝，『計算機概論-探索未來2008』，金禾資訊，2007出版
+    註5：更詳細的RISC架構可以參考維基百科：
+    http://zh.wikipedia.org/w/index.php?title=精簡指令集&variant=zh-tw
+    相關的 CPU 種類可以參考：
+    Oracle SPARC: http://en.wikipedia.org/wiki/SPARC
+    IBM Power CPU: http://en.wikipedia.org/wiki/IBM_POWER_microprocessors
+    註6：關於ARM架構的說明，可以參考維基百科：
+    http://zh.wikipedia.org/w/index.php?title=ARM架構&variant=zh-tw
+    註7：更詳細的CISC架構可參考維基百科：
+    http://zh.wikipedia.org/w/index.php?title=CISC&variant=zh-tw
+    註8：更詳細的x86架構發展史可以參考維基百科：
+    http://zh.wikipedia.org/w/index.php?title=X86&variant=zh-tw
+    註9：用來觀察 CPU 相關資訊的 CPU-Z 軟體網站：
+    http://www.cpuid.com/softwares/cpu-z.html
+    註10：Intel i7 4790 CPU 的詳細規格介紹
+    http://ark.intel.com/zh-tw/products/80806/Intel-Core-i7-4790-Processor-8M-Cache-up-to-4_00-GHz
+    註11：DDR 記憶體的詳細規格介紹
+    http://zh.wikipedia.org/wiki/DDR_SDRAM
+    註12：相關的韌體說明可參考維基百科：
+    http://zh.wikipedia.org/w/index.php?title=韌體&variant=zh-hant
+    註13：相關 EEPROM 可以參考維基百科：
+    http://zh.wikipedia.org/w/index.php?title=EEPROM&variant=zh-tw
+    註14：相關 BIOS 的說明可以參考維基百科：
+    http://zh.wikipedia.org/w/index.php?title=BIOS&variant=zh-tw
+    註15：相關 PCIe 的說明可以參考維基百科：
+    http://en.wikipedia.org/wiki/PCI_Express
+    註16：關於磁碟盤資料的說明：Zone bit recording ：
+    http://en.wikipedia.org/wiki/Zone_bit_recording
+    註17：關於 SATA 磁碟界面的 wiki 說明 ：
+    http://zh.wikipedia.org/wiki/SATA
+    註18：關於 SAS 磁碟界面的 wiki 說明 ：
+    http://en.wikipedia.org/wiki/SCSI#SCSI-EXPRESS
+    http://en.wikipedia.org/wiki/Serial_attached_SCSI
+    註19：關於 USB 界面的 wiki 說明 ：
+    http://en.wikipedia.org/wiki/USB
+    註20：關於 SSD 的 wiki 說明 ：
+    http://en.wikipedia.org/wiki/Solid-state_drive
+    感謝：本章當中出現很多圖示，很多是從Tom's Hardware(http://www.tomshardware.com/)網站取得的，在此特別感謝！
+
     • 針對本文的建議：http://phorum.vbird.org/viewtopic.php?t=31574 
 
 第一章、Linux是什麼與如何學習
@@ -100,7 +149,31 @@ Linux並不好學習，鳥哥也是『重傷』過好幾次才能對Linux有一�
     • 
     • 1.6 本章習題 
     • 1.7 參考資料與延伸閱讀 
-    • 針對本文的建議：http://phorum.vbird.org/viewtopic.php?t=23871 
+ 
+    註1：Multics計畫網站：http://www.multicians.org/。
+    註2：Ken Thompson 的 wiki 簡介：http://en.wikipedia.org/wiki/Ken_Thompson
+    註3：Dennis Ritchie 的 wiki 簡介： http://en.wikipedia.org/wiki/Dennis_Ritchie
+    註4：Bill joy 的 wiki 簡介： http://en.wikipedia.org/wiki/Bill_Joy
+    註5：Andrew Tanenbaum 的 wiki 簡介： http://en.wikipedia.org/wiki/Andrew_S._Tanenbaum
+    註6：Richard Stallman的個人網站： http://www.stallman.org/
+    註7：GNU 計畫的官網： http://www.gnu.org/
+    註8：開放原始碼促進會針對 open source 的解釋： http://opensource.org/definition
+    以及 Open source 與 free software 的差異：http://opensource.org/faq#free-software
+    註9：開放原始碼促進會針對 Open source 授權的彙整介紹： http://opensource.org/licenses
+    註10：Linus Torvalds 在 Wiki 的介紹： http://en.wikipedia.org/wiki/Linus_Torvalds
+    註11：Cluster Computer 在 Wiki 的介紹： http://en.wikipedia.org/wiki/Computer_cluster
+    註12：Android 在 Wiki 的介紹： http://zh.wikipedia.org/wiki/Android
+    洪朝貴老師的GNU/FSF介紹： http://people.ofset.org/~ckhung/a/c_83.php
+    葛林穆迪著，杜默譯，『Linux傳奇』，時報文化出版企業。
+    書本介紹：http://findbook.tw/book/9789571333632/basic
+    XFree86的網站：http://www.xfree86.org/
+    POSIX的相關說明：
+    維基百科：http://en.wikipedia.org/wiki/POSIX
+    IEEE POSIX標準：http://standards.ieee.org/regauth/posix/
+
+   • 針對本文的建議：http://phorum.vbird.org/viewtopic.php?t=23871 
+
+
 第二章、主機規劃與磁碟分割
 最近更新日期：2015/04/28 
 事實上，要安裝好一部Linux主機並不是那麼簡單的事情，你必須要針對distributions的特性、伺服器軟體的能力、 未來的升級需求、硬體擴充性需求等等來考量，還得要知道磁碟分割、檔案系統、Linux操作較頻繁的目錄等等， 都得要有一定程度的瞭解才行，所以，安裝Linux並不是那麼簡單的工作喔！ 不過，要學習Linux總得要有Linux系統存在吧？所以鳥哥在這裡還是得要提前說明如何安裝一部Linux練習機。 在這一章裡面，鳥哥會介紹一下，在開始安裝Linux之前，您應該要先思考哪些工作？ 好讓您後續的主機維護輕鬆愉快啊！此外，要瞭解這個章節的重要性，您至少需要瞭解到Linux檔案系統的基本概念， 這部份初學者是不可能具備的！所以初學者在這個章節裡面可能會覺得很多部份都是莫名其妙！沒關係！ 在您完成了後面的相關章節之後，記得要再回來這裡看看如何規劃主機即可！ ^_^
@@ -139,7 +212,20 @@ Linux並不好學習，鳥哥也是『重傷』過好幾次才能對Linux有一�
     • 
     • 2.5 本章習題 
     • 2.6 參考資料與延伸閱讀 
+
+2.6 參考資料與延伸閱讀
+
+    GUID / GPT 磁碟分割表與 MBR 的限制 wiki 簡介：
+    http://zh.wikipedia.org/wiki/GUID磁碟分割表
+    http://zh.wikipedia.org/wiki/全局唯一标识符
+    與 UEFI 界面有關的介紹：
+    Wiki 介紹：http://zh.wikipedia.org/wiki/統一可延伸韌體介面
+    T客幫介紹：http://www.techbang.com/posts/4361-fully-understand-uefi-bios-theory-and-actual-combat-3-liu-xiudian
+    黃明華先生的介紹：http://www.netadmin.com.tw/article_content.aspx?sn=1501070001&jump=3
+
     • 針對本文的建議：http://phorum.vbird.org/viewtopic.php?t=23874 
+
+
 第三章、安裝 CentOS7.x
 最近更新日期：2015/05/06 
 Linux distributions越作越成熟，所以在安裝方面也越來越簡單！雖然安裝非常的簡單， 但是剛剛前一章所談到的基礎認知還是需要瞭解的，包括MBR/GPT, partition, boot loader, mount, software的選擇等等的資料。 這一章鳥哥的安裝定義為『一部練習機』，所以安裝的方式都是以最簡單的方式來處理的。 另外，鳥哥選擇的是CentOS 7.x的版本來安裝的啦！在內文中，只要標題內含有(Option) 的，代表是鳥哥額外的說明，你應該看看就好，不需要實作喔！^_^
@@ -177,7 +263,25 @@ Linux distributions越作越成熟，所以在安裝方面也越來越簡單！�
     • 
     • 3.5 本章習題 
     • 3.6 參考資料與延伸閱讀 
-    • 針對本文的建議：http://phorum.vbird.org/viewtopic.php?p=135157 
+ 
+    註1：虛擬機器管理員建置一部虛擬機器的流程：
+    http://www.cyberciti.biz/faq/kvm-virt-manager-install-centos-linux-guest/
+    http://www.itzgeek.com/how-tos/linux/centos-how-tos/install-kvm-qemu-on-centos-7-rhel-7.html#axzz3Yf6il9S2
+    https://virt-manager.org/screenshots/
+    註2：CentOS 7 網卡的命名規則：
+    https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Networking_Guide/sec-Understanding_the_Predictable_Network_Interface_Device_Names.html
+    註3：進階記憶體測試網站：http://www.memtest.org/
+    註4：更多的核心參數可以參考如下連結：
+    http://www.faqs.org/docs/Linux-HOWTO/BootPrompt-HOWTO.html
+    對於安裝過程所加入的參數有興趣的，則可以參考底下這篇連結，裡面有詳細說明硬體原因：
+    http://polishlinux.org/choose/laptop/
+    安裝過程的簡易示意圖：
+    http://www.tecmint.com/centos-7-installation/
+    https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Installation_Guide/sect-disk-partitioning-setup-x86.html
+
+   • 針對本文的建議：http://phorum.vbird.org/viewtopic.php?p=135157 
+
+
 第四章、首次登入與線上求助
 最近更新日期：2015/06/02 
 終於可以開始使用Linux這個有趣的系統了！由於Linux系統使用了非同步的磁碟/記憶體資料傳輸模式，同時又是個多人多工的環境， 所以你不能隨便的不正常關機，關機有一定的程序喔！錯誤的關機方法可能會造成磁碟資料的損毀呢！ 此外，Linux有多種不同的操作方式，圖形介面與文字介面的操作有何不同？ 我們能否在文字介面取得大量的指令說明，而不需要硬背某些指令的選項與參數等等。這都是這一章要來介紹的呢！
@@ -217,6 +321,11 @@ Linux distributions越作越成熟，所以在安裝方面也越來越簡單！�
     • 
     • 4.7 本章習題 
     • 4.8 參考資料與延伸閱讀 
+
+    為了讓Linux的視窗顯示效果更佳，很多團體開始發展桌面應用的環境，GNOME/KDE都是。 他們的目標就是發展出類似Windows桌面的一整套可以工作的桌面環境，他可以進行視窗的定位、放大、縮小、 同時還提供很多的桌面應用軟體。底下是KDE與GNOME的相關連結：
+    http://www.kde.org/
+    http://www.gnome.org/
+
     • 針對本文的建議：http://phorum.vbird.org/viewtopic.php?t=23877 
 
 
@@ -268,7 +377,17 @@ Linux最優秀的地方之一就在於他的多人多工環境。而為了讓各
     • 
     • 5.5 本章練習 
     • 5.6 參考資料與延伸閱讀 
+
+    註1：各種檔案系統的檔名長度限制，維基百科： http://en.wikipedia.org/wiki/Comparison_of_file_systems
+    註2：FHS 標準的相關說明：
+    維基百科簡易說明： http://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard
+    FHS 2.3 (2004 年版)的標準文件：http://www.pathname.com/fhs/pub/fhs-2.3.html
+    FHS 3.0 (2015 年版)的標準文件：http://refspecs.linuxfoundation.org/FHS_3.0/fhs-3.0.pdf
+    關於 Journaling 日誌式文章的相關說明 http://www.linuxplanet.com/linuxplanet/reports/3726/1/
+
     • 針對本文的建議：http://phorum.vbird.org/viewtopic.php?t=23878 
+
+
     • 第六章、Linux 檔案與目錄管理
 最近更新日期：2015/06/24 
 在前一章我們認識了Linux系統下的檔案權限概念以及目錄的配置說明。 在這個章節當中，我們就直接來進一步的操作與管理檔案及目錄吧！包括在不同的目錄間變換、 建立與刪除目錄、建立與刪除檔案，還有尋找檔案、查閱檔案內容等等，都會在這個章節作個簡單的介紹啊！
@@ -343,8 +462,14 @@ touch 的目的在修改檔案的時間參數，但亦可用來建立空檔案�
 利用 find 可以加入許多選項來直接查詢檔案系統，以獲得自己想要知道的檔名。
     • 6.8 本章習題 
     • 6.9 參考資料與延伸閱讀 
+
+    小洲大大回答 SUID/SGID 的一篇討論：
+    http://phorum.vbird.org/viewtopic.php?t=20256
+
     • 針對本文的建議：http://phorum.vbird.org/viewtopic.php?t=23879 
     • 
+
+
     第七章、Linux 磁碟與檔案系統管理
 最近更新日期：2017/09/04
 系統管理員很重要的任務之一就是管理好自己的磁碟檔案系統，每個分割槽不可太大也不能太小， 太大會造成磁碟容量的浪費，太小則會產生檔案無法儲存的困擾。此外，我們在前面幾章談到的檔案權限與屬性中， 這些權限與屬性分別記錄在檔案系統的哪個區塊內？這就得要談到 filesystem 中的 inode 與 block 了。同時，為了虛擬化與大容量磁碟， 現在的 CentOS 7 預設使用大容量效能較佳的 xfs 當預設檔案系統了！這也得了解一下。 在本章我們的重點在於如何製作檔案系統，包括分割、格式化與掛載等，是很重要的一個章節喔！
@@ -404,6 +529,34 @@ touch 的目的在修改檔案的時間參數，但亦可用來建立空檔案�
 
 7.8 本章習題 - 第一題一定要做
 7.9 參考資料與延伸閱讀
+
+    註1：根據The Linux Document Project的文件所繪製的圖示，詳細的參考文獻可以參考如下連結：
+    Filesystem How-To: http://tldp.org/HOWTO/Filesystems-HOWTO-6.html
+    註2：參考維基百科所得資料，連結網址如下：
+    條目： Ext2 介紹 http://en.wikipedia.org/wiki/Ext2
+    註3：PAVE為一套秀圖軟體，常應用於數值模式的輸出檔案之再處理：
+    PAVE 使用手冊： http://www.ie.unc.edu/cempd/EDSS/pave_doc/index.shtml
+    註4：詳細的 inode 表格所定義的旗標可以參考如下連結：
+    John's spec of the second extended filesystem: http://uranus.it.swin.edu.au/~jn/explore2fs/es2fs.htm
+    註5：其他值得參考的 Ext2 相關檔案系統文章之連結如下：
+        『Design and Implementation of the Second Extended Filesystem 』http://e2fsprogs.sourceforge.net/ext2intro.html
+        Whitepaper: Red Hat's New Journaling File System: ext3: http://www.redhat.com/support/wpapers/redhat/ext3/
+        The Second Extended File System - An introduction: http://www.freeos.com/articles/3912/
+        ext3 or ReiserFS? Hans Reiser Says Red Hat's Move Is Understandable http://www.linuxplanet.com/linuxplanet/reports/3726/1/
+        檔案系統的比較：維基百科：http://en.wikipedia.org/wiki/Comparison_of_file_systems
+        Ext2/Ext3 檔案系統：http://linux.vbird.org/linux_basic/1010appendix_B.php
+    註6：參考資料為：
+        man xfs 詳細內容
+        xfs 官網：http://xfs.org/docs/xfsdocs-xml-dev/XFS_User_Guide/tmp/en-US/html/index.html
+    註7：計算 RAID 的 sunit 與 swidth 的方式：
+        計算 sunit 與 swidth 的方法： http://xfs.org/index.php/XFS_FAQ
+        計算 raid 與 sunit/swidth 部落客： http://blog.tsunanet.net/2011/08/mkfsxfs-raid10-optimal-performance.html
+    註8： Linux 核心所支援的硬體之裝置代號(Major, Minor)查詢：
+    https://www.kernel.org/doc/Documentation/devices.txt
+    註9：與 Boot sector 及 Superblock 的探討有關的討論文章：
+    The Second Extended File System: http://www.nongnu.org/ext2-doc/ext2.html
+    Rob's ext2 documentation: http://www.landley.net/code/toybox/ext2.html
+
 針對本文的建議：http://phorum.vbird.org/viewtopic.php?t=23881
 
 第八章、檔案與檔案系統的壓縮,打包與備份
@@ -446,6 +599,15 @@ touch 的目的在修改檔案的時間參數，但亦可用來建立空檔案�
 
     8.8 本章習題
     8.9 參考資料與延伸閱讀
+
+    台灣學術網路管理文件：Backup Tools in UNIX(Linux):
+    http://nmc.nchu.edu.tw/tanet/backup_tools_in_unix.htm
+    中文 How to 文件計畫 (CLDP)：http://www.linux.org.tw/CLDP/HOWTO/hardware/CD-Writing-HOWTO/CD-Writing-HOWTO-3.html
+    熊寶貝工作記錄之： Linux 燒錄實作：http://csc.ocean-pioneer.com/docum/linux_burn.html
+    PHP5 網管實驗室： http://www.php5.idv.tw/html.php?mod=article&do=show&shid=26
+    CentOS 7.x 之 man xfsdump
+    CentOS 7.x 之 man xfsrestore
+
     針對本文的建議：http://phorum.vbird.org/viewtopic.php?t=23882
 
 
@@ -504,6 +666,19 @@ touch 的目的在修改檔案的時間參數，但亦可用來建立空檔案�
 
     9.6 本章習題
     9.7 參考資料與延伸閱讀
+
+    註1：常見文書編輯器專案計畫連結：
+        emacs: http://www.gnu.org/software/emacs/
+        pico: https://en.wikipedia.org/wiki/Pico_(text_editor)
+        nano: http://sourceforge.net/projects/nano/
+        joe: http://sourceforge.net/projects/joe-editor/
+        vim: http://www.vim.org
+        常見文書編輯器比較：http://encyclopedia.thefreedictionary.com/List+of+text+editors
+        維基百科的文書編輯器比較：http://en.wikipedia.org/wiki/Comparison_of_text_editors
+    維基百科：ASCII 的代碼與圖示對應表：http://zh.wikipedia.org/wiki/ASCII
+    關於 vim 是什麼的『中文』說明：http://www.vim.org/6k/features.zh.txt。
+    vim 補齊功能介紹：http://www.openfoundry.org/en/tech-column/2215
+
     針對本文的建議：http://phorum.vbird.org/viewtopic.php?t=23883
 
 第十章、認識與學習BASH
@@ -571,8 +746,19 @@ touch 的目的在修改檔案的時間參數，但亦可用來建立空檔案�
     管線命令的重點是：『管線命令僅會處理 standard output，對於 standard error output 會予以忽略』 『管線命令必須要能夠接受來自前一個指令的資料成為 standard input 繼續處理才行。』
     本章介紹的管線命令主要有：cut, grep, sort, wc, uniq, tee, tr, col, join, paste, expand, split, xargs 等。
 
-10.8 本章習題
+    10.8 本章習題
     10.9 參考資料與延伸閱讀
+
+    註1：Webmin 的官方網站：http://www.webmin.com/
+    註2：關於 shell 的相關歷史可以參考網路農夫兄所整理的優秀文章。不過由於網路農夫兄所建置的網站暫時關閉， 因此底下的連結為鳥哥到網路上找到的片段文章連結。若有任何侵權事宜，請來信告知，謝謝： http://linux.vbird.org/linux_basic/0320bash/csh/
+    註3：使用 man bash，再以 PS1 為關鍵字去查詢，按下數次 n 往後查詢後，可以得到 PS1 的變數說明。
+    在語系資料方面，i18n 是由一些 Linux distribution 貢獻者共同發起的大型計畫，目的在於讓眾多的 Linux distributions 能夠有良好的萬國碼 (Unicode) 語系的支援。詳細的資料可以參考：
+        i18n 的 wiki 介紹：https://en.wikipedia.org/wiki/Internationalization_and_localization
+        康橋大學 Dr Markus Kuhn 的文獻：http://www.cl.cam.ac.uk/~mgk25/unicode.html
+        Debian 社群所寫的文件：http://www.debian.org/doc/manuals/intro-i18n/
+    GNU 計畫的 BASH 說明：http://www.gnu.org/software/bash/manual/bash.html
+    man bash
+
     針對本文的建議：http://phorum.vbird.org/viewtopic.php?t=23884
 
 
@@ -615,9 +801,69 @@ touch 的目的在修改檔案的時間參數，但亦可用來建立空檔案�
     文件的比對中，可利用 diff 及 cmp 進行比對，其中 diff 主要用在純文字檔案方面的新舊版本比對
     patch 指令可以將舊版資料更新到新版 (主要亦由 diff 建立 patch 的補丁來源檔案)
 
-11.6 本章習題
+    11.6 本章習題
     11.7 參考資料與延伸閱讀
+
+    註1：關於正規表示法與 POSIX 及特殊語法的參考網址可以查詢底下的來源：
+    維基百科的說明：http://en.wikipedia.org/wiki/Regular_expression
+    ZYTRAX 網站介紹：http://zytrax.com/tech/web/regex.htm
+    註2：其他關於正規表示法的網站介紹：
+    洪朝貴老師的網頁：http://www.cyut.edu.tw/~ckhung/b/re/index.php
+    龍門少尉的窩：http://main.rtfiber.com.tw/~changyj/
+    PCRE 官方網站：http://perldoc.perl.org/perlre.html
+    註3：關於 ASCII 編碼對照表可參考維基百科的介紹：
+    維基百科 (ASCII) 條目： http://zh.wikipedia.org/w/index.php?title=ASCII&variant=zh-tw
+    註4：關於 awk 的進階文獻，包括有底下幾個連結：
+    中研院計算中心 ASPAC 計畫之 awk 程式介紹： 鳥哥備份：http://linux.vbird.org/linux_basic/0330regularex/awk.pdf
+    這份文件寫的非常棒！歡迎大家多多參考！
+    Study Area：http://www.study-area.org/linux/system/linux_shell.htm
+
     針對本文的建議：http://phorum.vbird.org/viewtopic.php?t=23885
+
+第十二章、學習 Shell Scripts
+最近更新日期：2017/03/29
+
+如果你真的很想要走資訊這條路，並且想要管理好屬於你的主機，那麼，別說鳥哥不告訴你， 可以自動管理系統的好工具： Shell scripts！這傢伙真的是得要好好學習學習的！ 基本上， shell script 有點像是早期的批次檔，亦即是將一些指令彙整起來一次執行，但是 Shell script 擁有更強大的功能，那就是他可以進行類似程式 (program) 的撰寫，並且不需要經過編譯 (compile) 就能夠執行， 真的很方便。加上我們可透過 shell script 來簡化我們日常的工作管理， 而且，整個 Linux 環境中，一些服務 (services) 的啟動都是透過 shell script 的， 如果你對於 script 不瞭解，嘿嘿！發生問題時，可真是會求助無門喔！所以，好好的學一學他吧！
+
+    12.1 什麼是 Shell Script
+        12.1.1 幹嘛學習 shell scripts
+        12.1.2 第一支 script 的撰寫與執行
+        12.1.3 撰寫 shell script 的良好習慣建立
+    12.2 簡單的 shell script 練習
+        12.2.1 簡單範例： 對談式腳本, 隨日期變化, 數值運算, 計算 pi
+        12.2.2 script 的執行方式差異 (source, sh script, ./script)
+    12.3 善用判斷式
+        12.3.1 利用 test 指令的測試功能
+        12.3.2 利用判斷符號 [ ]
+        12.3.3 Shell script 的預設變數($0, $1...)： shift
+    12.4 條件判斷式
+        12.4.1 利用 if .... then： 單層簡單條件, 多重複雜條件, 檢驗$1內容, 網路狀態, 退伍
+        12.4.2 利用 case ..... esac 判斷
+        12.4.3 利用 function 功能
+    12.5 迴圈 (loop)
+        12.5.1 while...do...done, until...do...done (不定迴圈)
+        12.5.2 for...do...done (固定迴圈)： 帳號檢查, 網路狀態 $(seq )
+        12.5.3 for...do...done 的數值處理
+        12.5.4 搭配亂數與陣列的實驗
+    12.6 shell script 的追蹤與 debug
+    12.7 重點回顧
+
+    shell script 是利用 shell 的功能所寫的一個『程式 (program)』，這個程式是使用純文字檔，將一些 shell 的語法與指令(含外部指令)寫在裡面， 搭配正規表示法、管線命令與資料流重導向等功能，以達到我們所想要的處理目的
+    shell script 用在系統管理上面是很好的一項工具，但是用在處理大量數值運算上， 就不夠好了，因為 Shell scripts 的速度較慢，且使用的 CPU 資源較多，造成主機資源的分配不良。
+    在 Shell script 的檔案中，指令的執行是從上而下、從左而右的分析與執行；
+    shell script 的執行，至少需要有 r 的權限，若需要直接指令下達，則需要擁有 r 與 x 的權限；
+    良好的程式撰寫習慣中，第一行要宣告 shell (#!/bin/bash) ，第二行以後則宣告程式用途、版本、作者等
+    對談式腳本可用 read 指令達成；
+    要建立每次執行腳本都有不同結果的資料，可使用 date 指令利用日期達成；
+    script 的執行若以 source 來執行時，代表在父程序的 bash 內執行之意！
+    若需要進行判斷式，可使用 test 或中括號 ( [] ) 來處理；
+    在 script 內，$0, $1, $2..., $@ 是有特殊意義的！
+    條件判斷式可使用 if...then 來判斷，若是固定變數內容的情況下，可使用 case $var in ... esac 來處理
+    迴圈主要分為不定迴圈 (while, until) 以及固定迴圈 (for) ，配合 do, done 來達成所需任務！
+    我們可使用 sh -x script.sh 來進行程式的 debug
+
+    12.8 本章習題
+    針對本文的建議：http://phorum.vbird.org/viewtopic.php?t=23886
 
 
 

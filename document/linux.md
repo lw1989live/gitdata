@@ -874,6 +874,82 @@ touch 的目的在修改檔案的時間參數，但亦可用來建立空檔案�
 
 在訂定完了一些帳號的規則之後，那麼我們就繼續來管理一下主機的系統與程序的管理吧！ 這個包括了觀察每個程序 (Process) 與工作排程及工作管理 ( jobs control )，這些也都是很重要的工作呢！
 
+第十三章、Linux 帳號管理與 ACL 權限設定
+最近更新日期：2015/07/27
+
+要登入 Linux 系統一定要有帳號與密碼才行，否則怎麼登入，您說是吧？不過， 不同的使用者應該要擁有不同的權限才行吧？我們還可以透過 user/group 的特殊權限設定， 來規範出不同的群組開發專案呢～在 Linux 的環境下，我們可以透過很多方式來限制使用者能夠使用的系統資源， 包括 第十章、bash 提到的 ulimit 限制、還有特殊權限限制，如 umask 等等。 透過這些舉動，我們可以規範出不同使用者的使用資源。另外，還記得系統管理員的帳號嗎？對！ 就是 root 。請問一下，除了 root 之外，是否可以有其他的系統管理員帳號？ 為什麼大家都要盡量避免使用數字型態的帳號？如何修改使用者相關的資訊呢？這些我們都得要瞭解瞭解的！
+
+    13.1 Linux 的帳號與群組
+        13.1.1 使用者識別碼： UID 與 GID
+        13.1.2 使用者帳號：/etc/passwd 檔案結構, /etc/shadow 檔案結構
+        13.1.3 關於群組： /etc/group 檔案結構, 有效與初始群組, groups, newgrp, /etc/gshadow
+    13.2 帳號管理
+        13.2.1 新增與移除使用者： useradd, useradd 參考檔, passwd, chage, usermod, userdel
+        13.2.2 使用者功能：id, finger, chfn, chsh
+        13.2.3 新增與移除群組：groupadd, groupmod, groupdel, gpasswd 群組管理員
+        13.2.4 帳號管理實例
+        13.2.5 使用外部身份認證系統
+    13.3 主機的細部權限規劃：ACL 的使用
+        13.3.1 什麼是 ACL 與如何支援啟動 ACL
+        13.3.2 ACL 的設定技巧： setfacl, getfacl, ACL 的設定(user, group mask, default)
+    13.4 使用者身份切換
+        13.4.1 su
+        13.4.2 sudo： sudo 指令, visudo (/etc/sudoers) ( 帳號, 群組, 限制指令, 別名, 時間間隔, 配合 su)
+    13.5 使用者的特殊 shell 與 PAM 模組
+        13.5.1 特殊的 shell :/sbin/nologin, nologin.txt
+        13.5.2 PAM 模組簡介
+        13.5.3 PAM 模組設定語法：驗證類別(type)、控制標準(flag)、模組與參數
+        13.5.4 常用模組簡介： securetty, nologin, pam_pwquality, login流程
+        13.5.5 其他相關檔案： limits.conf
+    13.6 Linux 主機上的使用者訊息傳遞
+        13.6.1 查詢使用者： w, who, last, lastlog
+        13.6.2 使用者對談： write, mesg, wall
+        13.6.3 使用者郵件信箱： mail
+    13.7 CentOS 7 環境下大量建置帳號的方法
+        13.7.1 一些帳號相關的檢查工具：pwck, pwconv, pwunconv, chpasswd
+        13.7.2 大量建置帳號範本(適用 passwd --stdin 選項)
+    13.8 重點回顧
+
+    Linux 作業系統上面，關於帳號與群組，其實記錄的是 UID/GID 的數字而已；
+    使用者的帳號/群組與 UID/GID 的對應，參考 /etc/passwd 及 /etc/group 兩個檔案
+    /etc/passwd 檔案結構以冒號隔開，共分為七個欄位，分別是『帳號名稱、密碼、UID、GID、全名、家目錄、shell』
+    UID 只有 0 與非為 0 兩種，非為 0 則為一般帳號。一般帳號又分為系統帳號 (1~999) 及可登入者帳號 (大於 1000)
+    帳號的密碼已經移動到 /etc/shadow 檔案中，該檔案權限為僅有 root 可以更動。該檔案分為九個欄位，內容為『 帳號名稱、加密密碼、密碼更動日期、密碼最小可變動日期、密碼最大需變動日期、密碼過期前警告日數、密碼失效天數、 帳號失效日、保留未使用』
+    使用者可以支援多個群組，其中在新建檔案時會影響新檔案群組者，為有效群組。而寫入 /etc/passwd 的第四個欄位者， 稱為初始群組。
+    與使用者建立、更改參數、刪除有關的指令為：useradd, usermod, userdel等，密碼建立則為 passwd；
+    與群組建立、修改、刪除有關的指令為：groupadd, groupmod, groupdel 等；
+    群組的觀察與有效群組的切換分別為：groups 及 newgrp 指令；
+    useradd 指令作用參考的檔案有： /etc/default/useradd, /etc/login.defs, /etc/skel/ 等等
+    觀察使用者詳細的密碼參數，可以使用『 chage -l 帳號 』來處理；
+    使用者自行修改參數的指令有： chsh, chfn 等，觀察指令則有： id, finger 等
+    ACL 的功能需要檔案系統有支援，CentOS 7 預設的 XFS 確實有支援 ACL 功能！
+    ACL 可進行單一個人或群組的權限管理，但 ACL 的啟動需要有檔案系統的支援；
+    ACL 的設定可使用 setfacl ，查閱則使用 getfacl ；
+    身份切換可使用 su ，亦可使用 sudo ，但使用 sudo 者，必須先以 visudo 設定可使用的指令；
+    PAM 模組可進行某些程式的驗證程序！與 PAM 模組有關的設定檔位於 /etc/pam.d/* 及 /etc/security/*
+    系統上面帳號登入情況的查詢，可使用 w, who, last, lastlog 等；
+    線上與使用者交談可使用 write, wall，離線狀態下可使用 mail 傳送郵件！
+
+
+    13.9 本章習題
+    13.10 參考資料與延伸閱讀
+
+    註1：最完整與詳細的密碼檔說明，可參考各 distribution 內部的 man page。 本文中以 CentOS 7.x 的『 man 5 passwd 』及『 man 5 shadow 』的內容說明；
+    註2：MD5, DES, SHA 均為加密的機制，詳細的解釋可參考維基百科的說明：
+        MD5：http://zh.wikipedia.org/wiki/MD5
+        DES：http://en.wikipedia.org/wiki/Data_Encryption_Standard
+        SHA家族：https://en.wikipedia.org/wiki/Secure_Hash_Algorithm
+    在早期的 Linux 版本中，主要使用 MD5 加密演算法，近期則使用 SHA512 作為預設演算法。
+    註3：telnet 與 ssh 都是可以由遠端用戶主機連線到 Linux 伺服器的一種機制！詳細資料可查詢鳥站文章： 遠端連線伺服器：http://linux.vbird.org/linux_server/0310telnetssh.php
+    註4：詳細的說明請參考 man sudo ，然後以 5 作為關鍵字搜尋看看即可瞭解。
+    註5：詳細的 PAM 說明可以參考如下連結：
+    維基百科：http://en.wikipedia.org/wiki/Pluggable_Authentication_Modules
+    Linux-PAM網頁： http://www.kernel.org/pub/linux/libs/pam/
+
+
+    針對本文的建議：http://phorum.vbird.org/viewtopic.php?t=23887
+
+
     • 第五部份：Linux系統管理員 
     第五部分：Linux 系統管理員
 

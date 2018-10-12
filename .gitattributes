@@ -1,0 +1,20 @@
+# 设置所有文件的默认行为
+*.text=auto
+
+# 列出应使用系统相关的行结束符的文本文件
+*.php text
+*.html text
+*.css text
+*.c text
+*.java text
+*.md text
+
+# 列出应使用CRLF行结束符且不根据本地操作系统转换的文件
+*.sln text eol=crlf
+
+# 列出所有不应进行修改的二进制文件
+*.png binary
+*.jpg binary
+*.gif binary
+*.ico binary
+

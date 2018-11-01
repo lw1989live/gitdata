@@ -949,6 +949,70 @@ touch 的目的在修改檔案的時間參數，但亦可用來建立空檔案�
 
     針對本文的建議：http://phorum.vbird.org/viewtopic.php?t=23887
 
+第十四章、磁碟配額(Quota)與進階檔案系統管理
+最近更新日期：2015/07/28
+
+如果您的 Linux 伺服器有多個用戶經常存取資料時，為了維護所有使用者在硬碟容量的公平使用，磁碟配額 (Quota) 就是一項非常有用的工具！另外，如果你的用戶常常抱怨磁碟容量不夠用，那麼更進階的檔案系統就得要學習學習。 本章我們會介紹磁碟陣列 (RAID) 及邏輯捲軸檔案系統 (LVM)，這些工具都可以幫助你管理與維護使用者可用的磁碟容量喔！
+
+    14.1 磁碟配額 (Quota) 的應用與實作
+        14.1.1 什麼是 Quota： 一般用途, 限制, 規範 (inode/block, soft/hard, grace time)
+        14.1.2 一個 XFS 檔案系統的 Quota 的實作範例
+        14.1.3 實作 Quota 流程-1：檔案系統的支援與觀察 (/etc/fstab, /etc/mtab)
+        14.1.4 實作 Quota 流程-2：觀察 Quota 報告資料 (xfs_quota, print, df, report, state)
+        14.1.5 實作 Quota 流程-3：限制值設定方式 (limit, grace_time)
+        14.1.6 實作 Quota 流程-4：project 的限制 (針對目錄限制) (Optional)
+        14.1.7 XFS quota 的管理與額外指令對照表
+        14.1.8 不更動既有系統的 Quota 實例
+    14.2 軟體磁碟陣列 (Software RAID)
+        14.2.1 什麼是 RAID： RAID-0, RAID-1, RAID1+0, RAID-5, Spare disk
+        14.2.2 software, hardware RAID
+        14.2.3 軟體磁碟陣列的設定： mdadm --create
+        14.2.4 模擬 RAID 錯誤的救援模式： mdadm --manage
+        14.2.5 開機自動啟動 RAID 並自動掛載
+        14.2.6 關閉軟體 RAID(重要！)
+    14.3 邏輯捲軸管理員 (Logical Volume Manager)
+        14.3.1 什麼是 LVM： PV, PE, VG, LV 的意義
+        14.3.2 LVM 實作流程： PV 階段, VG 階段, LV 階段, 檔案系統階段
+        14.3.3 放大 LV 容量： xfs_growfs
+        14.3.4 使用 LVM thin Volume 讓 LVM 動態自動調整磁碟使用率
+        14.3.5 LVM 的磁碟快照： 建立傳統快照, 以快照還原, 用於測試環境
+        14.3.6 LVM 相關指令彙整與 LVM 的關閉
+    14.4 重點回顧
+
+    Quota 可公平的分配系統上面的磁碟容量給使用者；分配的資源可以是磁碟容量(block)或可建立檔案數量(inode)；
+    Quota 的限制可以有 soft/hard/grace time 等重要項目；
+    Quota 是針對整個 filesystem 進行限制，XFS 檔案系統可以限制目錄！
+    Quota 的使用必須要核心與檔案系統均支援。檔案系統的參數必須含有 usrquota, grpquota, prjquota
+    Quota 的 xfs_quota 實作的指令有 report, print, limit, timer... 等指令；
+    磁碟陣列 (RAID) 有硬體與軟體之分，Linux 作業系統可支援軟體磁碟陣列，透過 mdadm 套件來達成；
+    磁碟陣列建置的考量依據為『容量』、『效能』、『資料可靠性』等；
+    磁碟陣列所建置的等級常見有的 raid0, raid1, raid1+0, raid5 及 raid6
+    硬體磁碟陣列的裝置檔名與 SCSI 相同，至於 software RAID 則為 /dev/md[0-9]
+    軟體磁碟陣列的狀態可藉由 /proc/mdstat 檔案來瞭解；
+    LVM 強調的是『彈性的變化檔案系統的容量』；
+    與 LVM 有關的元件有： PV/VG/PE/LV 等元件，可以被格式化者為 LV
+    新的 LVM 擁有 LVM thin volume 的功能，能夠動態調整磁碟的使用率！
+    LVM 擁有快照功能，快照可以記錄 LV 的資料內容，並與原有的 LV 共享未更動的資料，備份與還原就變的很簡單；
+    XFS 透過 xfs_growfs 指令，可以彈性的調整檔案系統的大小
+
+    14.5 本章習題
+    14.6 參考資料與延伸閱讀
+
+    註1：相關的 XFS 檔案系統的 quota 說明，可以參考底下的文件：
+        XFS 官網說明：http://xfs.org/docs/xfsdocs-xml-dev/XFS_User_Guide/tmp/en-US/html/xfs-quotas.html
+    註2：若想對 RAID 有更深入的認識，可以參考底下的連結與書目：
+    http://www.tldp.org/HOWTO/Software-RAID-HOWTO.html
+    楊振和、『作業系統導論：第十一章』、學貫出版社，2006
+    註3：詳細的 mdstat 說明也可以參考如下網頁：
+    https://raid.wiki.kernel.org/index.php/Mdstat
+    註4：徐秉義老師在網管人雜誌的文章，文章篇名分別是：
+        磁碟管理：SoftRAID 與 LVM 綜合實做應用 (上)
+        磁碟管理：SoftRAID 與 LVM 綜合實做應用 (下)
+    目前文章已經找不到了～可能需要 google 一下舊文章的備份才能看到了！
+
+    針對本文的建議：http://phorum.vbird.org/viewtopic.php?t=23888
+
+
 
     • 第五部份：Linux系統管理員 
     第五部分：Linux 系統管理員

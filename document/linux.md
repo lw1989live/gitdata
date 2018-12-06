@@ -1044,6 +1044,75 @@ touch 的目的在修改檔案的時間參數，但亦可用來建立空檔案�
     15.6 本章習題
     針對本文的建議：http://phorum.vbird.org/viewtopic.php?t=23889
 
+第十六章、程序管理與 SELinux 初探
+最近更新日期：2016/10/24
+
+一個程式被載入到記憶體當中運作，那麼在記憶體內的那個資料就被稱為程序(process)。程序是作業系統上非常重要的概念， 所有系統上面跑的資料都會以程序的型態存在。那麼系統的程序有哪些狀態？不同的狀態會如何影響系統的運作？ 程序之間是否可以互相控管等等的，這些都是我們所必須要知道的項目。 另外與程序有關的還有 SELinux 這個加強檔案存取安全性的咚咚，也必須要做個瞭解呢！
+
+    16.1 什麼是程序 (Process)
+        16.1.1 程序與程式 (process & program)： 子程序與父程序, fork-and-exec, 系統服務
+        16.1.2 Linux 的多人多工環境
+    16.2 工作管理 (job control)
+        16.2.1 什麼是工作管理
+        16.2.2 job control 的管理：&, [ctrl]-z, jobs, fg, bg, kill
+        16.2.3 離線管理問題： nohup
+    16.3 程序管理
+        16.3.1 程序的觀察： ps (ps -l, ps aux, zombie), top, pstree
+        16.3.2 程序的管理： signal, kill, killall
+        16.3.3 關於程序的執行順序： priority, nice, renice
+        16.3.4 系統資源的觀察： free, uname, uptime, netstat, dmesg, vmstat
+    16.4 特殊檔案與程序
+        16.4.1 具有 SUID/SGID 權限的指令執行狀態
+        16.4.2 /proc/* 代表的意義
+        16.4.3 查詢已開啟檔案或已執行程序開啟之檔案： fuser, lsof, pidof
+    16.5 SELinux 初探
+        16.5.1 什麼是 SELinux： 目標, DAC, MAC
+        16.5.2 SELinux 的運作模式： 元件, 安全性本文, domain/type
+        16.5.3 SELinux 三種模式的啟動、關閉與觀察： getenforce, sestatus, 啟動與關閉, setenforce
+        16.5.4 SELinux 政策內的規則管理： getsebool, seinfo, sesearch, setsebool
+        16.5.5 SELinux 安全本文的修改： chcon, restorecon, semanage
+        16.5.6 一個網路服務案例及登錄檔協助： 所需服務, FTP 實例, 匿名者範例, 一般用戶家目錄, 非正規目錄, 非正規 port
+    16.6 重點回顧
+
+    程式 (program)：通常為 binary program ，放置在儲存媒體中 (如硬碟、光碟、軟碟、磁帶等)，為實體檔案的型態存在；
+    程序 (process)：程式被觸發後，執行者的權限與屬性、程式的程式碼與所需資料等都會被載入記憶體中， 作業系統並給予這個記憶體內的單元一個識別碼 (PID)，可以說，程序就是一個正在運作中的程式。
+    程式彼此之間是有相關性的，故有父程序與子程序之分。而 Linux 系統所有程序的父程序就是 systemd 這個 PID 為 1 號的程序。
+    在 Linux 的程序呼叫通常稱為 fork-and-exec 的流程！程序都會藉由父程序以複製 (fork) 的方式產生一個一模一樣的子程序， 然後被複製出來的子程序再以 exec 的方式來執行實際要進行的程式，最終就成為一個子程序的存在。
+    常駐在記憶體當中的程序通常都是負責一些系統所提供的功能以服務使用者各項任務，因此這些常駐程式就會被我們稱為：服務 (daemon)。
+    在工作管理 (job control) 中，可以出現提示字元讓你操作的環境就稱為前景 (foreground)，至於其他工作就可以讓你放入背景 (background) 去暫停或運作。
+    與 job control 有關的按鍵與關鍵字有： &, [ctrl]-z, jobs, fg, bg, kill %n 等；
+    程序管理的觀察指令有： ps, top, pstree 等等；
+    程序之間是可以互相控制的，傳遞的訊息 (signal) 主要透過 kill 這個指令在處理；
+    程序是有優先順序的，該項目為 Priority，但 PRI 是核心動態調整的，使用者只能使用 nice 值去微調 PRI
+    nice 的給予可以有： nice, renice, top 等指令；
+    vmstat 為相當好用的系統資源使用情況觀察指令；
+    SELinux 當初的設計是為了避免使用者資源的誤用，而 SELinux 使用的是 MAC 委任式存取設定；
+    SELinux 的運作中，重點在於主體程序 (Subject) 能否存取目標檔案資源 (Object) ，這中間牽涉到政策 (Policy) 內的規則， 以及實際的安全性本文類別 (type)；
+    安全性本文的一般設定為：『Identify:role:type』其中又以 type 最重要；
+    SELinux 的模式有： enforcing, permissive, disabled 三種，而啟動的政策 (Policy) 主要是 targeted
+    SELinux 啟動與關閉的設定檔在： /etc/selinux/config
+    SELinux 的啟動與觀察： getenforce, sestatus 等指令
+    重設 SELinux 的安全性本文可使用 restorecon 與 chcon
+    在 SELinux 有啟動時，必備的服務至少要啟動 auditd 這個！
+    若要管理預設的 SELinux 布林值，可使用 getsebool, setsebool 來管理！
+
+    16.7 本章習題
+    16.8 參考資料與延伸閱讀
+
+    註1：關於 fork-and-exec 的說明可以參考如下網頁與書籍：
+    吳賢明老師維護的網站：http://nmc.nchu.edu.tw/linux/process.htm
+    楊振和、作業系統導論、第三章、學貫出版社
+    註2：對 Linux 核心有興趣的話，可以先看看底下的連結：
+    http://www.linux.org.tw/CLDP/OLD/INFO-SHEET-2.html
+    註3：來自 Linux Journal 的關於 /proc 的說明：http://www.linuxjournal.com/article/177
+    註4：關於 SELinux 相關的網站與文件資料：
+    美國國家安全局的 SELinux 簡介：http://www.nsa.gov/research/selinux/
+    陳永昇、『企業級Linux 系統管理寶典』、學貫行銷股份有限公司
+    Fedora SELinux 說明：http://fedoraproject.org/wiki/SELinux/SecurityContext
+    美國國家安全局對 SELinux 的白皮書：http://www.nsa.gov/research/_files/selinux/papers/module/t1.shtml
+
+    針對本文的建議：http://phorum.vbird.org/viewtopic.php?t=23890
+
 
 
     • 第五部份：Linux系統管理員 

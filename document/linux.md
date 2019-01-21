@@ -1122,4 +1122,61 @@ touch 的目的在修改檔案的時間參數，但亦可用來建立空檔案�
 
 此外，由於『沒有一個套件是永遠安全的！』，所以套件管理是相當重要的一部份，這裡我們以 RPM 與 Tarball 來介紹一下如何管理你系統上面的套件。再來，你知道你的系統上面跑了多少資料嗎？ 雖然知道什麼是 ps 來查詢程序，但是總是得知道我的系統有哪些服務吧！嘿嘿！ 來看看先?不但如此，還得針對登錄檔進行解析，以及對於系統進行備份。呵呵！ 管理員的工作還真多那。不止不止，還要進行核心的管理呢！哇！果然是忙斃了！無論如何， 還是得要瞭解吶
 
+第十七章、認識系統服務 (daemons)
+最近更新日期：2015/08/14
+
+在 Unix-Like 的系統中，你會常常聽到 daemon 這個字眼！那麼什麼是傳說中的 daemon 呢？這些 daemon 放在什麼地方？他的功能是什麼？該如何啟動這些 daemon ？又如何有效的將這些 daemon 管理妥當？此外，要如何視察這些 daemon 開了多少個 ports ？又這些 ports 要如何關閉？還有還有，曉得你系統的這些 port 各代表的是什麼服務嗎？ 這些都是最基礎需要注意的呢！尤其是在架設網站之前，這裡的觀念就顯的更重要了。
+
+從 CentOS 7.x 這一版之後，傳統的 init 已經被捨棄，取而代之的是 systemd 這個傢伙～這傢伙跟之前的 init 有什麼差異？ 優缺點為何？如何管理不同種類的服務類型？以及如何取代原本的『執行等級』等等，很重要的改變喔！
+
+    17.1 什麼是 daemon 與服務 (service)
+        17.1.1 早期 Systemp V 的 init 管理行為中 daemon 的主要分類
+        17.1.2 systemd 使用的 unit 分類
+    17.2 透過 systemctl 管理服務
+        17.2.1 透過 systemctl 管理單一服務 (service unit) 的啟動/開機啟動與觀察狀態
+        17.2.2 透過 systemctl 觀察系統上所有的服務
+        17.2.3 透過 systemctl 管理不同的操作環境 (target unit)
+        17.2.4 透過 systemctl 分析各服務之間的相依性
+        17.2.5 與 systemd 的 daemon 運作過程相關的目錄簡介： /etc/services
+        17.2.6 關閉網路服務
+    17.3 systemctl 針對 service 類型的設定檔
+        17.3.1 systemctl 設定檔相關目錄簡介
+        17.3.2 systemctl 設定檔的設定項目簡介
+        17.3.3 兩個 vsftpd 運作的實例
+        17.3.4 多重的重複設定方式：以 getty 為例
+        17.3.5 自己的服務自己作
+    17.4 systemctl 針對 timer 的設定檔
+    17.5 CentOS 7.x 預設啟動的服務簡易說明
+    17.6 重點回顧
+
+    早期的服務管理使用 systemV 的機制，透過 /etc/init.d/*, service, chkconfig, setup 等指令來管理服務的啟動/關閉/預設啟動；
+    從 CentOS 7.x 開始，採用 systemd 的機制，此機制最大功能為平行處理，並採單一指令管理 (systemctl)，開機速度加快！
+    systemd 將各服務定義為 unit，而 unit 又分類為 service, socket, target, path, timer 等不同的類別，方便管理與維護
+    啟動/關閉/重新啟動的方式為： systemctl [start|stop|restart] unit.service
+    設定預設啟動/預設不啟動的方式為： systemctl [enable|disable] unit.service
+    查詢系統所有啟動的服務用 systemctl list-units --type=service 而查詢所有的服務 (含不啟動) 使用 systemctl list-unit-files --type=service
+    systemd 取消了以前的 runlevel 概念 (雖然還是有相容的 target)，轉而使用不同的 target 操作環境。常見操作環境為 multi-user.targer 與 graphical.target。 不重新開機而轉不同的操作環境使用 systemctl isolate unit.target，而設定預設環境則使用 systemctl set-default unit.target
+    systemctl 系統預設的設定檔主要放在 /usr/lib/systemd/system，管理員若要修改或自行設計時，則建議放在 /etc/systemd/system/ 目錄下。
+    管理員應使用 man systemd.unit, man systemd.service, man systemd.timer 查詢 /etc/systemd/system/ 底下設定檔的語法， 並使用 systemctl daemon-reload 載入後，才能自行撰寫服務與管理服務喔！
+    除了 atd 與 crond 之外，可以 透過 systemd.timer 亦即 timers.target 的功能，來使用 systemd 的時間管理功能。
+    一些不需要的服務可以關閉喔！
+
+    17.7 本章習題
+    17.8 參考資料與延伸閱讀
+
+    freedesktop.org 的重要介紹：http://www.freedesktop.org/wiki/Software/systemd/
+    Red Hat 官網的介紹：https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7
+    /html/System_Administrators_Guide/chap-Managing_Services_with_systemd.html
+    man systemd.unit, man systemd.service, man systemd.kill, man systemd.timer, man systemd.time
+    關於 timer 的相關介紹：
+        archlinux.org: https://wiki.archlinux.org/index.php/Systemd/Timers
+        Janson's Blog: http://jason.the-graham.com/2013/03/06/how-to-use-systemd-timers/
+        freedesktop.org: http://www.freedesktop.org/software/systemd/man/systemd.timer.html
+
+
+
+
+
+
+
     • 第六部份：其他備份文章

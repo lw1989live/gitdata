@@ -1173,6 +1173,53 @@ touch 的目的在修改檔案的時間參數，但亦可用來建立空檔案�
         Janson's Blog: http://jason.the-graham.com/2013/03/06/how-to-use-systemd-timers/
         freedesktop.org: http://www.freedesktop.org/software/systemd/man/systemd.timer.html
 
+第十八章、認識與分析登錄檔
+最近更新日期：2015/08/20
+
+當你的 Linux 系統出現不明原因的問題時，很多人都告訴你，你要查閱一下登錄檔才能夠知道系統出了什麼問題了，所以說， 了解登錄檔是很重要的事情呢。登錄檔可以記錄系統在什麼時間、哪個主機、哪個服務、出現了什麼訊息等資訊， 這些資訊也包括使用者識別資料、系統故障排除須知等資訊。如果你能夠善用這些登錄檔資訊的話，你的系統出現錯誤時， 你將可以在第一時間發現，而且也能夠從中找到解決的方案，而不是昏頭轉向的亂問人呢。 此外，登錄檔所記錄的資訊量是非常大的，要人眼分析實在很困難。此時利用 shell script 或者是其他軟體提供的分析工具來處理複雜的登錄檔，可以幫助你很多很多喔！
+
+    18.1 什麼是登錄檔：
+        18.1.1 CentOS 7 登錄檔簡易說明： 重要性, 常見檔名, 服務與程式, systemd-journald
+        18.1.2 登錄檔內容的一般格式
+    18.2 rsyslog.service ：記錄登錄檔的服務
+        18.2.1 rsyslog.service 的設定檔： /etc/rsyslog.conf, 預設的 rsyslog.conf 內容
+        18.2.2 登錄檔的安全性設置
+        18.2.3 登錄檔伺服器的設定
+    18.3 登錄檔的輪替 (logrotate)
+        18.3.1 logrotate 的設定檔
+        18.3.2 實際測試 logrotate 的動作
+        18.3.3 自訂登錄檔的輪替功能
+    18.4 systemd-journald.service 簡介：
+        18.4.1 使用 journalctl 觀察登錄資訊
+        18.4.2 logger 指令的應用
+        18.4.3 保存 journal 的方式
+    18.5 分析登錄檔
+        18.5.1 CentOS 預設提供的 logwatch
+        18.5.2 鳥哥自己寫的登錄檔分析工具：
+    18.6 重點回顧
+
+    登錄檔可以記錄一個事件的何時、何地、何人、何事等四大資訊，故系統有問題時務必查詢登錄檔；
+    系統的登錄檔預設都集中放置到 /var/log/ 目錄內，其中又以 messages 記錄的資訊最多！
+    登錄檔記錄的主要服務與程式為： systemd-journald.service, rsyslog.service, rsyslogd
+    rsyslogd 的設定檔在 /etc/rsyslog.conf ，內容語法為：『 服務名稱.等級 記載裝置或檔案』
+    透過 linux 的 syslog 函數查詢，了解上述服務名稱有 kernel, user, mail...從 0 到 23 的服務序號
+    承上，等級從不嚴重到嚴重依序有 info, notice, warning, error, critical, alert, emergency 等
+    rsyslogd 本身有提供登錄檔伺服器的功能，透過修改 /etc/rsyslog.conf 內容即可達成；
+    logrotate 程式利用 crontab 來進行登錄檔的輪替功能；
+    logrotate 的設定檔為 /etc/logrotate.conf ，而額外的設定則可寫入 /etc/logrotate.d/* 內；
+    新的 CentOS 7 由於內建 systemd-journald.service 的功能，可以使用 journalctl 直接從記憶體讀出登錄檔，查詢效能較佳
+    logwatch 為 CentOS 7 預設提供的一個登錄檔分析軟體。
+
+    18.7 本章習題練習
+    18.8 參考資料與延伸閱讀
+
+    註1：關於 console 的說明可以參考底下的連結：
+    http://en.wikipedia.org/wiki/Console
+    http://publib.boulder.ibm.com/infocenter/systems/index.jsp?topic=/com.ibm.aix.files/doc/aixfiles/console.htm
+    關於 logfile 也有網友提供英文版喔： http://phorum.vbird.org/viewtopic.php?f=10&t=34996&p=148198
+
+    針對本文的建議：http://phorum.vbird.org/viewtopic.php?t=23895
+
 
 
 

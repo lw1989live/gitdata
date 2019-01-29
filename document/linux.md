@@ -1220,6 +1220,125 @@ touch 的目的在修改檔案的時間參數，但亦可用來建立空檔案�
 
     針對本文的建議：http://phorum.vbird.org/viewtopic.php?t=23895
 
+第十九章、開機流程、模組管理與 Loader
+最近更新日期：2016/12/28
+
+系統開機其實是一項非常複雜的程序，因為核心得要偵測硬體並載入適當的驅動程式後， 接下來則必須要呼叫程序來準備好系統運作的環境，以讓使用者能夠順利的操作整部主機系統。 如果你能夠理解開機的原理，那麼將有助於你在系統出問題時能夠很快速的修復系統喔！ 而且還能夠順利的配置多重作業系統的多重開機問題。為了多重開機的問題，你就不能不學學 grub2 這個 Linux 底下優秀的開機管理程式 (boot loader)。 而在系統運作期間，你也得要學會管理核心模組呢！
+
+    19.1 Linux 的開機流程分析
+        19.1.1 開機流程一覽
+        19.1.2 BIOS, boot loader 與 kernel 載入：lsinitrd
+        19.1.3 第一支程式 systemd 及使用 default.target 進入開機程序分析
+        19.1.4 systemd 執行 sysinit.target 初始化系統、basic.target 準備系統
+        19.1.5 systemd 啟動 multi-user.target 下的服務： 相容的 rc.local, getty.target 啟動
+        19.1.6 systemd 啟動 graphical.target 底下的服務
+        19.1.7 開機過程會用到的主要設定檔
+    19.2 核心與核心模組
+        19.2.1 核心模組與相依性： depmod
+        19.2.2 核心模組的觀察： lsmod, modinfo
+        19.2.3 核心模組的載入與移除：insmod, modprobe, rmmod
+        19.2.4 核心模組的額外參數設定：/etc/modprobe.d/*conf
+    19.3 Boot loader: Grub2
+        19.3.1 boot loader 的兩個 stage
+        19.3.2 grub2 的設定檔 /boot/grub2/grub.cfg 初探： 磁碟代號, grub.cfg
+        19.3.3 grub2 設定檔維護 /etc/default/grub 與 /etc/grub.d： grub, 40_custom
+        19.3.4 initramfs 的重要性與建立新 initramfs 檔案： dracut/mkinitrd
+        19.3.5 測試與安裝 grub2： grub2-install
+        19.3.6 開機前的額外功能修改
+        19.3.7 關於開機畫面與終端機畫面的圖形顯示方式
+        19.3.8 為個別選單加上密碼： grub2-mkpasswd-pbkdf2
+    19.4 開機過程的問題解決
+        19.4.1 忘記 root 密碼的解決之道
+        19.4.2 直接開機就以 root 執行 bash 的方法
+        19.4.3 因檔案系統錯誤而無法開機
+    19.5 重點回顧
+
+    Linux 不可隨意關機，否則容易造成檔案系統錯亂或者是其他無法開機的問題；
+    開機流程主要是：BIOS、MBR、Loader、kernel+initramfs、systemd 等流程
+    Loader 具有提供選單、載入核心檔案、轉交控制權給其他 loader 等功能。
+    boot loader 可以安裝在 MBR 或者是每個分割槽的 boot sector 區域中
+    initramfs 可以提供核心在開機過程中所需要的最重要的模組，通常與磁碟及檔案系統有關的模組；
+    systemd 的設定檔為主要來自 /etc/systemd/system/default.target 項目；
+    額外的裝置與模組對應，可寫入 /etc/modprobe.d/*.conf 中；
+    核心模組的管理可使用 lsmod, modinfo, rmmod, insmod, modprobe 等指令；
+    modprobe 主要參考 /lib/modules/$(uanem -r)/modules.dep 的設定來載入與卸載核心模組；
+    grub2 的設定檔與相關檔案系統定義檔大多放置於 /boot/grub2 目錄中，設定檔名為 grub.cfg
+    grub2 對磁碟的代號設定與 Linux 不同，主要透過偵測的順序來給予設定。如 (hd0) 及 (hd0,1) 等。
+    grub.cfg 內每個選單與 menuentry 有關，而直接指定核心開機時，至少需要 linux16 及 initrd16 兩個項目
+    grub.cfg 內設定 loader 控制權移交時，最重要者為 chainloader +1 這個項目。
+    若想要重建 initramfs ，可使用 dracut 或 mkinitrd 處理
+    重新安裝 grub2 到 MBR 或 boot sector 時，可以利用 grub2-install 來處理。
+    若想要進入救援模式，可於開機選單過程中，在 linux16 的項目後面加入『 rd.break 』或『 init=/bin/bash 』等方式來進入救援模式。
+    我們可以對 grub2 的個別選單給予不同的密碼。
+
+    19.6 本章習題
+    19.7 參考資料與延伸閱讀
+
+    註1：BIOS 的 POST 功能解釋：http://en.wikipedia.org/wiki/Power-on_self-test
+    註2：BIOS 的 INT 13 硬體中斷解釋：http://en.wikipedia.org/wiki/INT_13
+    註3：關於 splash 的相關說明：http://ruslug.rutgers.edu/~mcgrof/grub-images/
+    註4：一些 grub 出錯時的解決之道：
+    http://wiki.linuxquestions.org/wiki/GRUB_boot_menu
+    http://forums.gentoo.org/viewtopic.php?t=122656&highlight=grub+error+collection
+    info grub (尤其是 6.1 的段落，在講解 /etc/default/grub 的設定項目)
+    GNU 官方網站關於 grub 的說明文件：
+    http://www.gnu.org/software/grub/manual/html_node/
+    純文字螢幕解析度的修改方法：
+    http://phorum.study-area.org/viewtopic.php?t=14776
+
+    針對本文的建議：http://phorum.vbird.org/viewtopic.php?t=23891
+
+第二十章、基礎系統設定與備份策略
+最近更新日期：2015/09/03
+
+新的 CentOS 7 有針對不同的服務提供了相當大量的指令列設定模式，因此過去那個 setup 似乎沒有什麼用了！ 取而代之的是許多加入了 bash-complete 提供了不少參數補全的設定工具！甚至包括網路設定也是透過這個機制哩！ 我們這個小章節主要就是在介紹如何透過這些基本的指令來設定系統就是了。另外， 萬一不幸你的 Linux 被駭客入侵了、或是你的 Linux 系統由於硬體關係 (不論是天災還是人禍) 而掛掉了！這個時候，請問如何快速的回復你的系統呢？呵呵！當然囉，如果有備份資料的話， 那麼回復系統所花費的時間與成本將降低相當的多！平時最好就養成備份的習慣， 以免突然間的系統損毀造成手足無措！此外，哪些檔案最需要備份呢？又，備份是需要完整的備份還是僅備份重要資料即可？ 嗯！確實需要考慮看看呦！
+
+    20.1 系統基本設定
+        20.1.1 網路設定 (手動設定與DHCP自動取得)： 手動, 自動, 改主機名稱
+        20.1.2 日期與時間設定
+        20.1.3 語系設定
+        20.1.4 防火牆簡易設定
+    20.2 伺服器硬體資料的收集
+        20.2.1 以系統內建 dmidecode 解析硬體配備
+        20.2.2 硬體資源的收集與分析： lspci, lsusb, iostat...
+        20.2.3 瞭解磁碟的健康狀態
+    20.3 備份要點
+        20.3.1 備份資料的考量
+        20.3.2 哪些 Linux 資料具有備份的意義
+        20.3.3 備份用儲存媒體的選擇
+    20.4 備份的種類、頻率與工具的選擇
+        20.4.1 完整備份之累積備份 (Incremental backup), 使用軟體
+        20.4.2 完整備份之差異備份 (Differential backup)
+        20.4.3 關鍵資料備份
+    20.5 VBird 的備份策略與 scripts
+        20.5.1 每週系統備份的 script
+        20.5.2 每日備份資料的 script
+        20.5.3 遠端備援的 script
+    20.6 災難復原的考量
+    20.7 重點回顧
+
+    網際網路 (Internet) 就是 TCP/IP ，而 IP 的取得需與 ISP 要求。一般常見的取得 IP 的方法有：(1)手動直接設定 (2)自動取得 (dhcp) (3)撥接取得 (4)cable寬頻 等方式。
+    主機的網路設定要成功，必須要有底下的資料：(1)IP (2)Netmask (3)gateway (4)DNS 伺服器 等項目；
+    本章新增硬體資訊的收集指令有： lspci, lsusb, iostat 等；
+    備份是系統損毀時等待救援的救星，但造成系統損毀的因素可能有硬體與軟體等原因。
+    由於主機的任務不同，備份的資料與頻率等考量參數也不相同。
+    常見的備份考慮因素有：關鍵檔案、儲存媒體、備份方式(完整/關鍵)、備份頻率、使用的備份工具等。
+    常見的關鍵資料有：/etc, /home, /var/spool/mail, /boot, /root 等等
+    儲存媒體的選擇方式，需要考慮的地方有：備份速度、媒體的容量、經費與媒體的可靠性等。
+    與完整備份有關的備份策略主要有：累積備份與差異備份。
+    累積備份可具有較小的儲存資料量、備份速度快速等。但是在還原方面則比差異備份的還原慢。
+    完整備份的策略中，常用的工具有 dd, cpio, tar, xfsdump 等等。
+
+    20.8 本章習題
+    20.9 參考資料與延伸閱讀
+
+    註1：維基百科的備份說明：http://en.wikipedia.org/wiki/Incremental_backup
+    註2：關於 differential 與 incremental 備份的優缺點說明：
+    http://www.backupschedule.net/databackup/differentialbackup.html
+    註3：一些備份計畫的實施：http://en.wikipedia.org/wiki/Backup_rotation_scheme
+
+    針對本文的建議：http://phorum.vbird.org/viewtopic.php?t=23898
+
 
 
 

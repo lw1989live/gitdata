@@ -1403,6 +1403,63 @@ touch 的目的在修改檔案的時間參數，但亦可用來建立空檔案�
 
     針對本文的建議：http://phorum.vbird.org/viewtopic.php?t=23892
 
+第二十二章、軟體安裝 RPM, SRPM 與 YUM
+最近更新日期：2015/10/16
+
+雖然使用原始碼進行軟體編譯可以具有客製化的設定，但對於 Linux distribution 的發佈商來說，則有軟體管理不易的問題， 畢竟不是每個人都會進行原始碼編譯的。如果能夠將軟體預先在相同的硬體與作業系統上面編譯好才發佈的話， 不就能夠讓相同的 distribution 具有完全一致的軟體版本嗎？如果再加上簡易的安裝/移除/管理等機制的話， 對於軟體控管就會簡易的多。有這種東西嗎？有的，那就是 RPM 與 YUM 這兩個好用的咚咚。 既然這麼好用，我們當然不能錯過學習機會囉！趕緊來參詳參詳！
+
+    22.1 軟體管理員簡介
+        22.1.1 Linux 界的兩大主流: RPM 與 DPKG
+        22.1.2 什麼是 RPM 與 SRPM
+        22.1.3 什麼是 i386, i586, i686, noarch, x86_64
+        22.1.4 RPM 的優點
+        22.1.5 RPM 屬性相依的克服方式： YUM 線上升級
+    22.2 RPM 軟體管理程式： rpm
+        22.2.1 RPM 預設安裝的路徑
+        22.2.2 RPM 安裝 (install)
+        22.2.3 RPM 升級與更新 (upgrade/freshen)
+        22.2.4 RPM 查詢 (query)
+        22.2.5 RPM 驗證與數位簽章 (Verify/signature)
+        22.2.6 RPM 反安裝與重建資料庫 (erase/rebuilddb)
+    22.3 YUM 線上升級機制
+        22.3.1 利用 yum 進行查詢、安裝、升級與移除功能
+        22.3.2 yum 的設定檔
+        22.3.3 yum 的軟體群組功能
+        22.3.4 EPEL/ELRepo 外掛軟體以及自訂設定檔
+        22.3.5 全系統自動升級
+        22.3.6 管理的抉擇：RPM 還是 Tarball
+        22.3.7 基礎服務管理：以 Apache 為例
+    22.4 SRPM 的使用： rpmbuild (Optional)
+        22.4.1 利用預設值安裝 SRPM 檔案 (--rebuid/--recompile)
+        22.4.2 SRPM 使用的路徑與需要的軟體
+        22.4.3 設定檔的主要內容 (*.spec)
+        22.4.4 SRPM 的編譯指令 (-ba/-bb)
+        22.4.5 一個打包自己軟體的範例
+    22.5 重點回顧
+
+    為了避免使用者自行編譯的困擾，開發商自行在特定的硬體與作業系統平台上面預先編譯好軟體， 並將軟體以特殊格式封包成檔案，提供終端用戶直接安裝到固定的作業系統上，並提供簡單的查詢/安裝/移除等流程。 此稱為軟體管理員。常見的軟體管理員有 RPM 與 DPKG 兩大主流。
+    RPM 的全名是 RedHat Package Manager，原本是由 Red Hat 公司所發展的，流傳甚廣；
+    RPM 類型的軟體中，所含有的軟體是經過編譯後的 binary program ，所以可以直接安裝在使用者端的系統上， 不過，也由於如此，所以 RPM 對於安裝者的環境要求相當嚴格；
+    RPM 除了將軟體安裝至使用者的系統上之外，還會將該軟體的版本、名稱、檔案與目錄配置、系統需求等等均記錄於資料庫 (/var/lib/rpm) 當中，方便未來的查詢與升級、移除；
+    RPM 可針對不同的硬體等級來加以編譯，製作出來的檔案可於副檔名 (i386, i586, i686, x86_64, noarch) 來分辨；
+    RPM 最大的問題為軟體之間的相依性問題；
+    SRPM 為 Source RPM ，內含的檔案為 Source code 而非為 binary file ，所以安裝 SRPM 時還需要經過 compile ，不過，SRPM 最大的優點就是可以讓使用者自行修改設定參數 (makefile/configure 的參數) ，以符合使用者自己的 Linux 環境；
+    RPM 軟體的屬性相依問題，已經可以藉由 yum 或者是 APT 等方式加以克服。 CentOS 使用的就是 yum 機制。
+    yum 伺服器提供多個不同的軟體庫放置個別的軟體，以提供用戶端分別管理軟體類別。
+
+    22.6 本章習題
+    22.7 參考資料與延伸閱讀
+
+    註1：GNU Privacy Guard (GPG) 官方網站的介紹：http://www.gnupg.org/
+    RPM 包裝檔案管理程式：http://www.study-area.org/tips/rpm.htm
+    中文 RPM HOW-TO：http://www.linux.org.tw/CLDP/RPM-HOWTO.html
+    RPM 的使用：http://linux.tnc.edu.tw/techdoc/rpm-howto.htm
+    大家來作 RPM ：http://freebsd.ntu.edu.tw/bsd/4/3/2/29.html
+    一本 RPM 的原文書：http://linux.tnc.edu.tw/techdoc/maximum-rpm/rpmbook/
+    台灣網路危機處理小組：http://www.cert.org.tw/
+
+    針對本文的建議：http://phorum.vbird.org/viewtopic.php?t=23893
+
 
 
 

@@ -1460,6 +1460,50 @@ touch 的目的在修改檔案的時間參數，但亦可用來建立空檔案�
 
     針對本文的建議：http://phorum.vbird.org/viewtopic.php?t=23893
 
+第二十三章、X Window 設定介紹
+最近更新日期：2015/09/19
+
+在 Linux 上頭的圖形介面我們稱之為 X Window System，簡稱為 X 或 X11 囉！ 為何稱之為系統呢？這是因為 X 視窗系統又分為 X server 與 X client ，既然是 Server/Client (主從架構) 這就表示其實 X 視窗系統是可以跨網路且跨平台的！X 視窗系統對於 Linux 來說僅是一個軟體， 只是這個軟體日趨重要喔！因為 Linux 是否能夠在桌上型電腦上面流行，與這個 X 視窗系統有關啦！ 好在，目前的 X 視窗系統整合到 Linux 已經非常優秀了，而且也能夠具有 3D 加速的功能， 只是，我們還是得要瞭解一下 X 視窗系統才好，這樣如果出問題，我們才有辦法處理啊！
+
+    23.1 什麼是 X Window System
+        23.1.1 X Window 的發展簡史
+        23.1.2 主要元件： X Server/X Client/Window Manager/Display Manager
+        23.1.3 X Window 的啟動流程：startx, xinit
+        23.1.4 X 啟動流程測試
+        23.1.5 我是否需要啟用 X Window System
+    23.2 X Server 設定檔解析與設定
+        23.2.1 解析 xorg.conf 設定
+        23.2.2 字型管理
+        23.2.3 顯示器參數微調
+    23.3 顯示卡驅動程式安裝範例
+        23.3.1 NVidia
+        23.3.2 AMD (ATI)
+        23.3.3 Intel
+    23.4 重點回顧
+
+    Unix Like 作業系統上面的 GUI 使用的是最初由 MIT 所開發的 X window system，在 1987 釋出 X11 版，並於 1994 更改為 X11R6 ，故此 GUI 介面也被稱為 X 或 X11
+    X window system 的 X server 最初由 XFree86 計畫所開發，後來則由 Xorg 基金會所持續開發；
+    X window system 主要分為 X server 與 X client ，其中 X Server 在管理硬體，而 X Client 則是應用程式。
+    在運作上，X Client 應用程式會將所想要呈現的畫面告知 X Server ，最終由 X server 來將結果透過他所管理的硬體繪製出來！
+    每一支 X client 都不知道對方的存在，必須要透過特殊的 X client ，稱為 Window Manager 的， 來管理各視窗的重疊、移動、最小化等工作。
+    若有需要登入圖形介面，有時會有 Display Manager 來管理這方面的動作
+    startx 可以偵測 X server / X client 的啟動腳本，並呼叫 xinit 來分別執行；
+    X 可以啟動多個，各個 X 顯示的位置使用 -display 來處理，顯示位置為 :0, :1...
+    Xorg 是一個 X server ，設定檔位於 /etc/X11/xorg.conf ，裡面含有 Module, Files, Monitor, Device 等設定階段。目前較新的設定中， 會將額外的設定放置於 /etc/X11/xorg.conf.d/*.conf
+
+    23.5 本章習題
+    23.6 參考資料與延伸閱讀
+
+    註1：維基百科對 X Window 的介紹：http://en.wikipedia.org/wiki/X_Window_System
+    註2：X Server/X client 與網路相關性的參考圖示：
+    http://en.wikipedia.org/wiki/File:X_client_sever_example.svg
+    註3：系統的 man page： man xinit 、 man Xorg 、 man startx
+    註4：一些與中文字型有關的網頁連結：
+    洪朝貴老師主筆的字型設定：http://www.cyut.edu.tw/~ckhung/b/gnu/font.php
+    X 相關的官方網站： X.org 官方網站 (http://www.x.org/)、 XFree86 官方網站 (http://www.xfree86.org/)
+
+    針對本文的建議：http://phorum.vbird.org/viewtopic.php?t=23897
+
 
 
 

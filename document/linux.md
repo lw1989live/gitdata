@@ -1804,6 +1804,69 @@ Linux 的網路功能相當的強悍，一時之間我們也無法完全的介�
 
 6.5 針對本文的建議：http://phorum.vbird.org/viewtopic.php?t=26155
 
+第二部分：主機的簡易資安防護措施
+有很多團體做過許多作業系統安全性偵測的研究，他們發現一部沒有經過更新與保護的 Linux/Windows 主機 (不論是一般個人電腦還是伺服器)，只要一接上 Internet 幾乎可以在數小時以內就被入侵或被當成跳板！ 您瞧瞧，這是啥世界啊～所以說，要好好的保護好您自己的伺服器主機才行喔！那應該要如何保護你的伺服器主機呢？ 基本上，你最要知道的是你的伺服器開了多少網路服務，而這些服務會啟動什麼埠口？ 根據這層關係來關閉一些不必要的網路服務。再者，利用線上更新系統讓你的 Linux 隨時保持在最新的軟體的狀態， 這個小動作可以預防絕大部分的入侵攻擊，可以說是最重要的一步了！最後才是架設基礎防火牆。
+
+因為 Linux 的功能太強了，如果你不好好的保護好你的主機，要是被入侵並且被當成跳板，這可能會讓您吃上官司的！ 不要小看這層動作喔！雖然被入侵後只要將舊系統移除並且重灌後，你的伺服器主機就能夠『短暫』的恢復正常， 不過如果您的一些操作習慣不改的話，呵呵，並不是重灌就能夠讓你的伺服器主機活的好好的喔！ 所以囉，我們在架站之前，基本的網路防備措施還是得來瞭解一下，免得三不五時要重灌、重灌、重灌....
+
+第七章、網路安全與主機基本防護：
+限制埠口, 網路升級與 SELinux
+最近更新日期：2011/07/21
+通過第一篇的鍛鍊之後，現在你應該已經利用 Linux 連上 Internet 了。但是你的 Linux 現在恐怕還是不怎麼安全的。 因此，在開始伺服器設定之前，我們必須要讓你的系統強壯些！以避免被惡意的 cracker 所攻擊啊！在這一章當中， 我們會介紹封包的流向，然後根據該流向來制訂系統強化的流程！包括線上自動升級、服務管控以及 SELinux 等等。現在就來瞭解瞭解囉！
+
+7.1 網路封包連線進入主機的流程
+　　7.1.1 封包進入主機的流程
+　　7.1.2 常見的攻擊手法與相關保護： 猜密碼, 漏洞, 社交工程, 程式誤用, rootkit, DDoS
+　　7.1.3 主機能作的保護：軟體更新、減少網路服務、啟動 SELinux
+7.2 網路自動升級軟體
+　　7.2.1 如何進行軟體升級
+　　7.2.2 CentOS 的 yum 軟體更新、映射站使用的原理
+　　7.2.3 yum 的使用： 安裝, 軟體群組, 全系統更新
+　　7.2.4 挑選特定的映射站：修改 yum 設定檔與清除 yum 快取
+7.3 限制連線埠口 (port)
+　　7.3.1 什麼是 port
+　　7.3.2 埠口的觀察： netstat, nmap
+　　7.3.3 埠口與服務的啟動/關閉及開機時狀態設定： 服務類型, 開機啟動
+　　7.3.4 安全性考量-關閉網路服務埠口
+7.4 SELinux 管理原則
+　　7.4.1 SELinux 的運作模式： 安全性本文, domain/type
+　　7.4.2 SELinux 的啟動、關閉與觀察： getenforce, setenforce
+　　7.4.3 SELinux type 的修改： chcon, restorecon, semanage
+　　7.4.4 SELinux 政策內的規則布林值修訂： seinfo, sesearch, getsebool, setsebool
+　　7.4.5 SELinux 登錄檔記錄所需服務-以 httpd 為範例： setroubleshoot, sealert
+7.5 被攻擊後的主機修復工作
+　　7.5.1 網管人員應具備的技能
+　　7.5.2 主機受攻擊後復原工作流程
+7.6 重點回顧
+
+    要管制登入伺服器的來源主機，得要瞭解網路封包的特性，這主要包括 TCP/IP 的封包協定， 以及重要的 Socket Pair ，亦即來源與目標的 IP 與 port 等。在 TCP 封包方面，則還得瞭解 SYN/ACK 等封包狀態；
+    網路封包要進入我們 Linux 本機，至少需要通過 (1)防火牆 (2)服務本身的管理 (3)SELinux (4)取得檔案的 rwx 權限等步驟；
+    主機的基本保護之一，就是擁有正確的權限設定。而複雜的權限設定可以利用 ACL 或者是 SELinux 來輔助；
+    關閉 SELinux 可在 /etc/selinux/config 檔案內設定，亦可在核心功能中加入 selinux=0 的項目；
+    rootkit 為一種取得 root 的工具組，你可以利用 rkhunter 來查詢你主機是否被植入 rootkit；
+    網管人員應該注意在員工的教育訓練還有主機的完善備份方案上面；
+    一些所謂的黑客軟體，幾乎都是透過你的 Linux 上面的軟體漏洞來攻擊 Linux 主機的；
+    軟體升級是預防被入侵的最有效方法之一；
+    良好的登錄檔分析習慣可以在短時間內發現系統的漏洞，並加以修復。
+
+7.7 本章習題
+7.8 參考資料與延伸閱讀
+
+    註1： nmap 的官方網站：http://insecure.org/nmap/
+    Fedora 的 SELinux FAQ：http://fedora.redhat.com/docs/selinux-faq/
+    SELinux 的發展網站：http://selinux.sourceforge.net/
+    Red Hat 之 RHEL 4 的 SELinux 指南：http://www.redhat.com/docs/manuals/enterprise/RHEL-4-Manual/selinux-guide/index.html
+    美國國家安全局的 SELinux 簡介：http://www.nsa.gov/selinux/
+    Rootkit hunter：http://www.rootkit.nl/projects/rootkit_hunter.html
+
+7.9 針對本文的建議：http://phorum.vbird.org/viewtopic.php?p=114062
+
+
+
+
+
+
+
 
 
 

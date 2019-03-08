@@ -1861,14 +1861,240 @@ Linux 的網路功能相當的強悍，一時之間我們也無法完全的介�
 
 7.9 針對本文的建議：http://phorum.vbird.org/viewtopic.php?p=114062
 
+ 第八章、路由觀念與路由器設定
+最近更新日期：2011/07/22
+如果說 IP 是門牌，那麼郵差如何走到你家就是『路由』的功能啦！區域網路如果想成是條巷子，那麼路由器就是那間巷子內的郵局！ 其實本章應該是第二章網路基礎的延伸，將網路的設定延伸到整個區網的路由器上而已。那何時會用到路由器？ 如果你的環境中需要將整批 IP 再區隔出不同的廣播區段時，那麼就得要透過路由器的封包轉遞能力了。 本章是下一章防火牆與 NAT 的基礎，得先看完才比較容易理解下一章想要討論的事情喔！
 
+8.1 路由
+　　8.1.1 路由表產生的類型
+　　8.1.2 一個網卡綁多個 IP：IP Alias 的測試功能
+　　8.1.3 重複路由的問題
+8.2 路由器架設
+　　8.2.1 什麼是路由器與 IP 分享器： sysctl.conf
+　　8.2.2 何時需要路由器
+　　8.2.3 靜態路由之路由器
+8.3 動態路由器架設：quagga (zebra + ripd)
+8.4 特殊狀況：路由器兩邊界面是同一個 IP 網段：ARP Proxy
+8.5 重點回顧
 
+    網路卡的代號為 eth0, eth1, eth2...，而第一張網路卡的第一個虛擬介面為 eth0:0 ...
+    網路卡的參數可使用 ifconfig 直接設定，亦可使用設定檔如 /etc/sysconfig/network-scripts/ifcfg-ethn 來設定；
+    路由是雙向的，所以由網路封包發送處發送到目標的路由規劃，必須要考慮回程時是否具有相對的路由， 否則該封包可能會『遺失』；
+    每部主機都有自己的路由表，此路由表 (routing table) 是作為封包傳送時的路徑依據；
+    每部可對外 Internet 傳送封包的主機，其路由資訊中應有一個預設路由 (default gateway)；
+    要讓 Linux 作為 Router 最重要的是啟動核心的 IP Forward 功能；
+    重複路由可能會讓你的網路封包傳遞到錯誤的方向；
+    動態路由通常是用在兩個 Router 之間溝通彼此的路由規則用的，常見的 Linux 上的動態路由套件為 zebra ；
+    arp proxy 可以透過 arp 與 route 的功能，讓路由器兩端都在同一個網段內；
+    一般來說，路由器上都會有兩個以上的網路介面
+    事實上，Router 除了作為路由轉換之外，在 Router 上面架設防火牆，亦可在企業內部再分隔出多個需要安全 (Security) 的單位資料的區隔！
 
+8.6 本章習題
+8.7 參考資料與延伸閱讀
 
+    註1：網中人寫的『頻寬負載平衡』：http://www.study-area.org/tips/multipath.htm
+    註2：一些生產網路硬體設備的公司：
+    思科 (Cisco) ：http://www.cisco.com/
+    友訊 (D-Link) ：http://www.dlinktw.com.tw/
+    普聯技術 (TP-Link) ：http://www.tplink.com.tw/
+    註3：動態路由架設軟體：
+    動態路由軟體 Quagga: http://www.quagga.net
+    動態路由軟體 zebra: http://www.zebra.org
+    Ben 哥寫的『實作 Linux 動態路由』：http://linux.vbird.org/somepaper/20060714-linux_cisco_route.pdf
+    quagga 官方操作文件：http://www.quagga.net/docs/quagga.pdf
+    酷學園的 ARP Proxy：http://phorum.study-area.org/viewtopic.php?t=5619
+    酷學園 ericshei 的 ARP Proxy 分享：http://phorum.study-area.org/viewtopic.php?t=22943
 
+8.8 針對本文的建議：http://phorum.vbird.org/viewtopic.php?t=26428
 
+ 第九章、防火牆與 NAT 伺服器
+最近更新日期：2011/07/22
+從第七章的圖 7.1-1 我們可以發現防火牆是整個封包要進入主機前的第一道關卡，但，什麼是防火牆？Linux 的防火牆有哪些機制？ 防火牆可以達到與無法達到的功能有哪些？防火牆能不能作為區域防火牆而不是僅針對單一主機而已呢？其實，Linux 的防火牆主要是透過 Netfilter 與 TCP Wrappers 兩個機制來管理的。其中，透過 Netfilter 防火牆機制，我們可以達到讓私有 IP 的主機上網 (IP 分享器功能) ，並且也能夠讓 Internet 連到我內部的私有 IP 所架設的 Linux 伺服器 (DNAT 功能)！真的很不賴喔！ 這一章對您來說，也真的有夠重要的啦！
 
+9.1 認識防火牆
+　　9.1.1 開始之前來個提醒事項
+　　9.1.2 為何需要防火牆
+　　9.1.3 Linux 系統上防火牆的主要類別
+　　9.1.4 防火牆的一般網路佈線示意
+　　9.1.5 防火牆的使用限制
+9.2 TCP Wrappers
+　　9.2.1 哪些服務有支援： ldd
+　　9.2.2 /etc/hosts.{allow|deny} 的設定方式
+9.3 Linux 的封包過濾軟體： iptables
+　　9.3.1 不同 Linux 核心版本的防火牆軟體
+　　9.3.2 封包進入流程：規則順序的重要性！
+　　9.3.3 iptables 的表格 (table) 與鏈 (chain)
+　　9.3.4 本機的 iptables 語法
+　　9.3.4-1 規則的觀察與清除
+　　9.3.4-2 定義預設政策 (policy)
+　　9.3.4-3 封包的基礎比對：IP, 網域及介面裝置： 信任裝置, 信任網域
+　　9.3.4-4 TCP, UDP 的規則比對：針對埠口設定
+　　9.3.4-5 iptables 外掛模組：mac 與 state
+　　9.3.4-6 ICMP 封包規則的比對：針對是否回應 ping 來設計
+　　9.3.4-7 超陽春用戶端防火牆設計與防火牆規則儲存
+　　9.3.5 IPv4 的核心管理功能：/proc/sys/net/ipv4/*
+9.4 單機防火牆的一個實例
+　　9.4.1 規則草擬
+　　9.4.2 實際設定
+9.5 NAT 伺服器的設定
+　　9.5.1 什麼是 NAT？ SNAT？ DNAT？
+　　9.5.2 最陽春 NAT 伺服器： IP 分享功能
+　　9.5.3 iptables 的額外核心模組功能
+　　9.5.4 在防火牆後端之網路伺服器 DNAT 設定
+9.6 重點回顧
 
+    要擁有一部安全的主機，必須要有良好的主機權限設定；隨時的更新套件；定期的重要資料備份；完善的員工教育訓練。 僅有防火牆是不足夠的；
+    防火牆最大的功能就是幫助你『限制某些服務的存取來源』，可以管制來源與目標的 IP ；
+    防火牆依據封包抵擋的階層，可以分為 Proxy 以及 IP Filter (封包過濾) 兩種類型；
+    在防火牆內，但不在 LAN 內的伺服器所在網域，通常被稱為 DMZ (非軍事區)，如圖 9.1-4所示；
+    封包過濾機制的防火牆，通常至少可以分析 IP, port, flag (如 TCP 封包的 SYN), MAC 等等；
+    防火牆對於病毒的抵擋並不敏感；
+    防火牆對於來自內部的網路誤用或濫用的抵擋性可能較不足；
+    並不是架設防火牆之後，系統就一定很安全！還是需要更新套件漏洞以及管制使用者及權限設定等；
+    核心 2.4 以後的 Linux 使用 iptables 作為防火牆的軟體；
+    防火牆的訂定與『規則順序』有很大的關係；若規則順序錯誤，可能會導致防火牆的失效；
+    iptables 的預設 table 共有三個，分別是 filter, nat 及 mangle ，慣用者為 filter (本機) 與 nat (後端主機)。
+    filter table 主要為針對本機的防火牆設定，依據封包流向又分為 INPUT, OUTPUT, FORWARD 三條鏈；
+    nat table 主要針對防火牆的後端主機，依據封包流向又分為 PREROUTING, OUTPUT, POSTROUTING 三條鏈， 其中 PREROUTING 與 DNAT 有關， POSTROUTING 則與 SNAT 有關；
+    iptables 的防火牆為規則比對，但所有規則都不符合時，則以預設政策 (policy) 作為封包的行為依據；
+    iptables 的指令列當中，可以下達的參數相當的多，當下達 -j LOG 的參數時，則該封包的流程會被紀錄到 /var/log/messages 當中；
+    防火牆可以多重設定，例如雖然已經設定了 iptables ，但是仍然可以持續設定 TCP Wrappers ，因為誰也不曉得什麼時候 iptables 會有漏洞～或者是規則規劃不良！
+
+9.7 本章習題
+9.8 參考資料與延伸閱讀
+
+    註1： squid 官網：http://www.squid-cache.org/
+    鳥哥的舊版文章：http://linux.vbird.org/linux_server/0420squid.php
+    註2： 與 iptables 相關的網站與書籍：
+    中文網站：
+        http://www.study-area.org/linux/servers/linux_nat.htm
+    英文網站：
+        http://www.netfilter.org/
+        http://www.netfilter.org/documentation/HOWTO//packet-filtering-HOWTO.html
+        http://www.interhack.net/pubs/fwfaq/
+        http://www.sysresccd.org/Sysresccd-Networking-EN-Destination-port-routing
+    其他書籍與資料：
+        Robert L. Ziegler 著，朱亮愷等譯，『實戰 Linux 防火牆--iptables 應用全蒐錄』，上奇出版社，2004。
+        本機的核心文件：/usr/src/linux-{version}/networking/ip-sysctl.txt
+        iptables 的內建 tables 與各個 chain 的相關性： http://ebtables.sourceforge.net/br_fw_ia/bridge3b.png
+        核心參數的相關說明：http://www.study-area.org/tips/adv-route/Adv-Routing-HOWTO-12.html
+        使用 PPPoE 導致的 MTU 問題：http://www.akadia.com/services/pppoe_iptables.html
+
+9.9 針對本文的建議：http://phorum.vbird.org/viewtopic.php?p=114475
+
+ 第十章、申請合法的主機名稱
+最近更新日期：2011/07/23
+在讀完了網路基礎並且架設了個人簡易的防火牆之後，總算是準備要開始來給他進入 Server 的架設了！伺服器架設的步驟裡面，很重要的一點是『你的主機名稱必須要在 Internet 上面可以被查詢』才好！這是因為人類對於 IP 記憶力不佳，所以才會以主機名稱來取代 IP。不過， 你的主機名稱要能夠被查詢到才有用啊！這個時候，一個『合法』的主機名稱就很重要了！那要合法的主機，就得要讓 DNS 系統能夠找的到你的主機啊！不過，如果我們的主機是使用撥接得到的不固定 IP 呢？又該如何申請 DNS 主機名稱？那就得要使用動態 DNS 的系統囉！在這個章節中，我們主要在介紹 Client 端的設定，而不是在設定 DNS 伺服器喔！ ^_^
+
+10.1 為何需要主機名稱
+　　10.1.1 主機名稱的由來
+　　10.1.2 重點在合法授權
+　　10.1.3 申請靜態還是動態 DNS 主機名稱
+10.2 註冊一個合法的主機名稱
+　　10.2.1 靜態 DNS 主機名稱註冊：以 Hinet 為例
+　　10.2.2 動態 DNS 主機名稱註冊：以 no-ip 為例
+10.3 重點回顧
+
+    主機名稱的目的在輔助人們記憶 TCP/IP 的 IP 數值；
+    主機名稱與 IP 的對應，由早期的 /etc/hosts 變更為 DNS 系統來記錄
+    合法的主機名稱必須要透過合法授權後，才能夠在 Internet 上面完整的生效
+    除了靜態的主機名稱與 IP 對應外，若是不固定 IP 的連線模式，可以透過動態 DNS 服務，來達成非固定 IP 永遠指向同一個主機名稱的任務。
+
+10.4 本章習題
+10.5 參考資料與延伸閱讀
+
+    台灣網路資訊中心：http://www.twnic.net/
+    國外的領域名稱系統：http://www.netsol.com/
+    國外的領域名稱系統：http://www.dotster.com/
+    國外的免費 DNS 系統：http://www.no-ip.com
+
+10.6 針對本文的建議：http://phorum.vbird.org/viewtopic.php?t=26634
+
+第三部分：區域網路內常見的伺服器架設
+在開始實際 Linux 的網路伺服器架設之前，切記前面兩篇的內容都已經閱讀過，並且已經強化您主機的網路安全後，才開始架設吧！ 老實說，台灣中小企業非常多，企業人員常常需要共用一些資料，這些資料當然不會傳送到網際網路上，而是在內部區域網路上傳輸的。 因此，區域網路內部的伺服器架設量可能比我們網際網路上面的伺服器還要多呢！所以說，我們先來瞭解一下區域網路內常見的伺服器吧。
+
+在這一篇當中，我們主要會介紹管理伺服器用的連線伺服器如 ssh, xdmcp, VNC, xrdp 等服務，然後針對網路參數管理部份來介紹 DHCP 伺服器，在針對檔案伺服器的 NFS, SAMBA 等服務，再介紹與 NFS 相關性很強的帳號同步的 NIS 伺服器，然後介紹兩個常見的伺服器， 包括時間同步的 NTP 與網路監控能力較佳的 Proxy 伺服器，最終再講一個磁碟不夠時的 iSCSI 模擬器吧！
+
+ 第十一章、遠端連線伺服器SSH / XDMCP / VNC / RDP
+最近更新日期：2011/11/24
+維護網路伺服器最簡單的方式不是跑去實體伺服器前面登入，而是透過遠端連線伺服器連線功能來登入主機， 然後再來進行其他有的沒的維護就是了。Linux 主機幾乎都會提供 sshd 這個連線服務，而且這個服務還是主動進行資料加密的！ 訊息在網路上面跑安全多了。同時我們還能透過 rsync 這個指令以 sshd 通道來達成異地資料備援的功能哩！相當不賴。 如果想要利用圖形介面登入，那麼預設的 Xdmcp 配合 VNC 就能夠使用圖形介面在網路的另一端登入你的伺服器！ 如果你習慣使用 Windows 的遠端桌面，那麼 XRDP 也不要放過囉！
+
+11.1 遠端連線伺服器
+　　11.1.1 什麼是遠端連線伺服器
+　　11.1.2 有哪些可供登入的類型？
+11.2 文字介面連線伺服器：SSH 伺服器
+　　11.2.1 連線加密技術簡介： 產生新的公鑰
+　　11.2.2 啟動 ssh 服務
+　　11.2.3 ssh 用戶端連線程式 - Linux 用戶： ssh, ~/.ssh/known_hosts, sftp, scp
+　　11.2.4 ssh 用戶端連線程式 - Windows 用戶： pietty, psftp, filezilla
+　　11.2.5 sshd 伺服器細部設定
+　　11.2.6 製作不用密碼可立即登入的 ssh 用戶： ssh-keygen
+　　11.2.7 簡易安全設定
+11.3 最原始圖形介面： Xdmcp 服務的啟用
+　　11.3.1 X Window 的 Server/Client 架構與各元件
+　　11.3.2 設定 gdm 的 XDMCP 服務
+　　11.3.3 用戶系統為 Linux 的登入方式： Xnest
+　　11.3.4 用戶系統為 Windows 的登入方式： Xming
+11.4 華麗的圖形介面： VNC 伺服器
+　　11.4.1 預設的 VNC 伺服器：使用 twm window manager： vncserver, vncpasswd
+　　11.4.2 VNC 的用戶端連線軟體： vncviewer, realvnc
+　　11.4.3 VNC 搭配本機的 Xdmcp 畫面
+　　11.4.4 開機就啟動 VNC server 的方法
+　　11.4.5 同步的 VNC ：可以透過圖示同步教學
+11.5 模擬的遠端桌面系統： XRDP 伺服器
+11.6 SSH 伺服器的進階應用
+　　11.6.1 啟動 ssh 在非正規埠口 (非 port 22)
+　　11.6.2 以 rsync 進行同步鏡相備份
+　　11.6.3 透過 ssh 通道加密原本無加密的服務
+　　11.6.4 以 ssh 通道配合 X server 傳遞圖形介面
+11.7 重點回顧
+
+    遠端連線伺服器可以讓使用者在任何一部電腦登入主機，以使用主機的資源或管理與維護主機；
+    常見的遠端登入服務有 rsh, telnet, ssh, vnc, xdmcp 及 RDP 等；
+    telnet 與 rsh 都是以明碼傳輸資料，當資料在 Internet 上面傳輸時較不安全；
+    ssh 由於使用金鑰系統，因此資料在 Internet 上面傳輸時是加密過的，所以較為安全；
+    但 ssh 還是屬於比較危險的服務，請不要對整個 Internet 開放 ssh 的可登入權限，可利用 iptables 規範可登入範圍；
+    ssh 的 public Key 是放在伺服器端，而 private key 是放在 client 端；
+    ssh 的連線機制有兩種版本，建議使用可確認連線正確性的 version 2 ；
+    使用 ssh 時，盡量使用類似 email 的方式來登入，亦即： ssh username@hostname
+    client 端可以比對 server 傳來的 public key 的一致性，利用的檔案為 ~user/.ssh/known_hosts；
+    ssh 的 client 端軟體提供 ssh, scp, sftp 等程式；
+    製作不需要密碼的 ssh 帳號可利用 ssh-keygen -t rsa 來製作 public, private Key pair；
+    上述指令所製作出的 public key 必須要上傳到 server 的 ~user/.ssh/authorized_keys 檔案中；
+    Xdmcp 是透過 X display manager (xdm, gdm, kdm 等) 所提供的功能協定；
+    若 client 端為 Linux 時，需要在 X 環境下以 xhost 增加可連接到本機 X Server 的 IP 才行；
+    除了 Xdmcp 之外，我們可以利用 VNC 來進行 X 的遠端登入架構；
+    VNC 預設開的 port number 為 5900 開始，每個 port 僅允許一個連線；
+    rsync 可透過 ssh 的服務通道或 rsync --daemon 的方式來連線傳輸，其主要功能可以透過類似鏡像備份， 僅備份新的資料，因此傳輸備份速度相當快速！
+
+11.8 課後練習
+11.9 參考資料與延伸閱讀
+
+    註1：與 SSH 伺服器有關的兩個重要官網
+    OpenSSH 官方網站：http://www.openssh.com/
+    OpenSSL 官方網站：http://www.openssl.org/
+    註2：與 putty 及 pietty 有關的網站
+    putty 官方網站：http://www.chiark.greenend.org.uk/~sgtatham/putty/
+    pietty 中文網站：http://ntu.csie.org/~piaip/pietty/
+    註3：XDMCP 維基百科：http://en.wikipedia.org/wiki/X_display_manager_(program_type)
+    註4：教你怎麼設定 gdm 的 custom.conf
+    http://www.idevelopment.info/data/Unix/Linux/LINUX_ConfiguringXDMCPRedHatLinux.shtml
+    http://www.yolinux.com/TUTORIALS/GDM_XDMCP.html
+    註5：自由的 X server -- Xming： http://sourceforge.net/projects/xming/
+    註6：與 VNC 相關的資料
+    man vncserver, man Xvnc
+    使用 X 的 VNC Module：http://phorum.study-area.org/viewtopic.php?t=25713
+    http://fedoranews.org/tchung/vnc/03.shtml
+    註7：維基百科：http://en.wikipedia.org/wiki/Remote_Desktop_Protocol
+    註8：官網在 http://xrdp.sourceforge.net/
+    註9： Fedora 基金會提供的 Extra Packages for Enterprise Linux (EPEL) 計畫：
+    http://fedoraproject.org/wiki/EPEL
+    註10：rsync 的相關用法介紹：
+    酷學園：用 rsync 做備份：http://phorum.study-area.org/viewtopic.php?t=15553
+    ADJ 實驗室的 rsync + SSH：http://www.adj.idv.tw/server/linux_rsync.php
+    公鑰加密機制的維基百科解釋：http://en.wikipedia.org/wiki/Public_Key_Cryptography
+
+11.10針對本文的建議：http://phorum.vbird.org/viewtopic.php?p=114550
 
 
 

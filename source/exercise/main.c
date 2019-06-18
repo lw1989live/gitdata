@@ -9,9 +9,10 @@
 #include <string.h>    /* 提供 memcpy()、memset()、strlen()函数系列 */
 #include <getopt.h>    /* 提供外部 optarg、opterr、optind和getopt() 函数  */
 #include <sys/types.h> /* 类型定义快捷方式,如uint32_t和uint64_t */
+#include <stdint.h>
 /* 2 定义 */
 #define OPTSTR "vi:o:f:h" /* 程序推荐的命令行开关 */
-#define USAGE_FMT "%s [-v] [-f hexflag] [-i inputfile] [-o outputfile] [-h]" /* usage()函数要使用的printf()风格格式字符串 */
+#define USAGE_FMT "%s [-v] [-f hexflag] [-i inputfile] [-o outputfile] [-h]\n" /* usage()函数要使用的printf()风格格式字符串 */
 #define ERR_FOPEN_INPUT "fopen(input, r)"
 #define ERR_FOPEN_OUTPUT "fopen(output, w)"
 #define ERR_DO_THE_NEEDFUL "do_the_needful blew up"

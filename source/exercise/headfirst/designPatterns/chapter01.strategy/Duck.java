@@ -1,3 +1,5 @@
+package headfirst.designPatterns.chapter01.strategy;
+
 public abstract class Duck {
 	FlyBehavior flyBehavior;
 	QuackBehavior quackBehavior;
@@ -6,6 +8,14 @@ public abstract class Duck {
 
 	}
 
+	public void setFlyBehavior (FlyBehavior fb) {
+		flyBehavior = fb;
+	}
+ 
+	public void setQuackBehavior(QuackBehavior qb) {
+		quackBehavior = qb;
+	}
+ 
 	public abstract void display();
 
 	public void performFly() {

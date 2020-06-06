@@ -1,3 +1,5 @@
+package headfirst.designPatterns.chapter01.strategy;
+
 public abstract class MallardDuck extends Duck {
 	FlyBehavior flyBehavior;
 	QuackBehavior quackBehavior;
@@ -5,18 +7,6 @@ public abstract class MallardDuck extends Duck {
 	public MallardDuck() {
 		quackBehavior = new Quack();
 		flyBehavior = new FlyWithWings();
-	}
-
-	public void performFly() {
-		flyBehavior.fly();
-	}
-
-	public void performQuack() {
-		quackBehavior.quack();
-	}
-
-	public void swim() {
-		System.out.println("All ducks float, even decoys!");
 	}
 
 	public void display() {

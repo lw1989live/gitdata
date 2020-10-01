@@ -3,18 +3,14 @@ package headfirst.designPatterns.chapter01.strategy;
 public class MiniDuckSimulator {
     public static void main(String[] args) {
         
-		MallardDuck	mallard = new MallardDuck();
-		RubberDuck	rubberDuckie = new RubberDuck();
-		DecoyDuck	decoy = new DecoyDuck();
- 
-		ModelDuck	model = new ModelDuck();
-
+		Duck mallard = new MallardDuck();
 		mallard.performQuack();
-		rubberDuckie.performQuack();
-		decoy.performQuack();
+		mallard.performFly();
    
-		model.performFly();	
+		Duck model = new ModelDuck();
+		model.performFly();
 		model.setFlyBehavior(new FlyRocketPowered());
 		model.performFly();
+
     }
 } 

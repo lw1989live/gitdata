@@ -23,7 +23,7 @@ def getBilibiliFiles(root_dir):
                     file_dict["FileName"] = os.path.join(dirpath,json_result['Aid'] + "_" + json_result['PartNo'] + "_0.mp4")
                     file_dict["DirTitle"] = json_result['Title'].replace('/','_')
                     file_dict["NewName"] = json_result['PartName'].replace('/','_') + ".mp4"
-                    if os.path.exists(file_dict["FileName"]):
+                    if os.path.exists(file_dict["FileName"]) and os.path.getsize(file_dict["FileName"]) > 0:
                         #存在mp4文件时，将文件添加到返回结果列表中
                         parse_result.append(file_dict)
     return parse_result

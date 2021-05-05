@@ -613,3 +613,5 @@ Desktop.ini
 
 # vscode
 .vscode/*
+/.project
+/.pydevproject

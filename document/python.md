@@ -2047,6 +2047,979 @@ with 上下文管理可以自动管理资源，在 with 代码块执行完毕后
 不论何种原因跳出 with 块，不论是否有异常，总能保证资源正常释放。极大的简化了工作，在文件操作、网络通信相关的场合非常常用。
 
 #### trackback 模块
+【示例】使用 Traceback 模块打印异常信息
+#coding=utf-8
+import traceback
+try:
+    print("step1")
+    num = 1/0
+except:
+    traceback.print_exc()
+
+#### 自定义异常类
+自定义异常类一般都是运行时异常，通常继承 Exception 或其子类即可。命名一般以 Error、Exception 为后缀。
+自定义异常由 raise 语句主动抛出。
+
+
+
+## 第七章 模块(module)
+### 1. 模块化(module)程序设计理念
+#### 1.1 模块和包概念的进化史
+大家可以清晰的看到这发展的流程，核心的哲学思想就是“量变引起质变”、“物以类聚”。同样的思路，在企业管理、人的管理中思路完全一致。大家可以举一反三。
+    1. Python 程序由模块组成。一个模块对应 python 源文件，一般后缀名是：.py。
+    2. 模块由语句组成。运行 Python 程序时，按照模块中语句的顺序依次执行。
+    3. 语句是 Python 程序的构造单元，用于创建对象、变量赋值、调用函数、控制语句等。
+
+#### 1.2 标准库模块(standard library)
+与函数类似，模块也分为标准库模块和用户自定义模块。
+Python 标准库提供了操作系统功能、网络通信、文本处理、文件处理、数学运算等基本的功能。比如：random(随机数)、math(数学运算)、time(时间处理)、file(文件处理)、os(和操作系统交互)、sys(和解释器交互)等。
+另外，Python 还提供了海量的第三方模块，使用方式和标准库类似。功能覆盖了我们能想象到的所有领域，比如：科学计算、WEB 开发、大数据、人工智能、图形系统等。
+
+#### 1.3 为什么需要模块化编程
+模块化编程有如下几个重要优势：
+    1. 便于将一个任务分解成多个模块，实现团队协同开发，完成大规模程序
+    2. 实现代码复用。一个模块实现后，可以被反复调用。
+    3. 可维护性增强。
+
+#### 1.4 模块化编程的流程
+模块化编程的一般流程：
+    1. 设计 API，进行功能描述。
+    2. 编码实现 API 中描述的功能。
+    3. 在模块中编写测试代码，并消除全局代码。
+    4. 使用私有函数实现不被外部客户端调用的模块函数。
+
+#### 1.5 模块的 API 和功能描述要点
+API(Application Programming Interface 应用程序编程接口)是用于描述模块中提供的函数和类的功能描述和使用方式描述。
+模块化编程中，首先设计的就是模块的 API（即要实现的功能描述），然后开始编码实现 API 中描述的功能。最后，在其他模块中导入本模块进行调用。
+我们可以通过help(模块名)查看模块的API。一般使用时先导入模块 然后通过help函数查看
+
+#### 1.6 模块的创建和测试代码
+每个模块都有一个名称，通过特殊变量__name__可以获取模块的名称。
+在正常情况下，模块名字对应源文件名。 
+仅有一个例外，就是当一个模块被作为程序入口时（主程序、交互式提示符下），它的__name__的值为“__main__”。
+我们可以根据这个特点，将模块源代码文件中的测试代码进行独立的处理。
+
+#### 1.7 模块文档字符串和 API 设计
+我们可以在模块的第一行增加一个文档字符串，用于描述模块的相关功能。然后，通过__doc__可以获得文档字符串的内容
+
+### 2. 模块的导入
+模块化设计的好处之一就是“代码复用性高”。写好的模块可以被反复调用，重复使用。模块的导入就是“在本模块中使用其他模块”。
+#### 2.1 import 语句导入
+import 语句的基本语法格式如下：
+    import 模块名 #导入一个模块
+    import 模块 1，模块 2… #导入多个模块
+    import 模块名 as 模块别名 #导入模块并使用新名字
+
+import 加载的模块分为四个通用类别：
+    a.使用 python 编写的代码（.py 文件）；
+    b.已被编译为共享库或 DLL 的 C 或 C++扩展；
+    c.包好一组模块的包
+    d.使用 C 编写并链接到 python 解释器的内置模块；
+
+我们一般通过 import 语句实现模块的导入和使用，import 本质上是使用了内置函数__import__()。
+当我们通过 import 导入一个模块时，python 解释器进行执行，最终会生成一个对象，这个对象就代表了被加载的模块。
+
+#### 2.2 from…import 导入
+Python 中可以使用 from…import 导入模块中的成员。基本语法格式如下：
+    from 模块名 import 成员 1，成员 2，…
+
+如果希望导入一个模块中的所有成员，则可以采用如下方式：
+    from 模块名 import *
+
+【注】尽量避免“from 模块名 import *”这种写法。* 它表示导入模块中所有的不是以下划线(_)开头的名字都导入到当前位置。 
+但你不知道你导入什么名字，很有可能会覆盖掉你之前已经定义的名字。而且可读性极其的差。一般生产环境中尽量避免使用，学习时没有关系。
+
+#### 2.3 import 语句和 from...import 语句的区别
+import 导入的是模块。from...import 导入的是模块中的一个函数/一个类。
+
+如果进行类比的话，import 导入的是“文件”，我们要使用该“文件”下的内容，必须前面加“文件名称”。
+from...import 导入的是文件下的“内容”，我们直接使用这些“内容”即可，前面再也不需要加“文件名称”了。
+
+【注】
+1. from package import item 这种语法中，item 可以是包、模块，也可以是函数、类、变量。
+2. import item1.item2 这种语法中，item 必须是包或模块，不能是其他。
+
+#### 2.4 __import__()动态导入
+import 语句本质上就是调用内置函数__import__()，我们可以通过它实现动态导入。
+给__import__()动态传递不同的的参数值，就能导入不同的模块。
+
+注意：一般不建议我们自行使用__import__()导入，其行为在 python2 和 python3 中有差异，会导致意外错误。如果需要动态导入可以使用 importlib 模块。
+
+#### 2.5 模块的加载问题
+当导入一个模块时， 模块中的代码都会被执行。不过，如果再次导入这个模块，则不会再次执行。
+
+一个模块无论导入多少次，这个模块在整个解释器进程内有且仅有一个实例对象。
+
+重新加载
+    有时候我们确实需要重新加载一个模块，这时候可以使用：importlib.reload()方法
+
+
+### 3. 包 package 的使用
+#### 3.1 包(package)的概念和结构
+当一个项目中有很多个模块时，需要再进行组织。我们将功能类似的模块放到一起，形成了“包”。
+本质上，“包”就是一个必须有__init__.py 的文件夹。典型结构如下：
+
+包下面可以包含“模块(module)”，也可以再包含“子包(subpackage)”。就像文件夹下面可以有文件，也可以有子文件夹一样。
+
+上图中，a 是上层的包，下面有一个子包：aa。可以看到每个包里面都有__init__.py 文件。
+
+#### 3.2 pycharm 中创建包
+
+#### 3.3 导入包操作和本质
+上一节中的包结构，我们需要导入 module_AA.py。方式如下：
+    1. import a.aa.module_AA
+        在使用时，必须加完整名称来引用，比如：a.aa.module_AA.fun_AA()
+    2. from a.aa import module_AA
+        在使用时，直接可以使用模块名。 比如：module_AA.fun_AA()
+    3. from a.aa.module_AA import fun_AA 直接导入函数
+        在使用时，直接可以使用函数名。 比如：fun_AA()
+
+【注】
+1. from package import item 这种语法中，item 可以是包、模块，也可以是函数、类、变量。
+2. import item1.item2 这种语法中，item 必须是包或模块，不能是其他。
+
+导入包的本质其实是“导入了包的__init__.py”文件。也就是说，”import pack1”意味着执行了包 pack1 下面的__init__.py 文件。 
+这样，可以在__init__.py 中批量导入我们需要的模块，而不再需要一个个导入。
+
+__init__.py 的三个核心作用：
+1. 作为包的标识，不能删除。
+2. 用来实现模糊导入
+3. 导入包实质是执行__init__.py 文件，可以在__init__.py 文件中做这个包的初始化、以及需要统一执行代码、批量导入。
+
+【注】如上测试我们可以看出 python 的设计者非常巧妙的通过__init__.py 文件将包转成了模块的操作。因此，可以说“包的本质还是模块”。
+
+#### 3.4 用*导入包
+import * 这样的语句理论上是希望文件系统找出包中所有的子模块，然后导入它们。这可能会花长时间等。Python 解决方案是提供一个明确的包索引。
+
+这个索引由 __init__.py 定义 __all__ 变量，该变量为一列表，
+如上例 a 包下的__init__.py 中，可定义 __all__ = ["module_A","module_A2"]
+
+这意味着， from sound.effects import * 会从对应的包中导入以上两个子模块；
+
+【注】尽管提供 import * 的方法，仍不建议在生产代码中使用这种写法。
+
+#### 3.5 包内引用
+如果是子包内的引用，可以按相对位置引入子模块 以 aa 包下的 module_AA 中导入 a包下内容为例：
+from .. import module_A #..表示上级目录 .表示同级目录
+from . import module_A2 #.表示同级目录
+
+#### 3.6 sys.path 和模块搜索路径
+当我们导入某个模块文件时， Python 解释器去哪里找这个文件呢？只有找到这个文件才能读取、装载运行该模块文件。
+它一般按照如下路径寻找模块文件（按照顺序寻找，找到即停不继续往下寻找）：
+    1. 内置模块
+    2. 当前目录
+    3. 程序的主目录
+    4. pythonpath 目录（如果已经设置了 pythonpath 环境变量）
+    5. 标准链接库目录
+    6. 第三方库目录（site-packages 目录）
+    7. .pth 文件的内容（如果存在的话）
+    8. sys.path.append()临时添加的目录
+
+当任何一个 python 程序启动时，就将上面这些搜索路径(除内置模块以外的路径)进行收集，放到 sys 模块的 path 属性中（sys.path）
+
+· 使用 sys.path 查看和临时修改搜索路径
+· pythonpath 环境变量的设置
+    windows 系统中通过如下操作添加和设置 pythonpath 环境变量。
+.pth 文件的写法
+    我们可以在 site-packages 目录下添加.pth 文件。并在文件中增加内容： #一行一个目录
+
+### 4. 模块发布和安装
+#### 4.1 模块的本地发布
+当我们完成了某个模块开发后，可以将他对外发布，其他开发者也可以以“第三方扩展库”的方式使用我们的模块。
+我们按照如下步骤即可实现模块的发布：
+1.为模块文件创建如下结构的文件夹（一般，文件夹的名字和模块的名字一样）：
+2.在文件夹中创建一个名为『setup.py』的文件，内容如下：
+    from distutils.core import setup
+    setup(
+        name='baizhanMath2', # 对外我们模块的名字
+        version='1.0', # 版本号
+        description='这是第一个对外发布的模块，测试哦', #描述
+        author='gaoqi', # 作者
+        author_email='gaoqi110@163.com', 
+        py_modules=['baizhanMath2.demo1','baizhanMath2.demo2'] # 要发布的模块
+    )
+3. 构建一个发布文件。通过终端，cd 到模块文件夹 c 下面，再键入命令：
+    python setup.py sdist
+    执行完毕后，目录结构变为
+
+#### 4.2 本地安装模块
+将发布安装到你的本地计算机上。仍在 cmd 命令行模式下操作，进 setup.py 所在目录，键入命令：
+    python setup.py install
+
+安装成功后，我们进入 python 目录/Lib/site-packages 目录（第三方模块都安装的这里,python 解释器执行时也会搜索这个路径）：
+安装成功后，直接使用 import 导入即可
+
+#### 4.3 上传模块到 PyPI
+将自己开发好的模块上传到 PyPI 网站上，将成为公开的资源，可以让全球用户自由使用。
+按照如下步骤做，很容易就实现上传模块操作。
+
+    注册 PyPI 网站
+        注册 PyPI 网站：http://pypi.python.org
+
+    ·创建用户信息文件.pypirc
+        ·方式 1： 使用命令(适用 Linux)
+            输入并执行后 python setup.py register ，然后输入用户名和密码，即可。
+        ·方式 2：使用文件（适用 windows,Linux）
+            在用户的家目录里创建一个文件名为.pypirc, 内容为：
+                [distutils]
+                index-servers=pypi
+                [pypi]
+                repository = https://upload.pypi.org/legacy/
+                username = 账户名
+                password = 你自己的密码
+                
+            【注】
+            Linux 的家目录： ~/.pypirc
+            Windows 的家目录是： c:/user/用户名
+    ·上传并远程发布
+        进入 setup.py 文件所在目录，使用命令“python setup.py sdist upload”，即可以将模块代码上传并发布：
+    
+    ·管理你的模块
+        我们登录 pypi 官网，可以看到：
+        如果你的模块已经上传成功，那么当你登录 PyPI 网站后应该能在右侧导航栏看到管理入口。
+
+#### 4.4 让别人使用你的模块
+模块发布完成后，其他人只需要使用 pip 就可以安装你的模块文件。比如：
+    pip install package-name
+如果你更新了模块，别人可以可以通过--update 参数来更新：
+    pip install package-name update
+
+### 5. 库(Library)
+Python 中库是借用其他编程语言的概念，没有特别具体的定义。模块和包侧重于代码组织，有明确的定义。
+一般情况，库强调的是功能性，而不是代码组织。我们通常将某个功能的“模块的集合”，称为库。
+
+#### 5.1 标准库(Standard Library)
+Python 拥有一个强大的标准库。Python 语言的核心只包含数字、字符串、列表、字典、文件等常见类型和函数，
+而由 Python 标准库提供了系统管理、网络通信、文本处理、数据库接口、图形系统、XML 处理等额外的功能。
+
+Python 标准库的主要功能有：
+    1. 文本处理，包含文本格式化、正则表达式匹配、文本差异计算与合并、Unicode 支持，二进制数据处理等功能
+    2. 文件处理，包含文件操作、创建临时文件、文件压缩与归档、操作配置文件等功能
+    3. 操作系统功能，包含线程与进程支持、IO 复用、日期与时间处理、调用系统函数、日志（logging）等功能
+    4. 网络通信，包含网络套接字，SSL 加密通信、异步网络通信等功能
+    5. 网络协议，支持 HTTP，FTP，SMTP，POP，IMAP，NNTP，XMLRPC 等多种网络协议，并提供了编写网络服务器的框架
+    6. W3C 格式支持，包含 HTML，SGML，XML 的处理
+    7. 其它功能，包括国际化支持、数学运算、HASH、Tkinter 等
+
+#### 5.2 第三方扩展库的介绍
+强大的标准库奠定了 python 发展的基石，丰富和不断扩展的第三方库是 python 壮大的保证。我们可以进入 PyPI 官网：
+表 常用第三方库大汇总
+
+#### 5.3 PyPI 网站和 PIP 模块管理工具
+PyPI(Python Package Index)是 python 官方的第三方库的仓库，所有人都可以下载第三方库或上传自己开发的库到 PyPI。PyPI 推荐使用 pip 包管理器来下载第三方库。
+
+#### 5.4 安装第三方扩展库的 2 种方式
+
+第一种方式：命令行下远程安装
+    以安装第三方 pillow 图像库为例，在命令行提示符下输入：pip install pillow
+    安装完成后，我们就可以开始使用。
+    安装完，输入 pip show pillow， 进行确认：
+
+第二种方式：Pycharm 中直接安装到项目中
+    在 Pycharm 中，依次点击：file-->setting-->Project 本项目名-->Project Interpreter
+
+## 第八章 文件操作(IO 技术)
+
+### 文本文件和二进制文件
+按文件中数据组织形式，我们把文件分为文本文件和二进制文件两大类。
+1. 文本文件
+    文本文件存储的是普通“字符”文本，python 默认为 unicode 字符集（两个字节表示一个字符，最多可以表示：65536 个），可以使用记事本程序打开。
+
+2. 二进制文件
+    二进制文件把数据内容用“字节”进行存储，无法用记事本打开。必须使用专用的软件解码。常见的有：MP4 视频文件、MP3 音频文件、JPG 图片、doc 文档等等。
+
+### 文件操作相关模块概述
+Python 标准库中，如下是文件操作相关的模块，我们会陆续给大家介绍。
+名称 说明
+io 模块             文件流的输入和输出操作 input output
+os 模块             基本操作系统功能，包括文件操作
+glob 模块           查找符合特定规则的文件路径名
+fnmatch 模块        使用模式来匹配文件路径名
+fileinput 模块      处理多个输入文件
+filecmp 模块        用于文件的比较
+cvs 模块            用于 csv 文件处理
+pickle 和 cPickle   用于序列化和反序列化
+xml 包              用于 XML 数据处理
+bz2、gzip、zipfile、zlib、tarfile   用于处理压缩和解压缩文件（分别对应不同的算法）
+
+#### 创建文件对象 open()
+open()函数用于创建文件对象，基本语法格式如下：
+    open(文件名[,打开方式])
+
+如果只是文件名，代表在当前目录下的文件。文件名可以录入全路径，比如：D:\a\b.txt。
+为了减少“\”的输入，可以使用原始字符串：r“d:\b.txt”。示例如下：
+    f = open(r"d:\b.txt","w")
+打开方式有如下几种：
+模式    描述
+r   读 read 模式
+w   写 write 模式。如果文件不存在则创建；如果文件存在，则重写新内容；
+a   追加 append 模式。如果文件不存在则创建；如果文件存在，则在文件末尾追加内容
+b   二进制 binary 模式（可与其他模式组合使用）
++   读、写模式（可与其他模式组合使用）
+
+文本文件对象和二进制文件对象的创建：
+如果我们没有增加模式“b”，则默认创建的是文本文件对象，处理的基本单元是“字符”。
+如果是二进制模式“b”，则创建的是二进制文件对象，处理的基本单元是“字节”。
+
+### 文本文件的写入
+#### 基本的文件写入操作
+文本文件的写入一般就是三个步骤：
+    1. 创建文件对象
+    2. 写入数据
+    3. 关闭文件对象
+
+#### 常用编码介绍
+在操作文本文件时，经常会操作中文，这时候就经常会碰到乱码问题。为了让大家有能力解决中文乱码问题，这里简单介绍一下各种编码之间的关系。
+
+##### ASCII
+全称为 American Standard Code for Information Interchange，美国信息交换标准代码，这是世界上最早最通用的单字节编码系统，主要用来显示现代英语及其他西欧语言。
+
+ASCII 码用 7 位表示，只能表示 128 个字符。只定义了 27=128 个字符，用7bit 即可完全编码，而一字节 8bit 的容量是 256，所以一字节 ASCII 的编码最高位总是 0。
+
+0～31 表示控制字符如回车、退格、删除等；
+32～126 表示打印字符即可以通过键盘输入并且能显示出来的字符；
+其中 48～57 为 0 到 9 十个阿拉伯数字，65～90 为 26 个大写英文字母，97～122 号为 26 个小写英文字母，
+其余为一些标点符号、运算符号等，具体可以参考 ASCII 标准表。
+
+##### ISO8859-1
+ISO-8859-1 又称 Latin-1，是一个 8 位单字节字符集，它把 ASCII 的最高位也利用起来，并兼容了 ASCII，新增的空间是 128，但它并没有完全用完。在 ASCII 编码之上又增加了西欧语言、希腊语、泰语、阿拉伯语、希伯来语对应的文字符号，它是向下兼容 ASCII 编码
+
+##### GB2312,GBK,GB18030
+###### ·GB2312
+GB2312 全称为信息交换用汉字编码字符集，是中国于 1980 年发布，主要用于计算机系统中的汉字处理。GB2312 主要收录了 6763 个汉字、682 个符号。
+GB2312覆盖了汉字的大部分使用率，但不能处理像古汉语等特殊的罕用字，所以后来出现了像 GBK、GB18030 这种编码。
+GB2312 完全兼容 ISO8859-1。
+###### ·GBK
+全称为 Chinese Internal Code Specification，即汉字内码扩展规范，于 1995 年制定。它主要是扩展了 GB2312，在它的基础上又加了更多的汉字，它一共收录了 21003 个汉字
+###### ·GB18030
+现在最新的内码字集于 2000 年发布，并于 2001 年强制执行，包含了中国大部分少数民族的语言字符，收录汉字数超过 70000 余个。
+它主要采用单字节、双字节、四字节对字符编码，它是向下兼容 GB2312 和 GBK 的，虽然是我国的强制使用标准，但在实际生产中很少用到，用得最多的反而是 GBK 和 GB2312
+
+##### Unicode
+Unicode 编码设计成了固定两个字节，所有的字符都用 16 位(2^16=65536)表示，包括之前只占 8 位的英文字符等，所以会造成空间的浪费，UNICODE 在很长的一段时间内都没有得到推广应用。
+Unicode 完全重新设计，不兼容 iso8859-1，也不兼容任何其他编码。
+
+##### UTF-8
+对于英文字母，unicode 也需要两个字节来表示。所以 unicode 不便于传输和存储。因此而产生了 UTF 编码，UTF-8 全称是（8-bit UnicodeTransformation Format）。
+UTF 编码兼容 iso8859-1 编码，同时也可以用来表示所有语言的字符，不过，UTF 编码是不定长编码，每一个字符的长度从 1-4 个字节不等。其中，英文字母都是用一个字节表示，而汉字使用三个字节。
+
+【老鸟建议】一般项目都会使用 UTF-8。unicode 中虽然汉字是两个字节，UTF-8 中汉字是 3 个字节。但是互联网中一个网页也包含了大量的英文字母，这些英文字母只占用 1 个字节，整体占用空间，UTF-8 仍然优于 Unicode。
+
+#### 中文乱码问题
+windows 操作系统默认的编码是 GBK，Linux 操作系统默认的编码是 UTF-8。当我们用 open()时，调用的是操作系统打开的文件，默认的编码是 GBK。
+【示例】通过指定文件编码解决中文乱码问题
+
+#### write()/writelines()写入数据
+write(a)：把字符串 a 写入到文件中
+writelines(b)：把字符串列表写入文件中，不添加换行符
+
+#### close()关闭文件流
+由于文件底层是由操作系统控制，所以我们打开的文件对象必须显式调用 close()方法关闭文件对象。当调用 close()方法时，首先会把缓冲区数据写入文件(也可以直接调用 flush()方法)，再关闭文件，释放文件对象。
+
+为了确保打开的文件对象正常关闭，一般结合异常机制的 finally 或者 with 关键字实现无论何种情况都能关闭打开的文件对象。
+
+#### with 语句(上下文管理器)
+with 关键字（上下文管理器）可以自动管理上下文资源，不论什么原因跳出 with 块，都能确保文件正确的关闭，并且可以在代码块执行完毕后自动还原进入该代码块时的现场。
+
+### 文本文件的读取
+文件的读取一般使用如下三个方法：
+    1. read([size])
+        从文件中读取 size 个字符，并作为结果返回。如果没有 size 参数，则读取整个文件。读取到文件末尾，会返回空字符串。
+    2. readline()
+        读取一行内容作为结果返回。读取到文件末尾，会返回空字符串。
+    3. readlines()
+        文本文件中，每一行作为一个字符串存入列表中，返回该列表
+
+### 二进制文件的读取和写入
+二进制文件的处理流程和文本文件流程一致。首先还是要创建文件对象，不过，我们需要指定二进制模式，从而创建出二进制文件对象。
+例如：
+    f = open(r"d:\a.txt", 'wb') #可写的、重写模式的二进制文件对象
+    f = open(r"d:\a.txt", 'ab') #可写的、追加模式的二进制文件对象
+    f = open(r"d:\a.txt", 'rb') #可读的二进制文件对象
+
+创建好二进制文件对象后，仍然可以使用 write()、read()实现文件的读写操作。
+
+### 文件对象的常用属性和方法
+文件对象封装了文件相关的操作。在前面我们学习了通过文件对象对文件进行读写操作。本节我们详细列出文件对象的常用属性和方法，并进行说明
+
+#### 文件对象的属性
+属性        说明
+name    返回文件的名字
+mode    返回文件的打开模式
+closed  若文件被关闭则返回 True
+
+#### 文件对象的打开模式
+模式 说明
+r 读模式
+w 写模式
+a 追加模式
+b 二进制模式（可与其他模式组合）
++ 读写模式（可以其他模式组合）
+
+#### 文件对象的常用方法
+方法名 说明
+read([size])    从文件中读取 size 个字节或字符的内容返回。若省略[size]，则读取到文件末尾，即一次读取文件所有内容
+readline()      从文本文件中读取一行内容
+readlines()     把文本文件中每一行都作为独立的字符串对象，并将这些对象放入列表返回
+write(str)      将字符串 str 内容写入文件
+writelines(s)   将字符串列表 s 写入文件文件，不添加换行符
+seek(offset[,whence])   把文件指针移动到新的位置，offset 表示相对于 whence 的多少个字节的偏移量；
+                            offset：
+                                off 为正往结束方向移动，为负往开始方向移动
+                            whence 不同的值代表不同含义：
+                                0: 从文件头开始计算（默认值）
+                                1：从当前位置开始计算
+                                2：从文件尾开始计算
+tell()              返回文件指针的当前位置
+truncate([size])    不论指针在什么位置，只留下指针前 size 个字节的内容，其余全部删除；
+                    如果没有传入 size，则当指针当前位置到文件末尾内容全部删除
+flush()         把缓冲区的内容写入文件，但不关闭文件
+close()         把缓冲区内容写入文件，同时关闭文件，释放文件对象相关资源
+
+### 文件任意位置操作
+
+### 使用 pickle 序列化
+Python 中，一切皆对象，对象本质上就是一个“存储数据的内存块”。有时候，我们需要将“内存块的数据”保存到硬盘上，或者通过网络传输到其他的计算机上。这时候，就需要“对象的序列化和反序列化”。 对象的序列化机制广泛的应用在分布式、并行系统上。
+序列化指的是：将对象转化成“串行化”数据形式，存储到硬盘或通过网络传输到其他地方。
+反序列化是指相反的过程，将读取到的“串行化数据”转化成对象。
+我们可以使用 pickle 模块中的函数，实现序列化和反序列操作。
+
+序列化我们使用：
+    pickle.dump(obj, file)  obj 就是要被序列化的对象，file 指的是存储的文件
+    pickle.load(file)       从 file 读取数据，反序列化成对象
+
+### CSV 文件的操作
+csv(Comma Separated Values)是逗号分隔符文本格式，常用于数据交换、Excel文件和数据库数据的导入和导出。
+与 Excel 文件不同，CSV 文件中：
+    值没有类型，所有值都是字符串
+    不能指定字体颜色等样式
+    不能指定单元格的宽高，不能合并单元格
+    没有多个工作表
+    不能嵌入图像图表
+
+Python 标准库的模块 csv 提供了读取和写入 csv 格式文件的对象。
+
+#### csv.reader 对象和 csv 文件读取
+【操作】csv.reader 对象于从 csv 文件读取数据
+
+#### csv.writer 对象和 csv 文件写入
+【操作】csv.writer 对象写一个 csv 文件
+
+### os 和 os.path 模块
+os 模块可以帮助我们直接对操作系统进行操作。我们可以直接调用操作系统的可执行文件、命令，直接操作文件、目录等等。在系统运维的核心基础。
+
+#### os 模块-调用操作系统命令
+·os.system 可以帮助我们直接调用系统的命令
+
+【注】Linux 是命令行操作更容易，我们可以通过 os.system 可以更加容易的调用相关的命令；
+
+·os.startfile：直接调用可执行文件
+
+#### os 模块-文件和目录操作
+我们可以通过前面讲的文件对象实现对于文件内容的读写操作。如果，还需要对文件和目录做其他操作，可以使用 os 和 os.path 模块。
+
+##### os 模块下常用操作文件的方法
+方法名 描述
+remove(path)        删除指定的文件
+rename(src,dest)    重命名文件或目录
+stat(path)          返回文件的所有属性
+listdir(path)       返回 path 目录下的文件和目录列表
+
+##### os 模块下关于目录操作的相关方法，汇总如下：
+方法名 描述
+mkdir(path)                         创建目录
+makedirs(path1/path2/path3/... )    创建多级目录
+rmdir(path)                         删除目录
+removedirs(path1/path2...)          删除多级目录
+getcwd()                            返回当前工作目录：current work dir
+chdir(path)                         把 path 设为当前工作目录
+walk()                              遍历目录树
+sep                                 当前操作系统所使用的路径分隔符
+
+##### os.path 模块
+os.path 模块提供了目录相关（路径判断、路径切分、路径连接、文件夹遍历）的操作
+方法 描述
+isabs(path)         判断 path 是否绝对路径
+isdir(path)         判断 path 是否为目录
+isfile(path)        判断 path 是否为文件
+exists(path)        判断指定路径的文件是否存在
+getsize(filename)   返回文件的大小
+abspath(path)       返回绝对路径
+dirname(p)          返回目录的路径
+getatime(filename)  返回文件的最后访问时间
+getmtime(filename)  返回文件的最后修改时间
+walk(top,func,arg)  递归方式遍历目录
+join(path,*paths)   连接多个 path
+split(path)         对路径进行分割，以列表形式返回
+splitext(path)      从路径中分割文件的扩展名
+
+##### walk()递归遍历所有文件和目录
+os.walk()方法：
+返回一个 3 个元素的元组，(dirpath, dirnames, filenames), 
+    dirpath：   要列出指定目录的路径
+    dirnames：  目录下的所有文件夹
+    filenames： 目录下的所有文件
+
+### shutil 模块(拷贝和压缩)
+shutil 模块是 python 标准库中提供的，主要用来做文件和文件夹的拷贝、移动、删除等；还可以做文件和文件夹的压缩、解压缩操作。
+os 模块提供了对目录或文件的一般操作。shutil 模块作为补充，提供了移动、复制、压缩、解压等操作，这些 os 模块都没有提供。
+
+### 递归算法
+递归是一种常见的解决问题的方法，即把问题逐渐简单化。
+递归的基本思想就是“自己调用自己”，一个使用递归技术的方法将会直接或者间接的调用自己。
+
+利用递归可以用简单的程序来解决一些复杂的问题。比如：斐波那契数列的计算、汉诺塔、快排等问题。
+
+递归结构包括两个部分：
+     定义递归头。解答：什么时候不调用自身方法。如果没有头，将陷入死循环，也就是递归的结束条件。
+     递归体。解答：什么时候需要调用自身方法。
+
+递归的缺陷
+简单的程序是递归的优点之一。但是递归调用会占用大量的系统堆栈，内存耗用多，在递归调用层次多时速度要比循环慢的多，所以在使用递归时要慎重。
+
+## 第11章 GUI 图形用户界面编程
+GUI（Graphics User Interface），即图形用户界面编程，我们可以通过 python 提供的丰富的组件，快速的实现使用图形界面和用户交互。
+
+### 常用的 GUI 库
+#### 1. Tkinter
+tkinter（Tk interface）是 Python 的标准 GUI 库，支持跨平台的 GUI 程序开发。tkinter适合小型的 GUI 程序编写，也特别适合初学者学习 GUI 编程。本书以 tkinter 为核心进行讲解
+
+#### 2. wxPython
+wxPython 是比较流行的 GUI 库，适合大型应用程序开发，功能强于 tkinter，整体设计框架类似于 MFC(Microsoft Foundation Classes 微软基础类库)。
+
+#### 3. PyQT
+Qt 是一种开源的 GUI 库，适合大型 GUI 程序开发，PyQT 是 Qt 工具包标准的 Python 实现。我们也可以使用 Qt Desginer 界面设计器快速开发 GUI 应用程序。
+
+#### tkinter 模块
+本章中，涉及大量的 API 讲解。学习 API 最好的来源就是官方提供的文档：tkinter 官方网址：
+https://docs.python.org/3.7/library/tk.html
+或者：http://effbot.org/tkinterbook/ （相对规整，适合初学者查找）
+
+### GUI 编程的核心步骤和第一个 GUI 程序
+基于 tkinter 模块创建 GUI 程序包含如下 4 个核心步骤：
+1. 创建应用程序主窗口对象（也称：根窗口）
+    (1) 通过类 Tk 的无参构造函数
+    from tkinter import *
+    root = Tk()
+
+2. 在主窗口中，添加各种可视化组件，比如：按钮（Button）、文本框（Label）等。
+    btn01 = Button(root)
+    btn01["text"] = "点我就送花"
+
+3. 通过几何布局管理器，管理组件的大小和位置
+    btn01.pack()
+
+4. 事件处理
+    (1) 通过绑定事件处理程序，响应用户操作所触发的事件（比如：单击、双击等）
+    def songhua(e):
+        messagebox.showinfo("Message","送你一朵玫瑰花，请你爱上我")
+        print("送你 99 朵玫瑰花")
+
+    btn01.bind("<Button-1>",songhua)
+
+#### tkinter 主窗口
+主窗口位置和大小
+通过 geometry(‘wxh±x±y’)进行设置。
+w 为宽度，h 为高度。+x 表示距屏幕左边的距离；-x 表示距屏幕右边的距离；+y 表示距屏幕上边的距离；-y 表示距屏幕下边的距离。
+
+### GUI 编程整体描述
+图形用户界面是由一个个组件组成，就像小孩“搭积木”一样最终组成了整个界面。有的组件还能在里面再放置其他组件，我们称为“容器”。Tkinter 的 GUI 组件关系图如下：
+
+#### ·Misc 和 Wm：
+Tkinter 的 GUI 组件有两个根父类，它们都直接继承了 object 类：
+    ·Misc：它是所有组件的根父类。
+    ·Wm：它主要提供了一些与窗口管理器通信的功能函数。
+
+·Tk
+    Misc 和 Wm 派生出子类 Tk，它代表应用程序的主窗口。一般应用程序都需要直接或间接使用 Tk。
+
+·Pack、Place、Grid
+    Pack、Place、Grid 是布局管理器。布局管理器管理组件的：大小、位置。通过布局管理器可以将容器中的组件实现合理的排布
+
+·BaseWidget
+    BaseWidget 是所有组件的父类
+
+·Widget
+    Widget 是所有组件类的父类。Widget 一共有四个父类：BaseWidget、Pack、Grid、Place。意味着，所有 GUI 组件同时具备这四个父类的属性和方法
+
+【注】想观察类的层次结构可以在类定义处的类名上单击右键，选择 Diagram-->show Diagram。
+
+#### 常用组件汇总列表
+Tkinter 类 名称 简介
+Toplevel    顶层     容器类，可用于为其他组件提供单独的容器；Toplevel 有点类似于窗口
+Button  按钮       代表按钮组件
+Canvas  画布       提供绘图功能，包括直线、矩形、椭圆、多边形、位图等
+Checkbutton     复选框         可供用户勾选的复选框
+Entry   单行输入框         用户可输入内容
+Frame   容器        用于装载其它 GUI 组件
+Label   标签        用于显示不可编辑的文本或图标
+LabelFrame  容器      也是容器组件，类似于 Frame，但它支持添加标题
+Listbox     列表框         列出多个选项，供用户选择
+Menu    菜单      菜单组件
+Menubutton  菜单按钮        用来包含菜单的按钮（包括下拉式、层叠式等）
+OptionMenu  菜单按钮        Menubutton 的子类，也代表菜单按钮，可通过按钮打开一个菜单
+Message     消息框     类似于标签，但可以显示多行文本；后来当 Label 也能显示多行文本之后，该组件基本处于废弃状态
+PanedWindow     分区窗口        该容器会被划分成多个区域，每添加一个组件占一个区域，用户可通过拖动分隔线来改变各区域的大小
+Radiobutton     单选钮         可供用户点边的单选钮
+Scale   滑动条         拖动滑块可设定起始值和结束值，可显示当前位置的精确值
+Spinbox     微调选择器       用户可通过该组件的向上、向下箭头选择不同的值
+Scrollbar   滚动条         用于为组件（文本域、画布、列表框、文本框）提供滚动功能
+Text    多行文本框       显示多行文本
+
+### GUI 应用程序类的经
+
+本节程序也是 GUI 应用程序编写的一个主要结构，采用了面向对象的方式，更加合理的组织代码。
+
+通过类 Application 组织整个 GUI 程序，类 Application 继承了 Frame 及通过继承拥有了父类的特性。通过构造函数__init__()初始化窗口中的对象，通过 createWidgets()方法创建窗口中的对象。
+
+Frame 框架是一个 tkinter 组件，表示一个矩形的区域。Frame 一般作为容器使用，可以放置其他组件，从而实现复杂的布局。
+
+【示例】标准的 GUI 程序类的写法
+"""测试一个经典的 GUI 程序的写法，使用面向对象的方式"""
+from tkinter import *
+from tkinter import messagebox
+
+class Application(Frame):
+    """一个经典的 GUI 程序的类的写法"""
+
+    def __init__(self, master=None):
+        super().__init__(master) # super()代表的是父类的定义，而不是父类对象
+        self.master = master
+        self.pack()
+        self.createWidget()
+
+    def createWidget(self):
+        """创建组件"""
+        self.btn01 = Button(self)
+        self.btn01["text"] = "点击送花"
+        self.btn01.pack()
+        self.btn01["command"] = self.songhua
+        
+        # 创建一个退出按钮
+        self.btnQuit = Button(self, text="退出", command=root.destroy)
+        self.btnQuit.pack()
+
+    def songhua(self):
+        messagebox.showinfo("送花","送你 99 朵玫瑰花")
+
+if __name__ == '__main__':
+    root = Tk()
+    root.geometry("400x100+200+300")
+    root.title("一个经典的 GUI 程序类的测试")
+    app = Application(master=root)
+    root.mainloop()
+
+### 简单组件
+#### Label 标签
+Label（标签）主要用于显示文本信息，也可以显示图像。
+Label（标签）有这样一些常见属性：
+1. width,height：
+    用于指定区域大小，如果显示是文本，则以单个英文字符大小为单位(一个汉字宽度占2 个字符位置，高度和英文字符一样)；如果显示是图像，则以像素为单位。默认值是根据具体显示的内容动态调整。
+2. font
+    指定字体和字体大小，如：font = (font_name,size)
+3. image:
+    显示在 Label 上的图像，目前 tkinter 只支持 gif 格式。
+4. fg 和 bg
+    fg（foreground）:前景色、bg（background）:背景色
+5. justify
+    针对多行文字的对齐，可设置 justify 属性，可选值"left", "center" or "right"
+
+#### Options 选项详解
+我们可以通过三种方式设置 Options 选项，这在各种 GUI 组件中用法都一致。
+    1. 创建对象时，使用可变参数
+        fred = Button(self, fg="red", bg="blue")
+    2. 创建对象后，使用字典索引方式
+        fred["fg"] = "red"
+        fred["bg"] = "blue"
+    3. 创建对象后，使用 config()方法
+        fred.config(fg="red", bg="blue")
+
+如何查看组件的 Options 选项：
+    1. 可以通过打印 config()方法的返回值，查看 Options 选项
+        print(fred.config())
+    2. 通过在 IDE 中，点击组件对象的构造方法，进入到方法内观察：
+
+上面代码中有：“standard options 标准选项”和“widget-specific options 组件特定选项”。我们将常见的选项汇总如下：
+选项名（别名） 含义
+activebackground    指定组件处于激活状态时的背景色
+activeforeground    指定组件处于激活状态时的前景色
+anchor              指定组件内的信息（比如文本或图片）在组件中如何显示(当所在组件比信息大时，可以看出效果)。必须为下面的值之一：N、NE、E、SE、S、SW、W、NW 或 CENTER。比如 NW（NorthWest）指定将信息显示在组件的左上角
+background(bg)      指定组件正常显示时的背景色
+bitmap              指定在组件上显示该选项指定的位图，该选项值可以是 Tk_GetBitmap接收的任何形式的位图。位图的显示方式受 anchor、justify 选项的影响。如果同时指定了 bitmap 和 text，那么 bitmap 覆盖文本；如果同时指定了 bitmap 和 image，那么 image 覆盖 bitmap
+borderwidth         指定组件正常显示时的 3D 边框的宽度，该值可以是 Tk_GetPixels 接收的任何格式
+cursor              指定光标在组件上的样式。该值可以是 Tk_GetCursors 接受的任何格式
+command             指定按组件关联的命令方法，该方法通常在鼠标离开组件时被触发调用
+disabledforeground  指定组件处于禁用状态时的前景色
+font                指定组件上显示的文本字体
+foreground(fg)      指定组件正常显示时的前景色
+highlightbackground 指定组件在高亮状态下的背景色
+highlightcolor      指定组件在高亮状态下的前景色
+highlightthickness  指定组件在高亮状态下的周围方形区域的宽度，该值可以是Tk_GetPixels 接收的任何格式
+height              指定组件的高度，以 font 选项指定的字体的字符高度为单位，至少为1
+image               指定组件中显示的图像，如果设置了 image 选项，它将会覆盖 text、bitmap 选项
+justify             指定组件内部内容的对齐方式，该选项支持 LEFT（左对齐）、CENTER（居中对齐）或 RIGHT（右对齐）这三个值
+padx                指定组件内部在水平方向上两边的空白，该值可以是 Tk_GctPixels 接收的任何格式
+pady                指定组件内部在垂直方向上两地的空白，该值可以是 Tk_GctPixels 接收的任何格式
+relief              指定组件的 3D 效果，该选项支持的值包括 RAISED、SUNKEN、FLAT、RIDGE、SOLID、GROOVE。该值指出组件内部相对于外部的外观样式，比如 RAISED 表示组件内部相对于外部凸起
+selectbackground    指定组件在选中状态下的背景色
+selectborderwidth   指定组件在选中状态下的 3D 边框的宽度，该值可以是 Tk_GetPixels接收的任何格式
+selectforeground    指定组在选中状态下的前景色
+state               指定组件的当前状态。该选项支持 NORMAL（正常）、DISABLE（禁用）这两个值
+takefocus           指定组件在键盘遍历（Tab 或 Shift+Tab）时是否接收焦点，将该选项设为 1 表示接收焦点；设为 0 表示不接收焦点
+text                指定组件上显示的文本，文本显示格式由组件本身、anchor 及justify 选项决定
+textvariable        指定一个变量名，GUI 组件负责显示该变量值转换得到的字符串，文本显示格式由组件本身、anchor 及 justify 选项决定
+underline           指定为组件文本的第几个字符添加下画线，该选项就相当于为组件绑定了快捷键
+width               指定组件的宽度，以 font 选项指定的字体的字符高度为单位，至少为1
+wraplength  对于能支持字符换行的组件，该选项指定每行显示的最大字符数，超过该数量的字符将会转到下行显示
+xscrollcommand      通常用于将组件的水平滚动改变（包括内容滚动或宽度发生改变）与水平滚动条的 set 方法关联，从而让组件的水平滚动改变传递到水平滚动条
+yscrollcommand      通常用于将组件的垂直滚动改变（包括内容滚动或高度发生改变）与垂直滚动条的 set 方法关联，从而让组件的垂直滚动改变传递到垂直滚动条
+
+#### Button
+Button（按钮）用来执行用户的单击操作。Button 可以包含文本，也可以包含图像。按钮被单击后会自动调用对应事件绑定的方法。
+
+#### Entry 单行文本框
+Entry 用来接收一行字符串的控件。如果用户输入的文字长度长于 Entry 控件的宽度时, 文字会自动向后滚动。如果想输入多行文本, 需要使用 Text 控件。
+
+#### Text 多行文本框
+Text(多行文本框)的主要用于显示多行文本，还可以显示网页链接, 图片, HTML 页面, 甚至 CSS样式表，添加组件等。因此，也常被当做简单的文本处理器、文本编辑器或者网页浏览器来使用。比如 IDLE 就是 Text 组件构成的。
+
+·利用 Tags 实现更加强大的文本显示和控制
+    Tags 通常用于改变 Text 组件中内容的样式和功能。你可以修改文本的字体、尺寸和颜色。另外，Tags 还允许你将文本、嵌入的组件和图片与鼠标和键盘等事件相关联。
+
+#### Radiobutton 单选按钮
+Radiobutton 控件用于选择同一组单选按钮中的一个。Radiobutton 可以显示文本，也可以显示图像
+
+#### Checkbutton 复选按钮
+Checkbutton 控件用于选择多个按钮的情况。Checkbutton 可以显示文本，也可以显示图像。
+
+#### canvas 画布
+canvas（画布）是一个矩形区域，可以放置图形、图像、组件等。
+
+### 布局管理器
+一个 GUI 应用程序必然有大量的组件，这些组件如何排布？这时候，就需要使用 tkinter提供的布局管理器帮助我们组织、管理在父组件中子组件的布局方式。tkinter 提供了三种管理器：pack、grid、place。
+
+#### grid 布局管理器
+grid 表格布局，采用表格结构组织组件。子组件的位置由行和列的单元格来确定，并且可以跨行和跨列，从而实现复杂的布局。
+
+grid()方法提供的选项
+选项          说明          取值范围
+column      单元格的列号      从 0 开始的正整数
+columnspan  跨列，跨越的列数    正整数
+row         单元格的行号      从 0 开始的正整数
+rowspan     跨行，跨越的行数    正整数
+ipadx, ipady    设置子组件之间的间隔，x 方向或者 y 方向，默认单位为像素      非负浮点数，默认 0.0
+padx, pady      与之并列的组件之间的间隔，x 方向或者 y 方向，默认单位是像素   非负浮点数，默认 0.0
+sticky      组件紧贴所在单元格的某一角，对应于东南西北中以及 4 个角           “n”, “s”, “w”, “e”, “nw”, “sw”, “se”, “ne”, “center”(默认)
+
+#### pack 布局管理器
+pack 按照组件的创建顺序将子组件添加到父组件中，按照垂直或者水平的方向自然排布。如果不指定任何选项，默认在父组件中自顶向下垂直添加组件。
+pack 是代码量最少，最简单的一种，可以用于快速生成界面。
+
+pack()方法提供的选项
+名称 描述 取值范围
+expand  当值为“yes”时，side 选项无效。组件显示在父配件中心位置；若 fill 选项为”both”,则填充父组件
+的剩余空间       “yes”, 自然数,”no”, 0（默认值”no”或 0）
+fill    填充 x(y)方向上的空间，当属性 side=”top”或”bottom”时，填充 x 方向；当属性 side=”left”或”right”时，填充”y”方向；当 expand 选项为”yes”时，填充父组件的剩余空间   “x”, “y”, “both”，“none”(默认值为 none)
+ipadx,ipady   设置子组件之间的间隔，x 方向或者 y 方向，默认单位为像素  非负浮点数，默认 0.0
+padx,pady     与之并列的组件之间的间隔，x 方向或者 y 方向，默认单位是像素    非负浮点数，默认 0.0
+side    定义停靠在父组件的哪一边上   “ top ” , “ bottom ” , “left”, “right”（默认为”top”）
+before  将本组件于所选组建对象之前 pack，类似于先创建本组件再创建选定组件    已经 pack 后的组件对象
+after   将本组件于所选组建对象之后 pack，类似于先创建选定组件再本组件   已经 pack 后的组件对象
+in_     将本组件作为所选组建对象的子组件，类似于指定本组件的 master 为选定组件     已经 pack 后的组件对象
+anchor    对齐方式，左对齐”w”，右对齐”e”，顶对齐”n”，底对齐     ”s”“n”, “s”, “w”, “e”, “nw”, “sw”, “se”, “ne”, “center”(默认)
+
+【老鸟建议】如上列出了 pack 布局所有的属性，但是不需要挨个熟悉，了解基本的即可。pack 适用于简单的垂直或水平排布，如果需要复杂的布局可以使用 grid 或 place。
+
+#### place 布局管理器
+place 布局管理器可以通过坐标精确控制组件的位置，适用于一些布局更加灵活的场景。
+
+place()方法的选项
+选项 说明 取值范围
+x,y     组件左上角的绝对坐标（相对于窗口）   非负整数    x 和 y 选项用于设置偏移（像素），如果同时设置relx(rely) 和 x(y)，那么 place 将优先计算 relx 和rely，然后再实现 x 和 y 指定的偏移值
+relx    组件左上角的坐标（相对于父容器） relx 是相对父组件的位置。0 是最左边，0.5 是正中间，1是最右边；
+rely    组件左上角的坐标（相对于父容器） rely 是相对父组件的位置。0 是最上边，0.5 是正中间，1
+是最下边；
+width,
+height    组件的宽度和高度  非负整数
+relwidth,
+relheight    组件的宽度和高度（相对于父容器）    与 relx、rely 取值类似，但是相对于父组件的尺寸
+anchor  对齐方式，左对齐”w”，右对齐”e”，顶对齐”n”，底对齐”s”    “n”, “s”, “w”, “e”, “nw”, “sw”, “se”, “ne”, “center”(默认)
+
+### 事件处理
+一个 GUI 应用整个生命周期都处在一个消息循环 (event loop) 中。它等待事件的发生，并
+作出相应的处理。
+Tkinter 提供了用以处理相关事件的机制. 处理函数可被绑定给各个控件的各种事件。
+    widget.bind(event, handler)
+如果相关事件发生, handler 函数会被触发, 事件对象 event 会传递给 handler 函数. 
+
+#### 鼠标和键盘事件
+代码 说明
+<Button-1>
+<ButtonPress-1>
+<1>     鼠标左键按下。 2 表示右键，3 表示中键；
+<ButtonRelease-1> 鼠标左键释放
+<B1-Motion> 按住鼠标左键移动
+<Double-Button-1> 双击左键
+<Enter> 鼠标指针进入某一组件区域
+<Leave> 鼠标指针离开某一组件区域
+<MouseWheel> 滚动滚轮；
+<KeyPress-a> 按下 a 键，a 可用其他键替代
+<KeyRelease-a> 释放 a 键。
+<KeyPress-A> 按下 A 键（大写的 A）
+<Alt-KeyPress-a> 同时按下 alt 和 a；alt 可用 ctrl 和 shift 替代
+<Double-KeyPress-a> 快速按两下 a
+<Control-V> CTRL 和 V 键被同时按下，V 可以换成其它键位
+
+event 对象常用属性
+名称 说明
+char 按键字符，仅对键盘事件有效
+keycode 按键编码，仅对键盘事件有效
+keysym 按键名称，仅对键盘事件有效
+        比如按下空格键：
+        键的 char： 键的 keycode：32 键的 keysym：space
+        比如按下 a 键：
+        键的 char：a 键的 keycode：65 键的 keysym：a
+num 鼠标按键，仅对鼠标事件有效
+type 所触发的事件类型
+widget 引起事件的组件
+width,height 组件改变后的大小，仅 Configure 有效
+x，y 鼠标当前位置，相对于父容器
+x_root,y_root 鼠标当前位置，相对于整个屏幕
+
+#### lambda 表达式详解
+lambda 表达式定义的是一个匿名函数，只适合简单输入参数，简单计算返回结果，不适合功能复杂情况
+lambda 定义的匿名函数也有输入、也有输出，只是没有名字。语法格式如下：
+    lambda 参数值列表：表达式
+
+参数值列表即为输入。
+表达式计算的结构即为输出
+
+我们写一个最简单的案例：
+    add3args = lambda x,y,z:x+y+z
+    #print(add3args(10,20,30))
+
+上面的 lambda 表达式相当于如下函数定义：
+    def add3args(x,y,z):
+        return x+y+z
+
+lambda 表达式的参数值列表可以为如下内容：
+lambda 格式 说明
+lambda x, y: x*y    函数输入是 x 和 y，输出是它们的积 x*y
+lambda:None         函数没有输入参数，输出是 None
+lambda:aaa(3,4)         函数没有输入参数，输出是 aaa(3,4)的结果
+lambda *args: sum(args) 输入是任意个数的参数，输出是它们的和
+lambda **kwargs: 1      输入是任意键值对参数，输出是 1
+
+我们在平时使用时，注意 lambda 只是一个匿名函数（没有名字的函数），功能不强，不要
+过度使用；
+
+#### 多种事件绑定方式汇总
+·组件对象的绑定
+    1. 通过 command 属性绑定（适合简单不需获取 event 对象）
+        Button(root,text=”登录”,command=login)
+    2. 通过 bind()方法绑定（适合需要获取 event 对象）
+        c1 = Canvas(); c1.bind(“<Button-1>”,drawLine) 
+
+·组件类的绑定
+    调用对象的 bind_class 函数，将该组件类所有的组件绑定事件：
+        w.bind_class(“Widget”,”event”,eventhanler)
+    
+    比如：btn01.bind_class(“Button”,”<Button-1>”,func)
+
+### 其他组件
+
+#### OptionMenu 选择项
+OptionMenu(选择项)用来做多选一，选中的项在顶部显示。
+
+#### Scale 移动滑块
+Scale(移动滑块)用于在指定的数值区间，通过滑块的移动来选择值。
+
+#### 颜色选择框
+颜色选择框可以帮助我们设置背景色、前景色、画笔颜色、字体颜色等等。
+
+#### 文件对话框
+文件对话框帮助我们实现可视化的操作目录、操作文件。最后，将文件、目录的信息传入到程序中。
+文件对话框包含如下一些常用函数：
+
+函数名 对话框 说明
+askopenfilename(**options)  文 件 对 话框     返回打开的文件名
+askopenfilenames(**options)                 返回打开的多个文件名列表
+askopenfile(**options)                      返回打开文件对象
+askopenfiles(**options)                     返回打开的文件对象的列表
+askdirectory(**options)     目 录 对 话框     返回目录名
+asksaveasfile(**options)    保 存 对 话框       返回保存的文件对象
+asksaveasfilename(**options)                返回保存的文件名
+
+命名参数 options 的常见值如下：
+参数名                 说明
+defaultextension        默认后缀：.xxx    用户没有输入则自动添加
+filetypes=[(label1,pattern1),(labe2,pattern2)]      文件显示过滤器
+initialdir          初始目录
+initialfile         初始文件
+parent              父窗口，默认根窗口
+title               窗口标题
+
+#### 简单输入对话框
+simpledialog(简单对话框)包含如下常用函数
+函数名                         说明
+askfloat(title,prompt,**kw)     输入并返回浮点数
+askinteger(title,prompt,**kw)   输入并返回整数
+askstring(title,prompt,**kw)    输入并返回字符串
+
+参数中，title 表示窗口标题；prompt 是提示信息；命名参数 kw 为各种选项：initialvalue（初始值）、minvalue（最小值）、maxvalue（最大值）。
+
+#### 通用消息框
+messagebox（通用消息框）用于和用户简单的交互，用户点击确定、取消。
+如下列出了messagebox 的常见函数：
+函数名 说明 例子
+askokcancel(title,message,**options)        OK/Cancel 对话框
+askquestion(title,message,**options)        Yes/No 问题对话框
+askretrycancel(title,message,**options)     Retry/Cancel问题对话框
+showerror(title,message,**options)          错误消息对话框
+showinfo(title,message,**options)           消息框
+showwarning(title,message,**options)        警告消息框
+
+#### ttk 子模块控件
+我们再前面学的组件是 tkinter 模块下的组件，整体风格较老较丑。为了弥补这点不足，推出了 ttk 组件。ttk 组件更加美观、功能更加强大。 新增了 LabeledScale(带标签的Scale)、Notebook(多文档窗口)、Progressbar(进度条)、Treeview(树)等组件。
+
+使用 ttk 组件与使用普通的 Tkinter 组件并没有多大的区别，只要导入 ttk 模块即可。
+
+【注】此处我们不展开细讲 ttk。如果你的项目确实需要用到复杂的界面，推荐大家使用wxpython 或者 pyQt.
+
+#### 菜单
+GUI 程序通常都有菜单，方便用户的交互。我们一般将菜单分为两种：
+1. 主菜单
+    主菜单通常位于 GUI 程序上方。例如：
+
+2. 快捷菜单（上下文菜单）
+    通过鼠标右键单击某个组件对象而弹出的菜单，一般是与该组件相关的操作。
+
+##### 主菜单
+主菜单一般包含：文件、编辑、帮助等，位于 GUI 窗口的上面。创建主菜单一般有如下 4步：
+1. 创建主菜单栏对象
+    menubar = tk.Menu(root)
+2. 创建菜单，并添加到主菜单栏对象
+    file_menu = tk.Menu(menubar)
+    menubar.add_cascade(label=”文件”,menu=file_menu)
+3. 添加菜单项到 2 步中的菜单
+    file_menu.add_command(label=”打开”)
+    file_menu.add_command(label=”保存”,accelerator=”^p” command=mySaveFile)
+    file_menu.add_separator()
+    file_menu.add_command(label=”退出”)
+4. 将主菜单栏添加到根窗口
+    root[“menu”]=menubar
+
+##### 上下文菜单
+快捷菜单（上下文菜单）是通过鼠标右键单击组件而弹出的菜单，一般是和这个组件相关的操作，比如：剪切、复制、粘贴、属性等。
+创建快捷菜单步骤如下：
+
+1. 创建菜单
+    menubar = tk.Menu(root)
+    menubar.add_command(label=”字体”)
+2. 绑定鼠标右键单击事件
+    def test(event):
+        menubar.post(event.x_root,event.y_root) #在鼠标右键单击坐标处显示菜单
+    root.bind(“<Button-3>”,test)
 
 
 

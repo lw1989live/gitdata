@@ -43,16 +43,16 @@ def moveFiles(files,new_path):
             if not isDirExists :    # 判断路径是否存在,如果不存在则创建目录
                 os.makedirs(filePath)    # 创建目录操作函数
             #shutil.copyfile(oldFile,fileName)  #复制文件
-            #shutil.move(oldFile,fileName)  #移动文件
+            shutil.move(oldFile,fileName)  #移动文件
             print(fileName)
         except BaseException  as e:
             print(e)
-    print("文件已经复制到目录，")
+    print("文件已经复制到目录,总共复制了{0}个文件".format(len(files)))
 
 if __name__ == "__main__":
     bilibili_download_path = "/home/liwang/下载/downloads/Video/bilibili"
-    biliPath = os.path.join(bilibili_download_path,"500239952")
+    #biliPath = os.path.join(bilibili_download_path,"500239952")
     movePath = "/media/liwang/move/视频/教程/北京尚学堂·百战程序员"
 
-    files = getBilibiliFiles(biliPath)
+    files = getBilibiliFiles(bilibili_download_path)
     moveFiles(files,movePath)

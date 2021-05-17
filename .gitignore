@@ -615,3 +615,8 @@ Desktop.ini
 .vscode/*
 /.project
 /.pydevproject
+.settings/org.eclipse.jdt.core.prefs
+.classpath
+.settings/org.eclipse.wst.common.project.facet.core.xml
+build.properties
+META-INF/MANIFEST.MF

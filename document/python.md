@@ -1761,7 +1761,8 @@ Python 对于类的成员没有严格的访问控制限制，这与其他面向�
 #### @property 装饰器
 @property 可以将一个方法的调用方式变成“属性调用”。
 @property 主要用于帮助我们处理属性的读操作、写操作。对于某一个属性，我们可以直接通过：
-
+@property
+@属性.setter
 如上的操作读操作、写操作。但是，这种做法不安全。比如，我需要限制薪水必须为 1-10000
 的数字。这时候，我们就需要通过 getter、setter 方法来处理。
 
@@ -1958,6 +1959,7 @@ try...except 是最常见的异常处理结构。结构如下：
 	try:
 	    被监控的可能引发异常的语句块
 	except BaseException [as e]:
+		print(e.args)
 	    异常处理语句块
 
 try 块包含着可能引发异常的代码，except 块则用来捕捉和处理发生的异常。
@@ -1976,6 +1978,13 @@ except Exception1:
     处理 Exception1 的语句块
 except Exception2:
     处理 Exception2 的语句块
+... except BaseException：
+    处理可能遗漏的异常的语句块
+
+try:
+    被监控的、可能引发异常的语句块
+except (Exception1, Exception2):
+    处理 Exception1 和 Exception2的语句块
 ... except BaseException：
     处理可能遗漏的异常的语句块
 
@@ -3159,7 +3168,204 @@ pygame.surface 管理图像和屏幕
 
 ##### 坦克大战之音效处理
 
+### 第14章 数据库编程
+#### 操作SQLite3数据库
+从Python3.x版本开始，在标准库中已经内置了SQLlite3模块，它可以支持SQLite3数据库的访问和相关的数据库操作。
+在需要操作SQLite3数据库数据时，只须在程序中导入SQLite3模块即可。Python语言操作SQLite3数据库的基本流程如下所示。
+	(1)入相关库或模块（SQLite3）。
+	(2)使用connect()连接数据库并获取数据库连接对象。它提供了以下方法：
+		.cursor() 方法来创建一个游标对象 
+		.commit() 方法来处理事务提交 
+		.rollback() 方法来处理事务回滚 
+		.close() 方法来关闭一个数据库连接
+	(3)使用con.cursor()获取游标对象。
+	(4)使用游标对象的方法(execute()、executemany()、fetchall()等)来操作数据库，实现插入、修改和删除操作，并查询获取显示相关的记录。在Python程序中，连接函数sqlite3.connect()有如下两个常用参数。
+		database：表示要访问的数据库名。
+		timeout：表示访问数据的超时设定。
+	(5)使用close()关闭游标对象和数据库连接。数据库操作完成之后，必须及时调用其close()方法关闭数据库连接，这样做的目的是减轻数据库服务器的压力。
 
+##### 使用SQLite3创建表
+
+##### 使用SQLite3插入数据
+调用游标对象的execute执行插入的sql，使用executemany()执行多条sql语句，使用executmany()比循环使用excute()执行多条sql语句效率高。
+
+##### 使用SQLite3查询数据
+查询数据，游标对象提供了fetchall()和fetchone()方法 。
+fetchall()方法获取所有数据，返回一个列表。
+fetchone()方法获取其中一个结果，返回一个元组。
+
+#### 下载安装MySQL
+
+#### 操作MySQL数据库
+
+### 第10章 Numpy
+NumPy(Numerical Python) 是科学计算基础库
+#### 安装
+
+#### 数组的创建
+##### array 创建
+numpy 模块的 array 函数可以生成多维数组。
+例如，如果要生成一个二维数组，需要向array 函数传递一个列表类型的参数。
+每一个列表元素是一维的 ndarray 类型数组，作为二维数组的行。
+另外，通过 ndarray 类的 shape 属性可以获得数组每一维的元素个数（元组形式），
+也可以通过 shape[n]形式获得每一维的元素个数，其中 n 是维度，从 0 开始。
+
+语法格式如下：
+	numpy.array(object, dtype = None, copy = True, order = None, subok = False, ndmin = 0)
+array 参数说明
+名称 描述
+object 数组或嵌套的数列
+dtype 数组元素的数据类型，可选
+copy 对象是否需要复制，可选
+order 创建数组的样式，C 为行方向，F 为列方向，A 为任意方向（默认）
+subok 默认返回一个与基类类型一致的数组
+ndmin 指定生成数组的最小维度
+
+##### arange 创建
+使用 arange 函数创建数值范围并返回 ndarray 对象，函数格式如下：
+	numpy.arange(start, stop, step, dtype)
+
+arange 参数说明
+参数 描述
+start 起始值，默认为 0
+stop 终止值（不包含）
+step 步长，默认为 1
+dtype 返回 ndarray 的数据类型，如果没有提供，则会使用输入数据的类型。
+
+##### 随机数创建
+numpy.random.random(size=None)
+该方法返回[0.0, 1.0)范围的随机数
+
+numpy.random.randint()
+该方法有三个参数 low、high、size 三个参数。默认 high 是 None,如果只有 low，那范围就是[0,low)。如果有 high，范围就是[low,high)。
+
+numpy.random.randn(d0,d1,…,dn)
+randn 函数返回一个或一组样本，具有标准正态分布（期望为 0，方差为 1）。
+dn 表格每个维度
+返回值为指定维度的 array
+
+np.random.normal 指定期望和方差的正太分布
+正太分布（高斯分布）loc：期望 scale：方差 size 形状
+
+##### ndarray 对象
+NumPy 最重要的一个特点是其 N 维数组对象 ndarray，它是一系列同类型数据的集合，以 0 下标为开始进行集合中元素的索引。
+ndarray 对象是用于存放同类型元素的多维数组。ndarray 中的每个元素在内存中都有相同存储大小的区域。
+ndarray 内部由以下内容组成：
+	□ 一个指向数据（内存或内存映射文件中的一块数据）的指针。
+	□ 数据类型或 dtype，描述在数组中的固定大小值的格子。
+	□ 一个表示数组形状（shape）的元组，表示各维度大小的元组。
+	
+NumPy 的数组中比较重要 ndarray 对象属性有：
+属性 说明
+ndarray.ndim 	秩，即轴的数量或维度的数量
+ndarray.shape 	数组的维度，对于矩阵，n 行 m 列
+ndarray.size 	数组元素的总个数，相当于 .shape 中 n*m 的值
+ndarray.dtype 	ndarray 对象的元素类型
+ndarray.itemsize ndarray 对象中每个元素的大小，以字节为单位
+ndarray.flags 	ndarray 对象的内存信息
+ndarray.real 	ndarray 元素的实部
+ndarray.imag 	ndarray 元素的虚部
+ndarray.data 	包含实际数组元素的缓冲区，由于一般通过数组的索引获取元素，所以通常不需要使用这个属性。
+
+##### 其他方式创建
+ndarray 数组除了可以使用底层 ndarray 构造器来创建外，也可以通过以下几种方式来创建
+
+###### zeros 创建指定大小的数组，数组元素以 0 来填充：
+numpy.zeros(shape, dtype = float, order = 'C')
+
+###### numpy.ones 创建指定形状的数组，数组元素以 1 来填充：
+numpy.ones(shape, dtype = None, order = 'C')
+
+###### numpy.empty 方法用来创建一个指定形状（shape）、数据类型（dtype）且未初始化的数组，里面的元素的值是之前内存的值：
+numpy.empty(shape, dtype = float, order = 'C')
+empty 参数说明
+参数 描述
+shape 数组形状
+dtype 数据类型，可选
+order 有"C"和"F"两个选项,分别代表，行优先和列优先，在计算机内存中的存储元素的顺序
+
+###### linspace 函数用于创建一个一维数组，数组是一个等差数列构成的，格式如下：
+np.linspace(start, stop, num=50, endpoint=True, retstep=False, dtype=None)
+linspace 参数说明
+参数 描述
+start 序列的起始值
+stop 序列的终止值，如果 endpoint 为 true，该值包含于数列中
+num 要生成的等步长的样本数量，默认为 50
+endpoint 该值为 ture 时，数列中中包含 stop 值，反之不包含，默认是 True。
+retstep 如果为 True 时，生成的数组中会显示间距，反之不显示。
+dtype ndarray 的数据类型
+
+###### numpy.logspace 函数用于创建一个于等比数列。格式如下：
+np.logspace(start, stop, num=50, endpoint=True, base=10.0, dtype=None)
+表 10-7 logspace 参数说明
+参数 描述
+start 序列的起始值为：base ** start
+stop 序列的终止值为：base ** stop。如果 endpoint 为 true，该值包含于数列中
+num 要生成的等步长的样本数量，默认为 50
+endpoint 该值为 ture 时，数列中中包含 stop 值，反之不包含，默认是 True。
+base 对数 log 的底数。
+dtype ndarray 的数据类型
+
+### 第15章 多线程和并发编程
+#### 多任务
+#### 进程
+程序编写完没有运行称之为程序。正在运行的代码就是进程。
+在Python3语言中，对多进程支持的是multiprocessing模块和subprocess模块。
+multiprocessing模块为在子进程中运行任务、通讯和共享数据，以及执行各种形式的同步提供支持。 
+##### 进程创建
+Python提供了非常好用的多进程包multiprocessing，只需要定义一个函数，Python会完成其他所有事情。借助这个包，可以轻松完成从单进程到并发执行的转换。multiprocessing支持子进程、通信和共享数据。语法格式如下：
+Process（[group [, target [, name [, args [, kwargs]]]]]）
+其中target表示调用对象，args表示调用对象的位置参数元组。kwargs表示调用对象的字典。name为别名。group参数未使用，值始终为None。
+构造函数简单地构造了一个Process进程，Process的实例方法、Process的实例属性如下表所示。
+
+
+
+### 第16章 网络编程
+
+### 第23章 网络爬虫
+##### 网络爬虫的合法性
+一般可以查看网站的robots.txt文件
+如：http://www.taobao.com/robots.txt
+#### 爬虫的基本套路
+	基本流程
+		目标数据
+		来源地址
+		结构分析
+		实现构思
+		操刀编码
+	基本手段
+		破解请求限制
+			请求头设置，如：useragant为有效客户端
+			控制请求频率
+			IP代理
+			签名/加密参数从html/cookie/js分析
+		破解登录授权
+			请求带上用户cookie信息
+		破解验证码
+			简单的验证码可以使用识图读验证码第三方库
+	解析数据
+	HTML Dom解析
+		正则匹配，
+		使用第三方库解析html dom，比如jquery的库
+	数据字符串
+		正则匹配
+		转JSON/XML对象进行解析
+	涉及模块包
+		请求
+			urllib
+			requests
+		多线程
+			threading
+		正则
+			re
+		json解析
+			json
+		html dom解析
+			beautiful soup
+		lxml
+			xpath
+		操作浏览器
+			selenium
 
 
 # Python 教程

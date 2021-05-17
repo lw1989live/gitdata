@@ -1,19 +1,29 @@
+
+import java.io.ObjectStreamException;
+import java.io.Serializable;
 /**
- * 测试饿汉式单例模式（如何防止反射和反序列化漏洞）
+ * 测试懒汉式单例模式(如何防止反射和反序列化漏洞)
  * @author liwang
  *
  */
-public class SingletonDemo6  {
-	// 类初始化时，立即加载这个对象（没有延时加载的优势）.加载类时，天然的是线程安全的
-	private static SingletonDemo6 instance = new SingletonDemo6();		
+public class SingletonDemo6 implements Serializable {
+	//类初始化时，不初始化这个对象（延时加载，真正用的时候再创建）。
+	private static SingletonDemo6 instance;		
 	
 	private SingletonDemo6() {
-//		if(instance != null) {
-//			throw new RuntimeException();
-//		}
+		if(instance != null) {
+			throw new RuntimeException();
+		}
 	}
-	// 方法没有同步调用效率高
+	//方法同步，调用效率低！
 	public static SingletonDemo6 getInstance(){
+		if(instance==null){
+			instance = new SingletonDemo6();
+		}
+		return instance;
+	}
+	//反序列化时，如果定义了readResolve()则直接返回此方法指定的对象。而不需要单独再创建新对象！
+	private Object readResolve() throws ObjectStreamException {
 		return instance;
 	}
 }

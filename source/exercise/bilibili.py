@@ -52,7 +52,7 @@ def moveFiles(files,new_path):
 if __name__ == "__main__":
     bilibili_download_path = "/home/liwang/下载/downloads/Video/bilibili"
     #biliPath = os.path.join(bilibili_download_path,"500239952")
-    movePath = "/media/liwang/move/视频/教程/北京尚学堂·百战程序员"
+    movePath = "/media/liwang/move/视频/教程/temp"
 
     files = getBilibiliFiles(bilibili_download_path)
     moveFiles(files,movePath)

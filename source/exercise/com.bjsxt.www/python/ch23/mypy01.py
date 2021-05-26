@@ -4,6 +4,7 @@ Created on 2021年5月16日
 @author: liwang
 '''
 from urllib.request import urlopen
+from bs4 import BeautifulSoup
 
 # 
 url = 'http://www.baidu.com/'
@@ -12,11 +13,13 @@ response = urlopen(url)
 # 读取内容
 info = response.read()
 # 打印内容
-print(info.decode())
+# print(info.decode())
 # 返回HTTP的响应码
 print(response.getcode())
 # 返回实际访问的url
 print(response.geturl())
 # 返回HTTP响应报头
-print(response.info())
+# print(response.info())
 
+soup = BeautifulSoup(info,'lxml')
+print(soup.title.name)

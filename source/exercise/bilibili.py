@@ -10,10 +10,9 @@ def getBilibiliFiles(root_dir):
     """
     parse_result = []
     #遍历传入的目录，获取所有子文件
-    #list_files = os.walk(root_dir)
-    #遍历传入的目录，在所有子文件中，查找所有后缀名为.info的json文件,并
     for dirpath,dirnames,filenames in os.walk(root_dir):
         for file in filenames:
+            # 查找所有后缀名为.info的json文件
             if file.endswith(".info") :
                 json_file = os.path.join(dirpath,file)
                 # 打开json文件，从中读取文件名和标题
@@ -22,9 +21,9 @@ def getBilibiliFiles(root_dir):
                     json_result = json.load(f)
                     file_dict["FileName"] = os.path.join(dirpath,json_result['Aid'] + "_" + json_result['PartNo'] + "_0.mp4")
                     file_dict["DirTitle"] = json_result['Title'].replace('/','_')
-                    file_dict["NewName"] = json_result['PartName'].replace('/','_') + ".mp4"
+                    file_dict["NewName"] = json_result['PartNo'] + "-" + json_result['PartName'].replace('/','_') + ".mp4"
+                    # 存在mp4文件时，将文件添加到返回结果列表中
                     if os.path.exists(file_dict["FileName"]) and os.path.getsize(file_dict["FileName"]) > 0:
-                        #存在mp4文件时，将文件添加到返回结果列表中
                         parse_result.append(file_dict)
     return parse_result
 
